@@ -126,15 +126,14 @@ Some things to note:
 
 - The `FlagDecodeUnnecessaryEscapes` decodes the following escapes (_from -> to_):
 
-
-    -    %24 -> $
-    -    %26 -> &
-    -    %2B-%3B -> +,-./0123456789:;
-    -    %3D -> =
-    -    %40-%5A -> @ABCDEFGHIJKLMNOPQRSTUVWXYZ
-    -    %5F -> _
-    -    %61-%7A -> abcdefghijklmnopqrstuvwxyz
-    -    %7E -> ~
+  - %24 -> $
+  - %26 -> &
+  - %2B-%3B -> +,-./0123456789:;
+  - %3D -> =
+  - %40-%5A -> @ABCDEFGHIJKLMNOPQRSTUVWXYZ
+  - %5F -> \_
+  - %61-%7A -> abcdefghijklmnopqrstuvwxyz
+  - %7E -> ~
 
 - When the `NormalizeURL` function is used (passing an URL object), this source URL object is modified (that is, after the call, the URL object will be modified to reflect the normalization).
 
