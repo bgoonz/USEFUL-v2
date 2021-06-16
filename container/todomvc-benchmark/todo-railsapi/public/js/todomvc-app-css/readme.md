@@ -4,24 +4,19 @@
 
 ![](screenshot.png)
 
-
 ## Install
-
 
 ```
 $ npm install --save todomvc-app-css
 ```
 
-
 ## Getting started
 
 ```html
-<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css">
+<link rel="stylesheet" href="node_modules/todomvc-app-css/index.css" />
 ```
 
 See the [TodoMVC app template](https://github.com/tastejs/todomvc-app-template).
-
-
 
 ## License
 

@@ -3,21 +3,21 @@ var Exception = require("../exception")["default"];
 
 function LocationInfo(locInfo) {
   locInfo = locInfo || {};
-  this.firstLine   = locInfo.first_line;
+  this.firstLine = locInfo.first_line;
   this.firstColumn = locInfo.first_column;
-  this.lastColumn  = locInfo.last_column;
-  this.lastLine    = locInfo.last_line;
+  this.lastColumn = locInfo.last_column;
+  this.lastLine = locInfo.last_line;
 }
 
 var AST = {
-  ProgramNode: function(statements, strip, locInfo) {
+  ProgramNode: function (statements, strip, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "program";
     this.statements = statements;
     this.strip = strip;
   },
 
-  MustacheNode: function(rawParams, hash, open, strip, locInfo) {
+  MustacheNode: function (rawParams, hash, open, strip, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "mustache";
     this.strip = strip;
@@ -26,7 +26,7 @@ var AST = {
     if (open != null && open.charAt) {
       // Must use charAt to support IE pre-10
       var escapeFlag = open.charAt(3) || open.charAt(2);
-      this.escaped = escapeFlag !== '{' && escapeFlag !== '&';
+      this.escaped = escapeFlag !== "{" && escapeFlag !== "&";
     } else {
       this.escaped = !!open;
     }
@@ -46,14 +46,14 @@ var AST = {
     this.isHelper = this.sexpr.isHelper;
   },
 
-  SexprNode: function(rawParams, hash, locInfo) {
+  SexprNode: function (rawParams, hash, locInfo) {
     LocationInfo.call(this, locInfo);
 
     this.type = "sexpr";
     this.hash = hash;
 
-    var id = this.id = rawParams[0];
-    var params = this.params = rawParams.slice(1);
+    var id = (this.id = rawParams[0]);
+    var params = (this.params = rawParams.slice(1));
 
     // a mustache is definitely a helper if:
     // * it is an eligible helper, and
@@ -69,24 +69,24 @@ var AST = {
     // pass or at runtime.
   },
 
-  PartialNode: function(partialName, context, hash, strip, locInfo) {
+  PartialNode: function (partialName, context, hash, strip, locInfo) {
     LocationInfo.call(this, locInfo);
-    this.type         = "partial";
-    this.partialName  = partialName;
-    this.context      = context;
+    this.type = "partial";
+    this.partialName = partialName;
+    this.context = context;
     this.hash = hash;
     this.strip = strip;
 
     this.strip.inlineStandalone = true;
   },
 
-  BlockNode: function(mustache, program, inverse, strip, locInfo) {
+  BlockNode: function (mustache, program, inverse, strip, locInfo) {
     LocationInfo.call(this, locInfo);
 
-    this.type = 'block';
+    this.type = "block";
     this.mustache = mustache;
-    this.program  = program;
-    this.inverse  = inverse;
+    this.program = program;
+    this.inverse = inverse;
     this.strip = strip;
 
     if (inverse && !program) {
@@ -94,51 +94,54 @@ var AST = {
     }
   },
 
-  RawBlockNode: function(mustache, content, close, locInfo) {
+  RawBlockNode: function (mustache, content, close, locInfo) {
     LocationInfo.call(this, locInfo);
 
     if (mustache.sexpr.id.original !== close) {
-      throw new Exception(mustache.sexpr.id.original + " doesn't match " + close, this);
+      throw new Exception(
+        mustache.sexpr.id.original + " doesn't match " + close,
+        this
+      );
     }
 
     content = new AST.ContentNode(content, locInfo);
 
-    this.type = 'block';
+    this.type = "block";
     this.mustache = mustache;
     this.program = new AST.ProgramNode([content], {}, locInfo);
   },
 
-  ContentNode: function(string, locInfo) {
+  ContentNode: function (string, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "content";
     this.original = this.string = string;
   },
 
-  HashNode: function(pairs, locInfo) {
+  HashNode: function (pairs, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "hash";
     this.pairs = pairs;
   },
 
-  IdNode: function(parts, locInfo) {
+  IdNode: function (parts, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "ID";
 
     var original = "",
-        dig = [],
-        depth = 0,
-        depthString = '';
+      dig = [],
+      depth = 0,
+      depthString = "";
 
-    for(var i=0,l=parts.length; i<l; i++) {
+    for (var i = 0, l = parts.length; i < l; i++) {
       var part = parts[i].part;
-      original += (parts[i].separator || '') + part;
+      original += (parts[i].separator || "") + part;
 
       if (part === ".." || part === "." || part === "this") {
         if (dig.length > 0) {
           throw new Exception("Invalid path: " + original, this);
         } else if (part === "..") {
           depth++;
-          depthString += '../';
+          depthString += "../";
         } else {
           this.isScoped = true;
         }
@@ -148,10 +151,10 @@ var AST = {
     }
 
     this.original = original;
-    this.parts    = dig;
-    this.string   = dig.join('.');
-    this.depth    = depth;
-    this.idName   = depthString + this.string;
+    this.parts = dig;
+    this.string = dig.join(".");
+    this.depth = depth;
+    this.idName = depthString + this.string;
 
     // an ID is simple if it only has one part, and that part is not
     // `..` or `this`.
@@ -160,54 +163,50 @@ var AST = {
     this.stringModeValue = this.string;
   },
 
-  PartialNameNode: function(name, locInfo) {
+  PartialNameNode: function (name, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "PARTIAL_NAME";
     this.name = name.original;
   },
 
-  DataNode: function(id, locInfo) {
+  DataNode: function (id, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "DATA";
     this.id = id;
     this.stringModeValue = id.stringModeValue;
-    this.idName = '@' + id.stringModeValue;
+    this.idName = "@" + id.stringModeValue;
   },
 
-  StringNode: function(string, locInfo) {
+  StringNode: function (string, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "STRING";
-    this.original =
-      this.string =
-      this.stringModeValue = string;
+    this.original = this.string = this.stringModeValue = string;
   },
 
-  NumberNode: function(number, locInfo) {
+  NumberNode: function (number, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "NUMBER";
-    this.original =
-      this.number = number;
+    this.original = this.number = number;
     this.stringModeValue = Number(number);
   },
 
-  BooleanNode: function(bool, locInfo) {
+  BooleanNode: function (bool, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "BOOLEAN";
     this.bool = bool;
     this.stringModeValue = bool === "true";
   },
 
-  CommentNode: function(comment, locInfo) {
+  CommentNode: function (comment, locInfo) {
     LocationInfo.call(this, locInfo);
     this.type = "comment";
     this.comment = comment;
 
     this.strip = {
-      inlineStandalone: true
+      inlineStandalone: true,
     };
-  }
+  },
 };
-
 
 // Must be exported as an object rather than the root of the module as the jison lexer
 // most modify the object to operate properly.

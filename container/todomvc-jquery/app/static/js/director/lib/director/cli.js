@@ -1,11 +1,10 @@
+var util = require("util"),
+  BaseRouter = require("./router").Router;
 
-var util = require('util'),
-    BaseRouter = require('./router').Router;
-
-var Router = exports.Router = function (routes) {
+var Router = (exports.Router = function (routes) {
   BaseRouter.call(this, routes);
   this.recurse = false;
-};
+});
 
 //
 // Inherit from `BaseRouter`.
@@ -25,7 +24,7 @@ Router.prototype.configure = function (options) {
   // Delimiter must always be `\s` in CLI routing.
   // e.g. `jitsu users create`
   //
-  this.delimiter = '\\s';
+  this.delimiter = "\\s";
   return this;
 };
 
@@ -43,20 +42,19 @@ Router.prototype.dispatch = function (method, path, tty, callback) {
   // algorithm will recognize it. This is because we always assume
   // that the `path` begins with `this.delimiter`.
   //
-  path = ' ' + path;
-  var fns = this.traverse(method, path, this.routes, '');
+  path = " " + path;
+  var fns = this.traverse(method, path, this.routes, "");
   if (!fns || fns.length === 0) {
-    if (typeof this.notfound === 'function') {
+    if (typeof this.notfound === "function") {
       this.notfound.call({ tty: tty, cmd: path }, callback);
-    }
-    else if (callback) {
-      callback(new Error('Could not find path: ' + path));
+    } else if (callback) {
+      callback(new Error("Could not find path: " + path));
     }
 
     return false;
   }
 
-  if (this.recurse === 'forward') {
+  if (this.recurse === "forward") {
     fns = fns.reverse();
   }
 

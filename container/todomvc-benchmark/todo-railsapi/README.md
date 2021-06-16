@@ -1,5 +1,4 @@
-TodoMVC Backend Using Rails
-======================================
+# TodoMVC Backend Using Rails
 
 This project, is an implementation of the popular [TodoMVC](http://todomvc.com/) and a backend built using [Rails 5].
 
@@ -26,4 +25,5 @@ $ bundle exec rails server
 ```
 
 # Contributing
+
 We really appreciate pull requests, so if you think there something missing, wrong or want to have something in the app, don't hesitate to send us a pull request.

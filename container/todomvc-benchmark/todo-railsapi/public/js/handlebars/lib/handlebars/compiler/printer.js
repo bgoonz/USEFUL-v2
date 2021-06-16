@@ -10,10 +10,10 @@ export function PrintVisitor() {
 
 PrintVisitor.prototype = new Visitor();
 
-PrintVisitor.prototype.pad = function(string) {
+PrintVisitor.prototype.pad = function (string) {
   var out = "";
 
-  for(var i=0,l=this.padding; i<l; i++) {
+  for (var i = 0, l = this.padding; i < l; i++) {
     out = out + "  ";
   }
 
@@ -21,12 +21,13 @@ PrintVisitor.prototype.pad = function(string) {
   return out;
 };
 
-PrintVisitor.prototype.program = function(program) {
+PrintVisitor.prototype.program = function (program) {
   var out = "",
-      statements = program.statements,
-      i, l;
+    statements = program.statements,
+    i,
+    l;
 
-  for(i=0, l=statements.length; i<l; i++) {
+  for (i = 0, l = statements.length; i < l; i++) {
     out = out + this.accept(statements[i]);
   }
 
@@ -35,7 +36,7 @@ PrintVisitor.prototype.program = function(program) {
   return out;
 };
 
-PrintVisitor.prototype.block = function(block) {
+PrintVisitor.prototype.block = function (block) {
   var out = "";
 
   out = out + this.pad("BLOCK:");
@@ -48,22 +49,28 @@ PrintVisitor.prototype.block = function(block) {
     this.padding--;
   }
   if (block.inverse) {
-    if (block.program) { this.padding++; }
+    if (block.program) {
+      this.padding++;
+    }
     out = out + this.pad("{{^}}");
     this.padding++;
     out = out + this.accept(block.inverse);
     this.padding--;
-    if (block.program) { this.padding--; }
+    if (block.program) {
+      this.padding--;
+    }
   }
   this.padding--;
 
   return out;
 };
 
-PrintVisitor.prototype.sexpr = function(sexpr) {
-  var params = sexpr.params, paramStrings = [], hash;
+PrintVisitor.prototype.sexpr = function (sexpr) {
+  var params = sexpr.params,
+    paramStrings = [],
+    hash;
 
-  for(var i=0, l=params.length; i<l; i++) {
+  for (var i = 0, l = params.length; i < l; i++) {
     paramStrings.push(this.accept(params[i]));
   }
 
@@ -74,13 +81,13 @@ PrintVisitor.prototype.sexpr = function(sexpr) {
   return this.accept(sexpr.id) + " " + params + hash;
 };
 
-PrintVisitor.prototype.mustache = function(mustache) {
+PrintVisitor.prototype.mustache = function (mustache) {
   return this.pad("{{ " + this.accept(mustache.sexpr) + " }}");
 };
 
-PrintVisitor.prototype.partial = function(partial) {
+PrintVisitor.prototype.partial = function (partial) {
   var content = this.accept(partial.partialName);
-  if(partial.context) {
+  if (partial.context) {
     content += " " + this.accept(partial.context);
   }
   if (partial.hash) {
@@ -89,53 +96,54 @@ PrintVisitor.prototype.partial = function(partial) {
   return this.pad("{{> " + content + " }}");
 };
 
-PrintVisitor.prototype.hash = function(hash) {
+PrintVisitor.prototype.hash = function (hash) {
   var pairs = hash.pairs;
-  var joinedPairs = [], left, right;
+  var joinedPairs = [],
+    left,
+    right;
 
-  for(var i=0, l=pairs.length; i<l; i++) {
+  for (var i = 0, l = pairs.length; i < l; i++) {
     left = pairs[i][0];
     right = this.accept(pairs[i][1]);
-    joinedPairs.push( left + "=" + right );
+    joinedPairs.push(left + "=" + right);
   }
 
   return "HASH{" + joinedPairs.join(", ") + "}";
 };
 
-PrintVisitor.prototype.STRING = function(string) {
+PrintVisitor.prototype.STRING = function (string) {
   return '"' + string.string + '"';
 };
 
-PrintVisitor.prototype.NUMBER = function(number) {
+PrintVisitor.prototype.NUMBER = function (number) {
   return "NUMBER{" + number.number + "}";
 };
 
-PrintVisitor.prototype.BOOLEAN = function(bool) {
+PrintVisitor.prototype.BOOLEAN = function (bool) {
   return "BOOLEAN{" + bool.bool + "}";
 };
 
-PrintVisitor.prototype.ID = function(id) {
+PrintVisitor.prototype.ID = function (id) {
   var path = id.parts.join("/");
-  if(id.parts.length > 1) {
+  if (id.parts.length > 1) {
     return "PATH:" + path;
   } else {
     return "ID:" + path;
   }
 };
 
-PrintVisitor.prototype.PARTIAL_NAME = function(partialName) {
-    return "PARTIAL:" + partialName.name;
+PrintVisitor.prototype.PARTIAL_NAME = function (partialName) {
+  return "PARTIAL:" + partialName.name;
 };
 
-PrintVisitor.prototype.DATA = function(data) {
+PrintVisitor.prototype.DATA = function (data) {
   return "@" + this.accept(data.id);
 };
 
-PrintVisitor.prototype.content = function(content) {
+PrintVisitor.prototype.content = function (content) {
   return this.pad("CONTENT[ '" + content.string + "' ]");
 };
 
-PrintVisitor.prototype.comment = function(comment) {
+PrintVisitor.prototype.comment = function (comment) {
   return this.pad("{{! '" + comment.comment + "' }}");
 };
-

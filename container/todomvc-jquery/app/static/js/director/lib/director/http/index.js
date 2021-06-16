@@ -1,13 +1,13 @@
-var events = require('events'),
-    qs = require('querystring'),
-    util = require('util'),
-    BaseRouter = require('../router').Router,
-    responses = require('./responses');
+var events = require("events"),
+  qs = require("querystring"),
+  util = require("util"),
+  BaseRouter = require("../router").Router,
+  responses = require("./responses");
 
 //
 // ### Expose all HTTP methods and responses
 //
-exports.methods   = require('./methods');
+exports.methods = require("./methods");
 Object.keys(responses).forEach(function (name) {
   exports[name] = responses[name];
 });
@@ -18,22 +18,22 @@ Object.keys(responses).forEach(function (name) {
 // Constuctor function for the HTTP Router object responsible for building
 // and dispatching from a given routing table.
 //
-var Router = exports.Router = function (routes) {
+var Router = (exports.Router = function (routes) {
   //
   // ### Extend the `Router` prototype with all of the RFC methods.
   //
-  this.params   = {};
-  this.routes   = {};
-  this.methods  = ['on', 'after', 'before'];
-  this.scope    = [];
+  this.params = {};
+  this.routes = {};
+  this.methods = ["on", "after", "before"];
+  this.scope = [];
   this._methods = {};
-  this.recurse = 'forward';
+  this.recurse = "forward";
   this._attach = [];
 
-  this.extend(exports.methods.concat(['before', 'after']));
+  this.extend(exports.methods.concat(["before", "after"]));
   this.configure();
   this.mount(routes || {});
-};
+});
 
 //
 // Inherit from `BaseRouter`.
@@ -64,9 +64,9 @@ Router.prototype.configure = function (options) {
 //
 Router.prototype.on = function (method, path) {
   var args = Array.prototype.slice.call(arguments, 2),
-      route = args.pop(),
-      options = args.pop(),
-      accept;
+    route = args.pop(),
+    options = args.pop(),
+    accept;
 
   if (options) {
     if (options.stream) {
@@ -76,14 +76,16 @@ Router.prototype.on = function (method, path) {
     if (options.accept) {
       this._hasAccepts = true;
       accept = options.accept;
-      route.accept = (Array.isArray(accept) ? accept : [accept]).map(function (a) {
-        return typeof a === 'string' ? RegExp(a) : a;
+      route.accept = (Array.isArray(accept) ? accept : [accept]).map(function (
+        a
+      ) {
+        return typeof a === "string" ? RegExp(a) : a;
       });
     }
   }
 
-  if (typeof path !== 'string' && !path.source) {
-    path = '';
+  if (typeof path !== "string" && !path.source) {
+    path = "";
   }
 
   BaseRouter.prototype.on.call(this, method, path, route);
@@ -111,32 +113,37 @@ Router.prototype.dispatch = function (req, res, callback) {
   //
   // Dispatch `HEAD` requests to `GET`
   //
-  var method = req.method === 'HEAD' ? 'get' : req.method.toLowerCase(),
-      thisArg = { req: req, res: res },
-      self = this,
-      contentType,
-      runlist,
-      stream,
-      error,
-      fns,
-      url;
+  var method = req.method === "HEAD" ? "get" : req.method.toLowerCase(),
+    thisArg = { req: req, res: res },
+    self = this,
+    contentType,
+    runlist,
+    stream,
+    error,
+    fns,
+    url;
 
   //
   // Trap bad URLs from `decodeUri`
   //
-  try { url = decodeURI(req.url.split('?', 1)[0]); }
-  catch (ex) { url = null }
+  try {
+    url = decodeURI(req.url.split("?", 1)[0]);
+  } catch (ex) {
+    url = null;
+  }
 
   if (url && this._hasAccepts) {
-    contentType = req.headers['content-type'];
-    fns = this.traverse(method, url, this.routes, '', function (route) {
-      return !route.accept || route.accept.some(function (a) {
-        return a.test(contentType);
-      });
+    contentType = req.headers["content-type"];
+    fns = this.traverse(method, url, this.routes, "", function (route) {
+      return (
+        !route.accept ||
+        route.accept.some(function (a) {
+          return a.test(contentType);
+        })
+      );
     });
-  }
-  else if (url) {
-    fns = this.traverse(method, url, this.routes, '');
+  } else if (url) {
+    fns = this.traverse(method, url, this.routes, "");
   }
 
   if (this._attach) {
@@ -146,22 +153,25 @@ Router.prototype.dispatch = function (req, res, callback) {
   }
 
   if (!fns || fns.length === 0) {
-    error = new exports.NotFound('Could not find path: ' + req.url);
-    if (typeof this.notfound === 'function') {
+    error = new exports.NotFound("Could not find path: " + req.url);
+    if (typeof this.notfound === "function") {
       this.notfound.call(thisArg, callback);
-    }
-    else if (callback) {
+    } else if (callback) {
       callback.call(thisArg, error, req, res);
     }
     return false;
   }
 
-  if (this.recurse === 'forward') {
+  if (this.recurse === "forward") {
     fns = fns.reverse();
   }
 
   runlist = this.runlist(fns);
-  stream  = this.stream || runlist.some(function (fn) { return fn.stream === true; });
+  stream =
+    this.stream ||
+    runlist.some(function (fn) {
+      return fn.stream === true;
+    });
 
   function parseAndInvoke() {
     error = self.parse(req);
@@ -186,19 +196,17 @@ Router.prototype.dispatch = function (req, res, callback) {
       // If the `http.ServerRequest` is still readable, then await
       // the end event and then continue
       //
-      req.once('end', parseAndInvoke);
+      req.once("end", parseAndInvoke);
       // Streams2 requires us to start the stream if we're not explicitly
       // reading from it.
       req.resume();
-    }
-    else {
+    } else {
       //
       // Otherwise, just parse the body now.
       //
       parseAndInvoke();
     }
-  }
-  else {
+  } else {
     this.invoke(runlist, thisArg, callback);
   }
 
@@ -211,8 +219,8 @@ Router.prototype.dispatch = function (req, res, callback) {
 // parse incoming responses.
 //
 Router.prototype.parsers = {
-  'application/x-www-form-urlencoded': qs.parse,
-  'application/json': JSON.parse
+  "application/x-www-form-urlencoded": qs.parse,
+  "application/json": JSON.parse,
 };
 
 //
@@ -222,15 +230,15 @@ Router.prototype.parsers = {
 //
 Router.prototype.parse = function (req) {
   function mime(req) {
-    var str = req.headers['content-type'] || '';
-    return str.split(';')[0];
+    var str = req.headers["content-type"] || "";
+    return str.split(";")[0];
   }
 
   var parser = this.parsers[mime(req)],
-      body;
+    body;
 
   if (parser) {
-    req.body = req.body || '';
+    req.body = req.body || "";
 
     if (req.chunks) {
       req.chunks.forEach(function (chunk) {
@@ -238,16 +246,12 @@ Router.prototype.parse = function (req) {
       });
     }
 
-    if ('string' === typeof req.body) {
+    if ("string" === typeof req.body) {
       try {
-        req.body = req.body && req.body.length
-          ? parser(req.body)
-          : {};
-      }
-      catch (err) {
-        return new exports.BadRequest('Malformed data');
+        req.body = req.body && req.body.length ? parser(req.body) : {};
+      } catch (err) {
+        return new exports.BadRequest("Malformed data");
       }
     }
   }
 };
-

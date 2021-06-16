@@ -1,13 +1,14 @@
 # Setting up nginx with SSL certificates
 
-* Install nginx
+- Install nginx
+
 ```shell
 $ sudo apt-get install nginx
 ```
 
-* Configure nginx to proxy pass to your gunicorn webserver. The gunicorn server
-  is listening on port 8000. Modify the ``/etc/nginx/sites-enabled/default``
-file to have the following:
+- Configure nginx to proxy pass to your gunicorn webserver. The gunicorn server
+  is listening on port 8000. Modify the `/etc/nginx/sites-enabled/default`
+  file to have the following:
 
 ```nginx
 server {
@@ -30,10 +31,10 @@ server {
   }
 ```
 
-* Then obtain your SSL certificates, and put the certificate and the
-  certificate key inside the ``/etc/nginx``. Modify the nginx conf to look like
-the following. Below we have called it ``cert.crt`` and ``cert.key``. Update
-these with the actual filenames you are using.
+- Then obtain your SSL certificates, and put the certificate and the
+  certificate key inside the `/etc/nginx`. Modify the nginx conf to look like
+  the following. Below we have called it `cert.crt` and `cert.key`. Update
+  these with the actual filenames you are using.
 
 ```nginx
 server {

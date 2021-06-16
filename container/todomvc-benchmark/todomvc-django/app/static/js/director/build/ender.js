@@ -1,3 +1,3 @@
 $.ender({
-  router: Router
+  router: Router,
 });
