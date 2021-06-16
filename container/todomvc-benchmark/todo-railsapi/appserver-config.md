@@ -1,6 +1,6 @@
 # Setting up Rails with Puma
 
-*Rails 5 comes with Puma (production-grade) in-built*
+_Rails 5 comes with Puma (production-grade) in-built_
 
 ```shell
 $ cd /app #change to the app folder

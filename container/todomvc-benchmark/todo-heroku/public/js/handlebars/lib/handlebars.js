@@ -8,10 +8,10 @@ import { Compiler, compile, precompile } from "./handlebars/compiler/compiler";
 import JavaScriptCompiler from "./handlebars/compiler/javascript-compiler";
 
 var _create = Handlebars.create;
-var create = function() {
+var create = function () {
   var hb = _create();
 
-  hb.compile = function(input, options) {
+  hb.compile = function (input, options) {
     return compile(input, options, hb);
   };
   hb.precompile = function (input, options) {
@@ -30,6 +30,6 @@ var create = function() {
 Handlebars = create();
 Handlebars.create = create;
 
-Handlebars['default'] = Handlebars;
+Handlebars["default"] = Handlebars;
 
 export default Handlebars;
