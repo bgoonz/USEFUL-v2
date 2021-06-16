@@ -3,7 +3,6 @@ title: Advanced usage
 anchor: advanced-usage
 ---
 
-
 ### Prototype Methods
 
 For each chart, there are a set of global prototype methods on the shared `ChartType` which you may find useful. These are available on all charts created with Chart.js, but for the examples, let's use a line chart we've made.
@@ -116,7 +115,7 @@ Looks for the element under the event point, then returns all elements at the sa
 Calling `getElementsAtEvent(event)` on your Chart instance passing an argument of an event, or jQuery event, will return the point elements that are at that the same position of that event.
 
 ```javascript
-canvas.onclick = function(evt){
+canvas.onclick = function (evt) {
 	var activePoints = myLineChart.getElementsAtEvent(evt);
 	// => activePoints is an array of points on the canvas that are at the same position as the click event.
 };
@@ -143,7 +142,7 @@ Extensive examples of usage are available in the [Chart.js tests](https://github
 
 ```javascript
 var meta = myChart.getDatasetMeta(0);
-var x = meta.data[0]._model.x
+var x = meta.data[0]._model.x;
 ```
 
 ### External Tooltips
@@ -152,11 +151,11 @@ You can enable custom tooltips in the global or chart configuration like so:
 
 ```javascript
 var myPieChart = new Chart(ctx, {
-	type: 'pie',
+	type: "pie",
 	data: data,
 	options: {
 		tooltips: {
-			custom: function(tooltip) {
+			custom: function (tooltip) {
 				// tooltip will be false if tooltip is not visible or should be hidden
 				if (!tooltip) {
 					return;
@@ -176,9 +175,9 @@ var myPieChart = new Chart(ctx, {
 				// tooltip.caretX
 				// tooltip.caretY
 				// etc...
-			}
-		}
-	}
+			},
+		},
+	},
 });
 ```
 
@@ -199,7 +198,7 @@ var MyScale = Chart.Scale.extend({
 Once you have created your scale class, you need to register it with the global chart object so that it can be used. A default config for the scale may be provided when registering the constructor. The first parameter to the register function is a string key that is used later to identify which scale type to use for a chart.
 
 ```javascript
-Chart.scaleService.registerScaleType('myScale', MyScale, defaultConfigObject);
+Chart.scaleService.registerScaleType("myScale", MyScale, defaultConfigObject);
 ```
 
 To use the new scale, simply pass in the string key to the config when creating a chart.
@@ -207,15 +206,17 @@ To use the new scale, simply pass in the string key to the config when creating 
 ```javascript
 var lineChart = new Chart(ctx, {
 	data: data,
-	type: 'line',
+	type: "line",
 	options: {
 		scales: {
-			yAxes: [{
-				type: 'myScale' // this is the same key that was passed to the registerScaleType function
-			}]
-		}
-	}
-})
+			yAxes: [
+				{
+					type: "myScale", // this is the same key that was passed to the registerScaleType function
+				},
+			],
+		},
+	},
+});
 ```
 
 #### Scale Properties
@@ -248,6 +249,7 @@ Scale instances are given the following properties during the fitting process.
 ```
 
 #### Scale Interface
+
 To work with Chart.js, custom scale types must implement the following interface.
 
 ```javascript
@@ -302,6 +304,7 @@ Optionally, the following methods may also be overwritten, but an implementation
 ```
 
 The Core.Scale base class also has some utility functions that you may find useful.
+
 ```javascript
 {
 	// Returns true if the scale instance is horizontal
@@ -321,17 +324,14 @@ The Core.Scale base class also has some utility functions that you may find usef
 Chart.js 2.0 introduces the concept of controllers for each dataset. Like scales, new controllers can be written as needed.
 
 ```javascript
-Chart.controllers.MyType = Chart.DatasetController.extend({
-
-});
-
+Chart.controllers.MyType = Chart.DatasetController.extend({});
 
 // Now we can create a new instance of our chart, using the Chart.js API
 new Chart(ctx, {
 	// this is the string the constructor was registered at, ie Chart.controllers.MyType
-	type: 'MyType',
+	type: "MyType",
 	data: data,
-	options: options
+	options: options,
 });
 ```
 
@@ -364,6 +364,7 @@ Dataset controllers must implement the following interface.
 ```
 
 The following methods may optionally be overridden by derived dataset controllers
+
 ```javascript
 {
 	// Initializes the controller
@@ -383,36 +384,40 @@ The following methods may optionally be overridden by derived dataset controller
 Extending or replacing an existing controller type is easy. Simply replace the constructor for one of the built in types with your own.
 
 The built in controller types are:
-* `Chart.controllers.line`
-* `Chart.controllers.bar`
-* `Chart.controllers.radar`
-* `Chart.controllers.doughnut`
-* `Chart.controllers.polarArea`
-* `Chart.controllers.bubble`
+
+-   `Chart.controllers.line`
+-   `Chart.controllers.bar`
+-   `Chart.controllers.radar`
+-   `Chart.controllers.doughnut`
+-   `Chart.controllers.polarArea`
+-   `Chart.controllers.bubble`
 
 #### Bar Controller
+
 The bar controller has a special property that you should be aware of. To correctly calculate the width of a bar, the controller must determine the number of datasets that map to bars. To do this, the bar controller attaches a property `bar` to the dataset during initialization. If you are creating a replacement or updated bar controller, you should do the same. This will ensure that charts with regular bars and your new derived bars will work seamlessly.
 
 ### Creating Plugins
 
 Starting with v2.1.0, you can create plugins for chart.js. To register your plugin, simply call `Chart.plugins.register` and pass your plugin in.
 Plugins will be called at the following times
-* Start of initialization
-* End of initialization
-* Start of update
-* After the chart scales have calculated
-* Start of datasets update
-* End of datasets update
-* End of update (before render occurs)
-* Start of draw
-* End of draw
-* Before datasets draw
-* After datasets draw
-* Resize
-* Before an animation is started
-* When an event occurs on the canvas (mousemove, click, etc). This requires the `options.events` property handled
+
+-   Start of initialization
+-   End of initialization
+-   Start of update
+-   After the chart scales have calculated
+-   Start of datasets update
+-   End of datasets update
+-   End of update (before render occurs)
+-   Start of draw
+-   End of draw
+-   Before datasets draw
+-   After datasets draw
+-   Resize
+-   Before an animation is started
+-   When an event occurs on the canvas (mousemove, click, etc). This requires the `options.events` property handled
 
 Plugins should implement the `IPlugin` interface:
+
 ```javascript
 {
 	beforeInit: function(chartInstance) { },

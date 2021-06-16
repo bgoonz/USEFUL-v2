@@ -1,19 +1,18 @@
-import defaultState from './State';
+import defaultState from "./State";
 
-const SUBMIT = 'EnterName/onSubmit';
+const SUBMIT = "EnterName/onSubmit";
 
-const onNameSubmit = (input) => ({type: SUBMIT, name: input});
+const onNameSubmit = (input) => ({ type: SUBMIT, name: input });
 
 const enternameReducer = (state = defaultState, action) => {
   switch (action.type) {
-
     case SUBMIT:
-      return {...state, name: action.name};
+      return { ...state, name: action.name };
 
     default:
-      return {...state};
+      return { ...state };
   }
 };
 
 export default enternameReducer;
-export {onNameSubmit};
+export { onNameSubmit };

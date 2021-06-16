@@ -1,10 +1,10 @@
 // Test the rectangle element
 
-describe('Rectangle element tests', function() {
-	it ('Should be constructed', function() {
+describe("Rectangle element tests", function () {
+	it("Should be constructed", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		expect(rectangle).not.toBe(undefined);
@@ -12,10 +12,10 @@ describe('Rectangle element tests', function() {
 		expect(rectangle._index).toBe(1);
 	});
 
-	it ('Should correctly identify as in range', function() {
+	it("Should correctly identify as in range", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Safely handles if these are called before the viewmodel is instantiated
@@ -27,7 +27,7 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: 15
+			y: 15,
 		};
 
 		expect(rectangle.inRange(10, 15)).toBe(true);
@@ -45,7 +45,7 @@ describe('Rectangle element tests', function() {
 		// Test when the y is below the base (negative bar)
 		var negativeRectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -53,7 +53,7 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: -15
+			y: -15,
 		};
 
 		expect(negativeRectangle.inRange(10, -16)).toBe(false);
@@ -61,10 +61,10 @@ describe('Rectangle element tests', function() {
 		expect(negativeRectangle.inRange(10, -5)).toBe(true);
 	});
 
-	it ('should get the correct height', function() {
+	it("should get the correct height", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -72,7 +72,7 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: 15
+			y: 15,
 		};
 
 		expect(rectangle.height()).toBe(-15);
@@ -80,7 +80,7 @@ describe('Rectangle element tests', function() {
 		// Test when the y is below the base (negative bar)
 		var negativeRectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -88,15 +88,15 @@ describe('Rectangle element tests', function() {
 			base: -10,
 			width: 4,
 			x: 10,
-			y: -15
+			y: -15,
 		};
 		expect(negativeRectangle.height()).toBe(5);
 	});
 
-	it ('should get the correct tooltip position', function() {
+	it("should get the correct tooltip position", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -104,7 +104,7 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: 15
+			y: 15,
 		};
 
 		expect(rectangle.tooltipPosition()).toEqual({
@@ -115,7 +115,7 @@ describe('Rectangle element tests', function() {
 		// Test when the y is below the base (negative bar)
 		var negativeRectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -123,7 +123,7 @@ describe('Rectangle element tests', function() {
 			base: -10,
 			width: 4,
 			x: 10,
-			y: -15
+			y: -15,
 		};
 
 		expect(negativeRectangle.tooltipPosition()).toEqual({
@@ -132,10 +132,10 @@ describe('Rectangle element tests', function() {
 		});
 	});
 
-	it ('should get the correct area', function() {
+	it("should get the correct area", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -143,16 +143,16 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: 15
+			y: 15,
 		};
 
 		expect(rectangle.getArea()).toEqual(60);
 	});
 
-	it ('should get the center', function() {
+	it("should get the center", function () {
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Attach a view object as if we were the controller
@@ -160,27 +160,27 @@ describe('Rectangle element tests', function() {
 			base: 0,
 			width: 4,
 			x: 10,
-			y: 15
+			y: 15,
 		};
 
-		expect(rectangle.getCenterPoint()).toEqual({x: 10, y: 7.5});
+		expect(rectangle.getCenterPoint()).toEqual({ x: 10, y: 7.5 });
 	});
 
-	it ('should draw correctly', function() {
+	it("should draw correctly", function () {
 		var mockContext = window.createMockContext();
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
 			_index: 1,
 			_chart: {
 				ctx: mockContext,
-			}
+			},
 		});
 
 		// Attach a view object as if we were the controller
 		rectangle._view = {
-			backgroundColor: 'rgb(255, 0, 0)',
+			backgroundColor: "rgb(255, 0, 0)",
 			base: 0,
-			borderColor: 'rgb(0, 0, 255)',
+			borderColor: "rgb(0, 0, 255)",
 			borderWidth: 1,
 			ctx: mockContext,
 			width: 4,
@@ -190,54 +190,65 @@ describe('Rectangle element tests', function() {
 
 		rectangle.draw();
 
-		expect(mockContext.getCalls()).toEqual([{
-			name: 'beginPath',
-			args: [],
-		}, {
-			name: 'setFillStyle',
-			args: ['rgb(255, 0, 0)']
-		}, {
-			name: 'setStrokeStyle',
-			args: ['rgb(0, 0, 255)'],
-		}, {
-			name: 'setLineWidth',
-			args: [1]
-		}, {
-			name: 'moveTo',
-			args: [8.5, 0]
-		}, {
-			name: 'lineTo',
-			args: [8.5, 14.5] // This is a minus bar. Not 15.5
-		}, {
-			name: 'lineTo',
-			args: [11.5, 14.5]
-		}, {
-			name: 'lineTo',
-			args: [11.5, 0]
-		}, {
-			name: 'fill',
-			args: [],
-		}, {
-			name: 'stroke',
-			args: []
-		}]);
+		expect(mockContext.getCalls()).toEqual([
+			{
+				name: "beginPath",
+				args: [],
+			},
+			{
+				name: "setFillStyle",
+				args: ["rgb(255, 0, 0)"],
+			},
+			{
+				name: "setStrokeStyle",
+				args: ["rgb(0, 0, 255)"],
+			},
+			{
+				name: "setLineWidth",
+				args: [1],
+			},
+			{
+				name: "moveTo",
+				args: [8.5, 0],
+			},
+			{
+				name: "lineTo",
+				args: [8.5, 14.5], // This is a minus bar. Not 15.5
+			},
+			{
+				name: "lineTo",
+				args: [11.5, 14.5],
+			},
+			{
+				name: "lineTo",
+				args: [11.5, 0],
+			},
+			{
+				name: "fill",
+				args: [],
+			},
+			{
+				name: "stroke",
+				args: [],
+			},
+		]);
 	});
 
-	it ('should draw correctly with no stroke', function() {
+	it("should draw correctly with no stroke", function () {
 		var mockContext = window.createMockContext();
 		var rectangle = new Chart.elements.Rectangle({
 			_datasetIndex: 2,
 			_index: 1,
 			_chart: {
 				ctx: mockContext,
-			}
+			},
 		});
 
 		// Attach a view object as if we were the controller
 		rectangle._view = {
-			backgroundColor: 'rgb(255, 0, 0)',
+			backgroundColor: "rgb(255, 0, 0)",
 			base: 0,
-			borderColor: 'rgb(0, 0, 255)',
+			borderColor: "rgb(0, 0, 255)",
 			ctx: mockContext,
 			width: 4,
 			x: 10,
@@ -246,40 +257,50 @@ describe('Rectangle element tests', function() {
 
 		rectangle.draw();
 
-		expect(mockContext.getCalls()).toEqual([{
-			name: 'beginPath',
-			args: [],
-		}, {
-			name: 'setFillStyle',
-			args: ['rgb(255, 0, 0)']
-		}, {
-			name: 'setStrokeStyle',
-			args: ['rgb(0, 0, 255)'],
-		}, {
-			name: 'setLineWidth',
-			args: [undefined]
-		}, {
-			name: 'moveTo',
-			args: [8, 0]
-		}, {
-			name: 'lineTo',
-			args: [8, 15]
-		}, {
-			name: 'lineTo',
-			args: [12, 15]
-		}, {
-			name: 'lineTo',
-			args: [12, 0]
-		}, {
-			name: 'fill',
-			args: [],
-		}]);
+		expect(mockContext.getCalls()).toEqual([
+			{
+				name: "beginPath",
+				args: [],
+			},
+			{
+				name: "setFillStyle",
+				args: ["rgb(255, 0, 0)"],
+			},
+			{
+				name: "setStrokeStyle",
+				args: ["rgb(0, 0, 255)"],
+			},
+			{
+				name: "setLineWidth",
+				args: [undefined],
+			},
+			{
+				name: "moveTo",
+				args: [8, 0],
+			},
+			{
+				name: "lineTo",
+				args: [8, 15],
+			},
+			{
+				name: "lineTo",
+				args: [12, 15],
+			},
+			{
+				name: "lineTo",
+				args: [12, 0],
+			},
+			{
+				name: "fill",
+				args: [],
+			},
+		]);
 	});
 
 	function testBorderSkipped(borderSkipped, expectedDrawCalls) {
 		var mockContext = window.createMockContext();
 		var rectangle = new Chart.elements.Rectangle({
-			_chart: {ctx: mockContext}
+			_chart: { ctx: mockContext },
 		});
 
 		// Attach a view object as if we were the controller
@@ -298,40 +319,39 @@ describe('Rectangle element tests', function() {
 		expect(drawCalls).toEqual(expectedDrawCalls);
 	}
 
-	it ('should draw correctly respecting "borderSkipped" == "bottom"', function() {
-		testBorderSkipped ('bottom', [
-			{name: 'moveTo', args: [8, 0]},
-			{name: 'lineTo', args: [8, 15]},
-			{name: 'lineTo', args: [12, 15]},
-			{name: 'lineTo', args: [12, 0]},
+	it('should draw correctly respecting "borderSkipped" == "bottom"', function () {
+		testBorderSkipped("bottom", [
+			{ name: "moveTo", args: [8, 0] },
+			{ name: "lineTo", args: [8, 15] },
+			{ name: "lineTo", args: [12, 15] },
+			{ name: "lineTo", args: [12, 0] },
 		]);
 	});
 
-	it ('should draw correctly respecting "borderSkipped" == "left"', function() {
-		testBorderSkipped ('left', [
-			{name: 'moveTo', args: [8, 15]},
-			{name: 'lineTo', args: [12, 15]},
-			{name: 'lineTo', args: [12, 0]},
-			{name: 'lineTo', args: [8, 0]},
+	it('should draw correctly respecting "borderSkipped" == "left"', function () {
+		testBorderSkipped("left", [
+			{ name: "moveTo", args: [8, 15] },
+			{ name: "lineTo", args: [12, 15] },
+			{ name: "lineTo", args: [12, 0] },
+			{ name: "lineTo", args: [8, 0] },
 		]);
 	});
 
-	it ('should draw correctly respecting "borderSkipped" == "top"', function() {
-		testBorderSkipped ('top', [
-			{name: 'moveTo', args: [12, 15]},
-			{name: 'lineTo', args: [12, 0]},
-			{name: 'lineTo', args: [8, 0]},
-			{name: 'lineTo', args: [8, 15]},
+	it('should draw correctly respecting "borderSkipped" == "top"', function () {
+		testBorderSkipped("top", [
+			{ name: "moveTo", args: [12, 15] },
+			{ name: "lineTo", args: [12, 0] },
+			{ name: "lineTo", args: [8, 0] },
+			{ name: "lineTo", args: [8, 15] },
 		]);
 	});
 
-	it ('should draw correctly respecting "borderSkipped" == "right"', function() {
-		testBorderSkipped ('right', [
-			{name: 'moveTo', args: [12, 0]},
-			{name: 'lineTo', args: [8, 0]},
-			{name: 'lineTo', args: [8, 15]},
-			{name: 'lineTo', args: [12, 15]},
+	it('should draw correctly respecting "borderSkipped" == "right"', function () {
+		testBorderSkipped("right", [
+			{ name: "moveTo", args: [12, 0] },
+			{ name: "lineTo", args: [8, 0] },
+			{ name: "lineTo", args: [8, 15] },
+			{ name: "lineTo", args: [12, 15] },
 		]);
 	});
-
 });

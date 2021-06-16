@@ -1,5 +1,5 @@
 const state = {
-  questions: []
+  questions: [],
 };
 
 export default state;

@@ -6,11 +6,11 @@ environment:
 init:
   - git config --global core.autocrlf true
 install:
-- cmd: >-
-    echo %Path%
+  - cmd: >-
+      echo %Path%
 
-    go version
+      go version
 
-    go env
+      go env
 build_script:
-- cmd: go test -v ./...
+  - cmd: go test -v ./...

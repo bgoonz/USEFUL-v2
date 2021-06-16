@@ -1,16 +1,12 @@
-Android SDK
-===========
+# Android SDK
 
 The Android SDK for Hasura.
 
-NOTE
-====
+# NOTE
 
 ### This sdk works with Hasura running on version below 0.15.
 
-
-Installation
-------------
+## Installation
 
 ### Step 1 : Download the Hasura Android SDK
 
@@ -70,6 +66,7 @@ ProjectConfig config = new ProjectConfig.Builder()
                  .setProjectName("projectName") // or it can be .setCustomBaseDomain("myCustomDomain.com")
                  .build()
 ```
+
 Other methods available are :
 
 - .enableOverHttp() // if included, then every network call is made over http (https is default)
@@ -84,10 +81,9 @@ Hasura.setProjectConfig(config)
   .initialise(this);
 ```
 
-***Note***: Initialisation **MUST** be done before you use the SDK.The best place to initialise Hasura would be in your `application` class or in your Launcher Activity.
+**_Note_**: Initialisation **MUST** be done before you use the SDK.The best place to initialise Hasura would be in your `application` class or in your Launcher Activity.
 
-Hasura Client
--------------
+## Hasura Client
 
 The `HasuraClient` object is the most functional feature of the SDK. It is built using the project config specified on initialisation.
 You can get an instance of the client only from Hasura, like so :
@@ -129,7 +125,7 @@ user.signUp(new SignUpResponseListener() {
         });
 ```
 
-***Note***: All network calls are called on a non ui thread and all the callbacks are pushed into the ui thread.
+**_Note_**: All network calls are called on a non ui thread and all the callbacks are pushed into the ui thread.
 
 #### Login
 
@@ -148,7 +144,7 @@ user.login(new AuthResponseListener() {
                 //Handle Error
             }
         });
-```    
+```
 
 #### LoggedIn User
 
@@ -203,10 +199,11 @@ client.useDataService()
 ```
 
 In the above method, there are a few things to be noted :
+
 - `.setRequestBody()`: This is an overloaded method which accepts either an object of type `JsonObject` or a POJO (ensure that the JSON representation of this object is correct)
 - `.expectResponseType()`: Specify the POJO representation of the expected response.
 
-***Note***: In case you are expecting an array response, use `.expectResponseTypeArrayOf()`. *All SELECT queries to the data service will return an array response.*
+**_Note_**: In case you are expecting an array response, use `.expectResponseTypeArrayOf()`. _All SELECT queries to the data service will return an array response._
 
 ```
 If the HasuraUser in the HasuraClient is loggedin/signedup then every call made by the HasuraClient will be
@@ -253,7 +250,7 @@ client.asRole("customRole") //throws an error if the current user does not have 
                 });
 ```
 
-***Note***: This role will be sent JUST for this query and ***will not*** become the default role.
+**_Note_**: This role will be sent JUST for this query and **_will not_** become the default role.
 
 ### Query Template Service
 
@@ -276,7 +273,6 @@ client.useQueryTemplateService("templateName")
                 });
 ```
 
-
 ### Filestore Service
 
 Hasura provides a filestore service, which can be used to upload and download files. To use the Filestore service properly, kindly take a look at the docs [here](https://docs.hasura.io/0.13/ref/hasura-microservices/filestore/index.html).
@@ -288,7 +284,7 @@ The upload file method accepts the following:
 - either a `File` object or a `byte` array (byte[]) which is to be uploaded.
 - a `mimetype` of the file.
 - `FileUploadResponseListener` which is an interface that handles the response.
-- FileId (optional): Every uploaded file has an unique Id associated with it. You can optionally specify this fileId on     the `uploadFile` method. In case it is not, the SDK automatically assigns a unique Id for the file.
+- FileId (optional): Every uploaded file has an unique Id associated with it. You can optionally specify this fileId on the `uploadFile` method. In case it is not, the SDK automatically assigns a unique Id for the file.
 
 ```java
 client.useFileStoreService()
@@ -306,6 +302,7 @@ client.useFileStoreService()
 ```
 
 `FileUploadResponse` object in the above response contains the following:
+
 - file_id: The uniqiue Id of the file that was uploaded.
 - user_id: The id of the user who uploaded the file.
 - created_at : The time string for when this file was uploaded/created.
@@ -366,7 +363,6 @@ Add the dependency
 </dependency>
 ```
 
-
 ##### Step2: Build your custom service (before Hasura Init)
 
 ```java
@@ -399,12 +395,10 @@ MyCustomService cs = client.useCustomService(MyCustomInterface.class);
 
 `RetrofitCallbackHandler` is a helper class which you can use to handle the responses from your custom APIs and parse errors.
 
-EXAMPLES
---------
+## EXAMPLES
 
 Check our [this](https://github.com/hasura/Modules-Android) for sample apps built using the SDK.
 
-ISSUES
-------
+## ISSUES
 
 In case of bugs, please raise an issue [here](https://github.com/hasura/support)

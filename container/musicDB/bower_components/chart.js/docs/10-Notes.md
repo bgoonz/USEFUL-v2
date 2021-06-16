@@ -2,6 +2,7 @@
 title: Notes
 anchor: notes
 ---
+
 ### Previous versions
 
 Version 2 has a completely different API than earlier versions.
@@ -12,7 +13,7 @@ Please use the documentation that is available on [chartjs.org](http://www.chart
 
 Please note - documentation for previous versions are available on the GitHub repo.
 
-- [1.x Documentation](https://github.com/chartjs/Chart.js/tree/v1.1.1/docs)
+-   [1.x Documentation](https://github.com/chartjs/Chart.js/tree/v1.1.1/docs)
 
 ### Browser support
 
@@ -22,22 +23,20 @@ Browser support for the canvas element is available in all modern & major mobile
 
 Thanks to <a href="https://browserstack.com" target="_blank">BrowserStack</a> for allowing our team to test on thousands of browsers.
 
-
 ### Bugs & issues
 
 Please report these on the GitHub page - at <a href="https://github.com/chartjs/Chart.js" target="_blank">github.com/chartjs/Chart.js</a>. If you could include a link to a simple <a href="http://jsbin.com/" target="_blank">jsbin</a> or similar to demonstrate the issue, that'd be really helpful.
-
 
 ### Contributing
 
 New contributions to the library are welcome, but we ask that you please follow these guidelines:
 
-- Use tabs for indentation, not spaces.
-- Only change the individual files in `/src`.
-- Check that your code will pass `eslint` code standards, `gulp lint` will run this for you.
-- Check that your code will pass tests, `gulp test` will run tests for you.
-- Keep pull requests concise, and document new functionality in the relevant `.md` file.
-- Consider whether your changes are useful for all users, or if creating a Chart.js plugin would be more appropriate.
+-   Use tabs for indentation, not spaces.
+-   Only change the individual files in `/src`.
+-   Check that your code will pass `eslint` code standards, `gulp lint` will run this for you.
+-   Check that your code will pass tests, `gulp test` will run tests for you.
+-   Keep pull requests concise, and document new functionality in the relevant `.md` file.
+-   Consider whether your changes are useful for all users, or if creating a Chart.js plugin would be more appropriate.
 
 ### License
 
@@ -47,69 +46,75 @@ Chart.js is <a href="https://github.com/chartjs/Chart.js" target="_blank">open s
 
 Library Features
 
-| Feature | Chart.js | D3 | HighCharts | Chartist |
-| ------- | -------- | --- | ---------- | -------- |
-| Completely Free | &check; | &check; | | &check; |
-| Canvas | &check; | | | |
-| SVG | | &check; | &check; | &check; |
-| Built-in Charts | &check; | | &check; | &check; |
-| 8+ Chart Types | &check; | &check; | &check; | |
-| Extendable to Custom Charts | &check; | &check; | |  |
-| Supports Modern Browsers | &check; | &check; | &check; | &check; |
-| Extensive Documentation | &check; | &check; | &check; | &check; |
-| Open Source | &check; | &check; | &check; | &check; |
+| Feature                     | Chart.js | D3      | HighCharts | Chartist |
+| --------------------------- | -------- | ------- | ---------- | -------- |
+| Completely Free             | &check;  | &check; |            | &check;  |
+| Canvas                      | &check;  |         |            |          |
+| SVG                         |          | &check; | &check;    | &check;  |
+| Built-in Charts             | &check;  |         | &check;    | &check;  |
+| 8+ Chart Types              | &check;  | &check; | &check;    |          |
+| Extendable to Custom Charts | &check;  | &check; |            |          |
+| Supports Modern Browsers    | &check;  | &check; | &check;    | &check;  |
+| Extensive Documentation     | &check;  | &check; | &check;    | &check;  |
+| Open Source                 | &check;  | &check; | &check;    | &check;  |
 
 Built in Chart Types
 
-| Type | Chart.js | HighCharts | Chartist |
-| ---- | -------- | ---------- | -------- |
-| Combined Types | &check; | &check; | |
-| Line | &check; | &check; | &check; |
-| Bar | &check; | &check; | &check; |
-| Horizontal Bar | &check; | &check; | &check; |
-| Pie/Doughnut | &check; | &check; | &check; |
-| Polar Area | &check; | &check; | |
-| Radar | &check; |  | |
-| Scatter | &check; | &check; | &check; |
-| Bubble | &check; | | |
-| Gauges | | &check; | |
-| Maps (Heat/Tree/etc.) | | &check; | |
+| Type                  | Chart.js | HighCharts | Chartist |
+| --------------------- | -------- | ---------- | -------- |
+| Combined Types        | &check;  | &check;    |          |
+| Line                  | &check;  | &check;    | &check;  |
+| Bar                   | &check;  | &check;    | &check;  |
+| Horizontal Bar        | &check;  | &check;    | &check;  |
+| Pie/Doughnut          | &check;  | &check;    | &check;  |
+| Polar Area            | &check;  | &check;    |          |
+| Radar                 | &check;  |            |          |
+| Scatter               | &check;  | &check;    | &check;  |
+| Bubble                | &check;  |            |          |
+| Gauges                |          | &check;    |          |
+| Maps (Heat/Tree/etc.) |          | &check;    |          |
 
 ### Popular Plugins
 
 There are many plugins that add additional functionality to Chart.js. Some particularly notable ones are listed here. In addition, many plugins can be found on the [Chart.js GitHub organization](https://github.com/chartjs).
 
- - <a href="https://github.com/chartjs/chartjs-plugin-annotation" target="_blank">chartjs-plugin-annotation.js</a> - Draw lines and boxes on chart area
- - <a href="https://github.com/chartjs/chartjs-plugin-deferred" target="_blank">chartjs-plugin-deferred.js</a> - Defer initial chart update until chart scrolls into viewport
- - <a href="https://github.com/compwright/chartjs-plugin-draggable" target="_blank">chartjs-plugin-draggable.js</a> - Makes select chart elements draggable with the mouse
- - <a href="https://github.com/chartjs/chartjs-plugin-zoom" target="_blank">chartjs-plugin-zoom.js</a> - Enable zooming and panning on charts
- - <a href="https://github.com/chartjs/Chart.BarFunnel.js" target="_blank">Chart.BarFunnel.js</a> - Adds a bar funnel chart type
- - <a href="https://github.com/chartjs/Chart.LinearGauge.js" target="_blank">Chart.LinearGauge.js</a> - Adds a linear gauge chart type
- - <a href="https://github.com/chartjs/Chart.smith.js" target="_blank">Chart.Smith.js</a> - Adds a smith chart type
+-   <a href="https://github.com/chartjs/chartjs-plugin-annotation" target="_blank">chartjs-plugin-annotation.js</a> - Draw lines and boxes on chart area
+-   <a href="https://github.com/chartjs/chartjs-plugin-deferred" target="_blank">chartjs-plugin-deferred.js</a> - Defer initial chart update until chart scrolls into viewport
+-   <a href="https://github.com/compwright/chartjs-plugin-draggable" target="_blank">chartjs-plugin-draggable.js</a> - Makes select chart elements draggable with the mouse
+-   <a href="https://github.com/chartjs/chartjs-plugin-zoom" target="_blank">chartjs-plugin-zoom.js</a> - Enable zooming and panning on charts
+-   <a href="https://github.com/chartjs/Chart.BarFunnel.js" target="_blank">Chart.BarFunnel.js</a> - Adds a bar funnel chart type
+-   <a href="https://github.com/chartjs/Chart.LinearGauge.js" target="_blank">Chart.LinearGauge.js</a> - Adds a linear gauge chart type
+-   <a href="https://github.com/chartjs/Chart.smith.js" target="_blank">Chart.Smith.js</a> - Adds a smith chart type
 
 ### Popular Extensions
 
 There are many extensions which are available for use with popular frameworks. Some particularly notable ones are listed here.
 
 #### Angular
- - <a href="https://github.com/jtblin/angular-chart.js" target="_blank">angular-chart.js</a>
- - <a href="https://github.com/carlcraig/tc-angular-chartjs" target="_blank">tc-angular-chartjs</a>
- - <a href="https://github.com/petermelias/angular-chartjs" target="_blank">angular-chartjs</a>
- - <a href="https://github.com/earlonrails/angular-chartjs-directive" target="_blank">Angular Chart-js Directive</a>
+
+-   <a href="https://github.com/jtblin/angular-chart.js" target="_blank">angular-chart.js</a>
+-   <a href="https://github.com/carlcraig/tc-angular-chartjs" target="_blank">tc-angular-chartjs</a>
+-   <a href="https://github.com/petermelias/angular-chartjs" target="_blank">angular-chartjs</a>
+-   <a href="https://github.com/earlonrails/angular-chartjs-directive" target="_blank">Angular Chart-js Directive</a>
 
 #### React
- - <a href="https://github.com/topdmc/react-chartjs2" target="_blank">react-chartjs2</a>
- - <a href="https://github.com/gor181/react-chartjs-2" target="_blank">react-chartjs-2</a>
+
+-   <a href="https://github.com/topdmc/react-chartjs2" target="_blank">react-chartjs2</a>
+-   <a href="https://github.com/gor181/react-chartjs-2" target="_blank">react-chartjs-2</a>
 
 #### Django
- - <a href="https://github.com/matthisk/django-jchart" target="_blank">Django JChart</a>
- - <a href="https://github.com/novafloss/django-chartjs" target="_blank">Django Chartjs</a>
+
+-   <a href="https://github.com/matthisk/django-jchart" target="_blank">Django JChart</a>
+-   <a href="https://github.com/novafloss/django-chartjs" target="_blank">Django Chartjs</a>
 
 #### Ruby on Rails
- - <a href="https://github.com/airblade/chartjs-ror" target="_blank">chartjs-ror</a>
+
+-   <a href="https://github.com/airblade/chartjs-ror" target="_blank">chartjs-ror</a>
 
 #### Laravel
- - <a href="https://github.com/fxcosta/laravel-chartjs" target="_blank">laravel-chartjs</a>
+
+-   <a href="https://github.com/fxcosta/laravel-chartjs" target="_blank">laravel-chartjs</a>
 
 #### Vue.js
- - <a href="https://github.com/apertureless/vue-chartjs/" target="_blank">vue-chartjs</a>
+
+-   <a href="https://github.com/apertureless/vue-chartjs/" target="_blank">vue-chartjs</a>

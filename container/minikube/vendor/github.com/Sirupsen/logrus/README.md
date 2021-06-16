@@ -136,8 +136,7 @@ func main() {
 #### Fields
 
 Logrus encourages careful, structured logging though logging fields instead of
-long, unparseable error messages. For example, instead of: `log.Fatalf("Failed
-to send event %s to topic %s with key %d")`, you should log the much more
+long, unparseable error messages. For example, instead of: `log.Fatalf("Failed to send event %s to topic %s with key %d")`, you should log the much more
 discoverable:
 
 ```go
@@ -221,21 +220,21 @@ func init() {
 }
 ```
 
-* [`github.com/Sirupsen/logrus/hooks/airbrake`](https://github.com/Sirupsen/logrus/blob/master/hooks/airbrake/airbrake.go)
+- [`github.com/Sirupsen/logrus/hooks/airbrake`](https://github.com/Sirupsen/logrus/blob/master/hooks/airbrake/airbrake.go)
   Send errors to an exception tracking service compatible with the Airbrake API.
   Uses [`airbrake-go`](https://github.com/tobi/airbrake-go) behind the scenes.
 
-* [`github.com/Sirupsen/logrus/hooks/papertrail`](https://github.com/Sirupsen/logrus/blob/master/hooks/papertrail/papertrail.go)
+- [`github.com/Sirupsen/logrus/hooks/papertrail`](https://github.com/Sirupsen/logrus/blob/master/hooks/papertrail/papertrail.go)
   Send errors to the Papertrail hosted logging service via UDP.
 
-* [`github.com/Sirupsen/logrus/hooks/syslog`](https://github.com/Sirupsen/logrus/blob/master/hooks/syslog/syslog.go)
+- [`github.com/Sirupsen/logrus/hooks/syslog`](https://github.com/Sirupsen/logrus/blob/master/hooks/syslog/syslog.go)
   Send errors to remote syslog server.
   Uses standard library `log/syslog` behind the scenes.
 
-* [`github.com/nubo/hiprus`](https://github.com/nubo/hiprus)
+- [`github.com/nubo/hiprus`](https://github.com/nubo/hiprus)
   Send errors to a channel in hipchat.
 
-* [`github.com/sebest/logrusly`](https://github.com/sebest/logrusly)
+- [`github.com/sebest/logrusly`](https://github.com/sebest/logrusly)
   Send logs to Loggly (https://www.loggly.com/)
 
 #### Level logging
@@ -308,16 +307,16 @@ Splunk or Logstash.
 
 The built-in logging formatters are:
 
-* `logrus.TextFormatter`. Logs the event in colors if stdout is a tty, otherwise
+- `logrus.TextFormatter`. Logs the event in colors if stdout is a tty, otherwise
   without colors.
-  * *Note:* to force colored output when there is no TTY, set the `ForceColors`
-    field to `true`.  To force no colored output even if there is a TTY  set the
+  - _Note:_ to force colored output when there is no TTY, set the `ForceColors`
+    field to `true`. To force no colored output even if there is a TTY set the
     `DisableColors` field to `true`
-* `logrus.JSONFormatter`. Logs fields as JSON.
+- `logrus.JSONFormatter`. Logs fields as JSON.
 
 Third party logging formatters:
 
-* [`zalgo`](https://github.com/aybabtme/logzalgo): invoking the P͉̫o̳̼̊w̖͈̰͎e̬͔̭͂r͚̼̹̲ ̫͓͉̳͈ō̠͕͖̚f̝͍̠ ͕̲̞͖͑Z̖̫̤̫ͪa͉̬͈̗l͖͎g̳̥o̰̥̅!̣͔̲̻͊̄ ̙̘̦̹̦.
+- [`zalgo`](https://github.com/aybabtme/logzalgo): invoking the P͉̫o̳̼̊w̖͈̰͎e̬͔̭͂r͚̼̹̲ ̫͓͉̳͈ō̠͕͖̚f̝͍̠ ͕̲̞͖͑Z̖̫̤̫ͪa͉̬͈̗l͖͎g̳̥o̰̥̅!̣͔̲̻͊̄ ̙̘̦̹̦.
 
 You can define your formatter by implementing the `Formatter` interface,
 requiring a `Format` method. `Format` takes an `*Entry`. `entry.Data` is a
@@ -347,6 +346,5 @@ func (f *JSONFormatter) Format(entry *Entry) ([]byte, error) {
 Log rotation is not provided with Logrus. Log rotation should be done by an
 external program (like `logrotated(8)`) that can compress and delete old log
 entries. It should not be a feature of the application-level logger.
-
 
 [godoc]: https://godoc.org/github.com/Sirupsen/logrus

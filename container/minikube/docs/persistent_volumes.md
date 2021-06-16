@@ -1,15 +1,16 @@
 ## Persistent Volumes
+
 Minikube supports [PersistentVolumes](http://kubernetes.io/docs/user-guide/persistent-volumes/) of type `hostPath`.
 These PersistentVolumes are mapped to a directory inside the minikube VM.
 
 The Minikube VM boots into a tmpfs, so most directories will not be persisted across reboots (`minikube stop`).
 However, Minikube is configured to persist files stored under the following directories in the minikube VM:
 
-* `/data`
-* `/var/lib/localkube`
-* `/var/lib/docker`
-* `/tmp/hostpath_pv`
-* `/tmp/hostpath-provisioner`
+- `/data`
+- `/var/lib/localkube`
+- `/var/lib/docker`
+- `/tmp/hostpath_pv`
+- `/tmp/hostpath-provisioner`
 
 Here is an example PersistentVolume config to persist data in the '/data' directory:
 

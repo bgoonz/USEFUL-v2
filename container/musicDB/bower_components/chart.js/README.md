@@ -4,7 +4,7 @@
 
 [![Chart.js on Slack](https://img.shields.io/badge/slack-Chart.js-blue.svg)](https://chart-js-automation.herokuapp.com/)
 
-*Simple HTML5 Charts using the canvas element* [chartjs.org](http://www.chartjs.org)
+_Simple HTML5 Charts using the canvas element_ [chartjs.org](http://www.chartjs.org)
 
 ## Installation
 
@@ -17,6 +17,7 @@ npm install chart.js --save
 ```
 
 To install via bower:
+
 ```bash
 bower install chart.js --save
 ```

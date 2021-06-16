@@ -105,7 +105,6 @@ if err != nil {
 }
 ```
 
-
 ## Caveat
 
 1. etcd/client prefers to use the same endpoint as long as the endpoint continues to work well. This saves socket resources, and improves efficiency for both client and server side. This preference doesn't remove consistency from the data consumed by the client because data replicated to each etcd member has already passed through the consensus process.

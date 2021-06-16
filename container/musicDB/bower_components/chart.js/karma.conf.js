@@ -1,14 +1,14 @@
-module.exports = function(config) {
+module.exports = function (config) {
 	config.set({
-		browsers: ['Chrome', 'Firefox'],
-		frameworks: ['browserify', 'jasmine'],
-		reporters: ['progress', 'html'],
+		browsers: ["Chrome", "Firefox"],
+		frameworks: ["browserify", "jasmine"],
+		reporters: ["progress", "html"],
 
 		preprocessors: {
-			'src/**/*.js': ['browserify']
+			"src/**/*.js": ["browserify"],
 		},
 		browserify: {
-			debug: true
-		}
+			debug: true,
+		},
 	});
 };

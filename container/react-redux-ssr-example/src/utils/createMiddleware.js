@@ -1,12 +1,12 @@
 export default function createMiddleware(client) {
   // Function that takes current state and dispatch function
-  return ({dispatch, getState}) => {
+  return ({ dispatch, getState }) => {
     // Returns a function that takes the next to perform function
-    return next =>
+    return (next) =>
       // Returns a function that takes the action to be performed
-      action => {
+      (action) => {
         // If action is a function
-        if (typeof action === 'function') {
+        if (typeof action === "function") {
           // Dispatch that action with the known state
           return action(dispatch, getState);
         }
@@ -23,19 +23,21 @@ export default function createMiddleware(client) {
         // Remember the types of actions that can happen
         const [REQUEST, SUCCESS, FAILURE] = types;
         // Perform the nextAction with the parameters and the load/request action
-        next({...rest, type: REQUEST});
+        next({ ...rest, type: REQUEST });
 
         // The involved promise is passed to the API client
         const actionPromise = promise(client);
 
         // Return from the promise
-        actionPromise.then(
-          (result) => next({...rest, result, type: SUCCESS}),
-          (error) => next({...rest, error, type: FAILURE})
-        ).catch((error)=> {
-          console.error('MIDDLEWARE ERROR:', error);
-          next({...rest, error, type: FAILURE});
-        });
+        actionPromise
+          .then(
+            (result) => next({ ...rest, result, type: SUCCESS }),
+            (error) => next({ ...rest, error, type: FAILURE })
+          )
+          .catch((error) => {
+            console.error("MIDDLEWARE ERROR:", error);
+            next({ ...rest, error, type: FAILURE });
+          });
 
         // Return whatever was the result of the promise
         return actionPromise;

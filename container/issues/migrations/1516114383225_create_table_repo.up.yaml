@@ -1,5 +1,6 @@
 - args:
-    sql: CREATE TABLE "repo"("id" bigint NOT NULL, "name" text NOT NULL, PRIMARY KEY
+    sql:
+      CREATE TABLE "repo"("id" bigint NOT NULL, "name" text NOT NULL, PRIMARY KEY
       ("id") )
   type: run_sql
 - args:

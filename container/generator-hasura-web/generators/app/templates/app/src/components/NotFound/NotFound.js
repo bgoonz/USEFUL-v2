@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 // import { replace } from 'react-router-redux';
 
 class NotFound extends React.Component {
   static propTypes = {
-    dispatch: React.PropTypes.func.isRequired
-  }
+    dispatch: React.PropTypes.func.isRequired,
+  };
 
   // componentDidMount() {
   //   const { dispatch } = this.props;
@@ -13,9 +13,7 @@ class NotFound extends React.Component {
   // }
 
   render() {
-    return (
-      <span>Not Found.</span>
-    );
+    return <span>Not Found.</span>;
   }
 }
 

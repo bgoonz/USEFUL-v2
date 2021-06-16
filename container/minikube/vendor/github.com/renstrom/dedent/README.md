@@ -31,7 +31,6 @@ func main() {
 
 To illustrate the difference, here's the output:
 
-
 ```bash
 $ go run main.go
 Lorem ipsum dolor sit amet,

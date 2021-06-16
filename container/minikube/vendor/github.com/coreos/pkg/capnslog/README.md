@@ -9,15 +9,15 @@ capnslog provides a simple but consistent logging interface suitable for all kin
 
 A library should not touch log options, only generate log entries. Libraries are silent until main lets them speak.
 
-##### All log options are runtime-configurable. 
+##### All log options are runtime-configurable.
 
-Still the job of `main` to expose these configurations. `main` may delegate this to, say, a configuration webhook, but does so explicitly. 
+Still the job of `main` to expose these configurations. `main` may delegate this to, say, a configuration webhook, but does so explicitly.
 
 ##### There is one log object per package. It is registered under its repository and package name.
 
 `main` activates logging for its repository and any dependency repositories it would also like to have output in its logstream. `main` also dictates at which level each subpackage logs.
 
-##### There is *one* output stream, and it is an `io.Writer` composed with a formatter.
+##### There is _one_ output stream, and it is an `io.Writer` composed with a formatter.
 
 Splitting streams is probably not the job of your program, but rather, your log aggregation framework. If you must split output streams, again, `main` configures this and you can write a very simple two-output struct that satisfies io.Writer.
 
@@ -29,11 +29,10 @@ An object knows best how to print itself. Log objects can collect more interesti
 
 ##### Log levels have specific meanings:
 
-  * Critical: Unrecoverable. Must fail.
-  * Error: Data has been lost, a request has failed for a bad reason, or a required resource has been lost
-  * Warning: (Hopefully) Temporary conditions that may cause errors, but may work fine. A replica disappearing (that may reconnect) is a warning.
-  * Notice: Normal, but important (uncommon) log information.
-  * Info: Normal, working log information, everything is fine, but helpful notices for auditing or common operations.
-  * Debug: Everything is still fine, but even common operations may be logged, and less helpful but more quantity of notices.
-  * Trace: Anything goes, from logging every function call as part of a common operation, to tracing execution of a query.
-
+- Critical: Unrecoverable. Must fail.
+- Error: Data has been lost, a request has failed for a bad reason, or a required resource has been lost
+- Warning: (Hopefully) Temporary conditions that may cause errors, but may work fine. A replica disappearing (that may reconnect) is a warning.
+- Notice: Normal, but important (uncommon) log information.
+- Info: Normal, working log information, everything is fine, but helpful notices for auditing or common operations.
+- Debug: Everything is still fine, but even common operations may be logged, and less helpful but more quantity of notices.
+- Trace: Anything goes, from logging every function call as part of a common operation, to tracing execution of a query.

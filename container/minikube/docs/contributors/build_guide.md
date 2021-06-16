@@ -1,11 +1,13 @@
 ### Build Requirements
-* A recent Go distribution (>1.8)
-* If you're not on Linux, you'll need a Docker installation
-* Minikube requires at least 4GB of RAM to compile, which can be problematic when using docker-machine
+
+- A recent Go distribution (>1.8)
+- If you're not on Linux, you'll need a Docker installation
+- Minikube requires at least 4GB of RAM to compile, which can be problematic when using docker-machine
 
 #### Prerequisites for different GNU/Linux distributions
 
 ##### Fedora
+
 On Fedora you need to install _glibc-static_
 
 ```shell
@@ -13,6 +15,7 @@ $ sudo dnf install -y glibc-static
 ```
 
 ### Building from Source
+
 Clone minikube into your go path under `$GOPATH/src/k8s.io`
 
 ```
@@ -53,15 +56,18 @@ make integration
 These are Kubernetes tests that run against an arbitrary cluster and exercise a wide range of Kubernetes features.
 You can run these against minikube by following these steps:
 
-* Clone the Kubernetes repo somewhere on your system.
-* Run `make quick-release` in the k8s repo.
-* Start up a minikube cluster with: `minikube start`.
-* Set following two environment variables:
+- Clone the Kubernetes repo somewhere on your system.
+- Run `make quick-release` in the k8s repo.
+- Start up a minikube cluster with: `minikube start`.
+- Set following two environment variables:
+
 ```shell
 export KUBECONFIG=$HOME/.kube/config
 export KUBERNETES_CONFORMANCE_TEST=y
 ```
-* Run the tests (from the k8s repo):
+
+- Run the tests (from the k8s repo):
+
 ```shell
 go run hack/e2e.go -v --test --test_args="--ginkgo.focus=\[Conformance\]" --check_version_skew=false --check_node_count=false
 ```
@@ -73,4 +79,3 @@ For example, to run the test `should update annotations on modification [Conform
 ```shell
 go run hack/e2e.go -v --test --test_args="--ginkgo.focus=should\supdate\sannotations\son\smodification" --check_version_skew=false --check_node_count=false
 ```
-

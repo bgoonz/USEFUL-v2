@@ -1,9 +1,9 @@
 const state = {
   loaded: false,
   data: {
-    query: '',
-    results: []
-  }
+    query: "",
+    results: [],
+  },
 };
 
 export default state;

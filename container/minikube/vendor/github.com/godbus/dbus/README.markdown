@@ -1,14 +1,13 @@
-dbus
-----
+## dbus
 
 dbus is a simple library that implements native Go client bindings for the
 D-Bus message bus system.
 
 ### Features
 
-* Complete native implementation of the D-Bus message protocol
-* Go-like API (channels for signals / asynchronous method calls, Goroutine-safe connections)
-* Subpackages that help with the introspection / property interfaces
+- Complete native implementation of the D-Bus message protocol
+- Go-like API (channels for signals / asynchronous method calls, Goroutine-safe connections)
+- Subpackages that help with the introspection / property interfaces
 
 ### Installation
 
@@ -24,10 +23,11 @@ If you want to use the subpackages, you can install them the same way.
 
 The complete package documentation and some simple examples are available at
 [godoc.org](http://godoc.org/github.com/godbus/dbus). Also, the
-[_examples](https://github.com/godbus/dbus/tree/master/_examples) directory
-gives a short overview over the basic usage. 
+[\_examples](https://github.com/godbus/dbus/tree/master/_examples) directory
+gives a short overview over the basic usage.
 
 #### Projects using godbus
+
 - [notify](https://github.com/esiqveland/notify) provides desktop notifications over dbus into a library.
 
 Please note that the API is considered unstable for now and may change without

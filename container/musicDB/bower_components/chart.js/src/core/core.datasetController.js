@@ -1,10 +1,9 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
-	var arrayEvents = ['push', 'pop', 'shift', 'splice', 'unshift'];
+	var arrayEvents = ["push", "pop", "shift", "splice", "unshift"];
 
 	/**
 	 * Hooks the array methods that add or remove values ('push', pop', 'shift', 'splice',
@@ -17,33 +16,33 @@ module.exports = function(Chart) {
 			return;
 		}
 
-		Object.defineProperty(array, '_chartjs', {
+		Object.defineProperty(array, "_chartjs", {
 			configurable: true,
 			enumerable: false,
 			value: {
-				listeners: [listener]
-			}
+				listeners: [listener],
+			},
 		});
 
-		arrayEvents.forEach(function(key) {
-			var method = 'onData' + key.charAt(0).toUpperCase() + key.slice(1);
+		arrayEvents.forEach(function (key) {
+			var method = "onData" + key.charAt(0).toUpperCase() + key.slice(1);
 			var base = array[key];
 
 			Object.defineProperty(array, key, {
 				configurable: true,
 				enumerable: false,
-				value: function() {
+				value: function () {
 					var args = Array.prototype.slice.call(arguments);
 					var res = base.apply(this, args);
 
-					helpers.each(array._chartjs.listeners, function(object) {
-						if (typeof object[method] === 'function') {
+					helpers.each(array._chartjs.listeners, function (object) {
+						if (typeof object[method] === "function") {
 							object[method].apply(object, args);
 						}
 					});
 
 					return res;
-				}
+				},
 			});
 		});
 	}
@@ -68,7 +67,7 @@ module.exports = function(Chart) {
 			return;
 		}
 
-		arrayEvents.forEach(function(key) {
+		arrayEvents.forEach(function (key) {
 			delete array[key];
 		});
 
@@ -76,12 +75,11 @@ module.exports = function(Chart) {
 	}
 
 	// Base class for all dataset controllers (line, bar, etc)
-	Chart.DatasetController = function(chart, datasetIndex) {
+	Chart.DatasetController = function (chart, datasetIndex) {
 		this.initialize(chart, datasetIndex);
 	};
 
 	helpers.extend(Chart.DatasetController.prototype, {
-
 		/**
 		 * Element type used to generate a meta dataset (e.g. Chart.element.Line).
 		 * @type {Chart.core.element}
@@ -94,7 +92,7 @@ module.exports = function(Chart) {
 		 */
 		dataElementType: null,
 
-		initialize: function(chart, datasetIndex) {
+		initialize: function (chart, datasetIndex) {
 			var me = this;
 			me.chart = chart;
 			me.index = datasetIndex;
@@ -102,88 +100,96 @@ module.exports = function(Chart) {
 			me.addElements();
 		},
 
-		updateIndex: function(datasetIndex) {
+		updateIndex: function (datasetIndex) {
 			this.index = datasetIndex;
 		},
 
-		linkScales: function() {
+		linkScales: function () {
 			var me = this;
 			var meta = me.getMeta();
 			var dataset = me.getDataset();
 
 			if (meta.xAxisID === null) {
-				meta.xAxisID = dataset.xAxisID || me.chart.options.scales.xAxes[0].id;
+				meta.xAxisID =
+					dataset.xAxisID || me.chart.options.scales.xAxes[0].id;
 			}
 			if (meta.yAxisID === null) {
-				meta.yAxisID = dataset.yAxisID || me.chart.options.scales.yAxes[0].id;
+				meta.yAxisID =
+					dataset.yAxisID || me.chart.options.scales.yAxes[0].id;
 			}
 		},
 
-		getDataset: function() {
+		getDataset: function () {
 			return this.chart.data.datasets[this.index];
 		},
 
-		getMeta: function() {
+		getMeta: function () {
 			return this.chart.getDatasetMeta(this.index);
 		},
 
-		getScaleForId: function(scaleID) {
+		getScaleForId: function (scaleID) {
 			return this.chart.scales[scaleID];
 		},
 
-		reset: function() {
+		reset: function () {
 			this.update(true);
 		},
 
 		/**
 		 * @private
 		 */
-		destroy: function() {
+		destroy: function () {
 			if (this._data) {
 				unlistenArrayEvents(this._data, this);
 			}
 		},
 
-		createMetaDataset: function() {
+		createMetaDataset: function () {
 			var me = this;
 			var type = me.datasetElementType;
-			return type && new type({
-				_chart: me.chart.chart,
-				_datasetIndex: me.index
-			});
+			return (
+				type &&
+				new type({
+					_chart: me.chart.chart,
+					_datasetIndex: me.index,
+				})
+			);
 		},
 
-		createMetaData: function(index) {
+		createMetaData: function (index) {
 			var me = this;
 			var type = me.dataElementType;
-			return type && new type({
-				_chart: me.chart.chart,
-				_datasetIndex: me.index,
-				_index: index
-			});
+			return (
+				type &&
+				new type({
+					_chart: me.chart.chart,
+					_datasetIndex: me.index,
+					_index: index,
+				})
+			);
 		},
 
-		addElements: function() {
+		addElements: function () {
 			var me = this;
 			var meta = me.getMeta();
 			var data = me.getDataset().data || [];
 			var metaData = meta.data;
 			var i, ilen;
 
-			for (i=0, ilen=data.length; i<ilen; ++i) {
+			for (i = 0, ilen = data.length; i < ilen; ++i) {
 				metaData[i] = metaData[i] || me.createMetaData(i);
 			}
 
 			meta.dataset = meta.dataset || me.createMetaDataset();
 		},
 
-		addElementAndReset: function(index) {
+		addElementAndReset: function (index) {
 			var element = this.createMetaData(index);
 			this.getMeta().data.splice(index, 0, element);
 			this.updateElement(element, index, true);
 		},
 
-		buildOrUpdateElements: function() {
+		buildOrUpdateElements: function () {
 			var me = this;
 			var dataset = me.getDataset();
 			var data = dataset.data || (dataset.data = []);
@@ -208,7 +214,7 @@ module.exports = function(Chart) {
 
 		update: helpers.noop,
 
-		draw: function(ease) {
+		draw: function (ease) {
 			var easingDecimal = ease || 1;
 			var i, len;
 			var metaData = this.getMeta().data;
@@ -217,19 +223,37 @@ module.exports = function(Chart) {
 			}
 		},
 
-		removeHoverStyle: function(element, elementOpts) {
+		removeHoverStyle: function (element, elementOpts) {
 			var dataset = this.chart.data.datasets[element._datasetIndex],
 				index = element._index,
 				custom = element.custom || {},
 				valueOrDefault = helpers.getValueAtIndexOrDefault,
 				model = element._model;
 
-			model.backgroundColor = custom.backgroundColor ? custom.backgroundColor : valueOrDefault(dataset.backgroundColor, index, elementOpts.backgroundColor);
-			model.borderColor = custom.borderColor ? custom.borderColor : valueOrDefault(dataset.borderColor, index, elementOpts.borderColor);
-			model.borderWidth = custom.borderWidth ? custom.borderWidth : valueOrDefault(dataset.borderWidth, index, elementOpts.borderWidth);
+			model.backgroundColor = custom.backgroundColor
+				? custom.backgroundColor
+				: valueOrDefault(
+						dataset.backgroundColor,
+						index,
+						elementOpts.backgroundColor
+				  );
+			model.borderColor = custom.borderColor
+				? custom.borderColor
+				: valueOrDefault(
+						dataset.borderColor,
+						index,
+						elementOpts.borderColor
+				  );
+			model.borderWidth = custom.borderWidth
+				? custom.borderWidth
+				: valueOrDefault(
+						dataset.borderWidth,
+						index,
+						elementOpts.borderWidth
+				  );
 		},
 
-		setHoverStyle: function(element) {
+		setHoverStyle: function (element) {
 			var dataset = this.chart.data.datasets[element._datasetIndex],
 				index = element._index,
 				custom = element.custom || {},
@@ -237,15 +261,33 @@ module.exports = function(Chart) {
 				getHoverColor = helpers.getHoverColor,
 				model = element._model;
 
-			model.backgroundColor = custom.hoverBackgroundColor ? custom.hoverBackgroundColor : valueOrDefault(dataset.hoverBackgroundColor, index, getHoverColor(model.backgroundColor));
-			model.borderColor = custom.hoverBorderColor ? custom.hoverBorderColor : valueOrDefault(dataset.hoverBorderColor, index, getHoverColor(model.borderColor));
-			model.borderWidth = custom.hoverBorderWidth ? custom.hoverBorderWidth : valueOrDefault(dataset.hoverBorderWidth, index, model.borderWidth);
+			model.backgroundColor = custom.hoverBackgroundColor
+				? custom.hoverBackgroundColor
+				: valueOrDefault(
+						dataset.hoverBackgroundColor,
+						index,
+						getHoverColor(model.backgroundColor)
+				  );
+			model.borderColor = custom.hoverBorderColor
+				? custom.hoverBorderColor
+				: valueOrDefault(
+						dataset.hoverBorderColor,
+						index,
+						getHoverColor(model.borderColor)
+				  );
+			model.borderWidth = custom.hoverBorderWidth
+				? custom.hoverBorderWidth
+				: valueOrDefault(
+						dataset.hoverBorderWidth,
+						index,
+						model.borderWidth
+				  );
 		},
 
 		/**
 		 * @private
 		 */
-		resyncElements: function() {
+		resyncElements: function () {
 			var me = this;
 			var meta = me.getMeta();
 			var data = me.getDataset().data;
@@ -262,8 +304,8 @@ module.exports = function(Chart) {
 		/**
 		 * @private
 		 */
-		insertElements: function(start, count) {
-			for (var i=0; i<count; ++i) {
+		insertElements: function (start, count) {
+			for (var i = 0; i < count; ++i) {
 				this.addElementAndReset(start + i);
 			}
 		},
@@ -271,28 +313,31 @@ module.exports = function(Chart) {
 		/**
 		 * @private
 		 */
-		onDataPush: function() {
-			this.insertElements(this.getDataset().data.length-1, arguments.length);
+		onDataPush: function () {
+			this.insertElements(
+				this.getDataset().data.length - 1,
+				arguments.length
+			);
 		},
 
 		/**
 		 * @private
 		 */
-		onDataPop: function() {
+		onDataPop: function () {
 			this.getMeta().data.pop();
 		},
 
 		/**
 		 * @private
 		 */
-		onDataShift: function() {
+		onDataShift: function () {
 			this.getMeta().data.shift();
 		},
 
 		/**
 		 * @private
 		 */
-		onDataSplice: function(start, count) {
+		onDataSplice: function (start, count) {
 			this.getMeta().data.splice(start, count);
 			this.insertElements(start, arguments.length - 2);
 		},
@@ -300,9 +345,9 @@ module.exports = function(Chart) {
 		/**
 		 * @private
 		 */
-		onDataUnshift: function() {
+		onDataUnshift: function () {
 			this.insertElements(0, arguments.length);
-		}
+		},
 	});
 
 	Chart.DatasetController.extend = helpers.inherits;

@@ -1,14 +1,17 @@
 # Overview
+
 This is the [Prometheus](http://www.prometheus.io) telemetric
-instrumentation client [Go](http://golang.org) client library.  It
+instrumentation client [Go](http://golang.org) client library. It
 enable authors to define process-space metrics for their servers and
 expose them through a web service interface for extraction,
 aggregation, and a whole slew of other post processing techniques.
 
 # Installing
+
     $ go get github.com/prometheus/client_golang/prometheus
 
 # Example
+
 ```go
 package main
 

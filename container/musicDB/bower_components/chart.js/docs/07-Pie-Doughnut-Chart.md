@@ -2,7 +2,9 @@
 title: Pie & Doughnut Charts
 anchor: doughnut-pie-chart
 ---
+
 ### Introduction
+
 Pie and doughnut charts are probably the most commonly used charts there are. They are divided into segments, the arc of each segment shows the proportional value of each piece of data.
 
 They are excellent at showing the relational proportions between data.
@@ -24,58 +26,47 @@ They are also registered under two aliases in the `Chart` core. Other than their
 
 ```javascript
 // For a pie chart
-var myPieChart = new Chart(ctx,{
-	type: 'pie',
+var myPieChart = new Chart(ctx, {
+	type: "pie",
 	data: data,
-	options: options
+	options: options,
 });
 ```
 
 ```javascript
 // And for a doughnut chart
 var myDoughnutChart = new Chart(ctx, {
-	type: 'doughnut',
+	type: "doughnut",
 	data: data,
-	options: options
+	options: options,
 });
 ```
 
 ### Dataset Structure
 
-Property | Type | Usage
---- | --- | ---
-data | `Array<Number>` | The data to plot as arcs
-label | `String` | The label for the dataset which appears in the legend and tooltips
-backgroundColor | `Array<Color>` | The fill color of the arcs. See [Colors](#chart-configuration-colors)
-borderColor | `Array<Color>` | Arc border color
-borderWidth | `Array<Number>` | Border width of arcs in pixels
-hoverBackgroundColor | `Array<Color>` | Arc background color when hovered
-hoverBorderColor | `Array<Color>` | Arc border color when hovered
-hoverBorderWidth | `Array<Number>` | Border width of arc when hovered
+| Property             | Type            | Usage                                                                 |
+| -------------------- | --------------- | --------------------------------------------------------------------- |
+| data                 | `Array<Number>` | The data to plot as arcs                                              |
+| label                | `String`        | The label for the dataset which appears in the legend and tooltips    |
+| backgroundColor      | `Array<Color>`  | The fill color of the arcs. See [Colors](#chart-configuration-colors) |
+| borderColor          | `Array<Color>`  | Arc border color                                                      |
+| borderWidth          | `Array<Number>` | Border width of arcs in pixels                                        |
+| hoverBackgroundColor | `Array<Color>`  | Arc background color when hovered                                     |
+| hoverBorderColor     | `Array<Color>`  | Arc border color when hovered                                         |
+| hoverBorderWidth     | `Array<Number>` | Border width of arc when hovered                                      |
 
 An example data object using these attributes is shown below.
 
 ```javascript
 var data = {
-    labels: [
-        "Red",
-        "Blue",
-        "Yellow"
-    ],
-    datasets: [
-        {
-            data: [300, 50, 100],
-            backgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
-            ],
-            hoverBackgroundColor: [
-                "#FF6384",
-                "#36A2EB",
-                "#FFCE56"
-            ]
-        }]
+	labels: ["Red", "Blue", "Yellow"],
+	datasets: [
+		{
+			data: [300, 50, 100],
+			backgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+			hoverBackgroundColor: ["#FF6384", "#36A2EB", "#FFCE56"],
+		},
+	],
 };
 ```
 
@@ -85,28 +76,28 @@ For a pie chart, datasets need to contain an array of data points. The data poin
 
 These are the customisation options specific to Pie & Doughnut charts. These options are merged with the [global chart configuration options](#global-chart-configuration), and form the options of the chart.
 
-Name | Type | Default | Description
---- | --- | --- | ---
-cutoutPercentage | Number | 50 - for doughnut, 0 - for pie | The percentage of the chart that is cut out of the middle.
-rotation | Number | -0.5 * Math.PI | Starting angle to draw arcs from
-circumference | Number | 2 * Math.PI | Sweep to allow arcs to cover
-*animation*.animateRotate | Boolean |true | If true, will animate the rotation of the chart.
-*animation*.animateScale | Boolean | false | If true, will animate scaling the Doughnut from the centre.
-*legend*.*labels*.generateLabels | Function | `function(chart) {} ` | Returns a label for each item to be displayed on the legend.
-*legend*.onClick | Function | function(event, legendItem) {} ` | Handles clicking an individual legend item
+| Name                             | Type     | Default                          | Description                                                  |
+| -------------------------------- | -------- | -------------------------------- | ------------------------------------------------------------ |
+| cutoutPercentage                 | Number   | 50 - for doughnut, 0 - for pie   | The percentage of the chart that is cut out of the middle.   |
+| rotation                         | Number   | -0.5 \* Math.PI                  | Starting angle to draw arcs from                             |
+| circumference                    | Number   | 2 \* Math.PI                     | Sweep to allow arcs to cover                                 |
+| _animation_.animateRotate        | Boolean  | true                             | If true, will animate the rotation of the chart.             |
+| _animation_.animateScale         | Boolean  | false                            | If true, will animate scaling the Doughnut from the centre.  |
+| _legend_._labels_.generateLabels | Function | `function(chart) {} `            | Returns a label for each item to be displayed on the legend. |
+| _legend_.onClick                 | Function | function(event, legendItem) {} ` | Handles clicking an individual legend item                   |
 
 You can override these for your `Chart` instance by passing a second argument into the `Doughnut` method as an object with the keys you want to override.
 
 For example, we could have a doughnut chart that animates by scaling out from the centre like so:
 
 ```javascript
-new Chart(ctx,{
-	type:"doughnut",
+new Chart(ctx, {
+	type: "doughnut",
 	options: {
-		animation:{
-			animateScale:true
-		}
-	}
+		animation: {
+			animateScale: true,
+		},
+	},
 });
 // This will create a chart with all of the default options, merged from the global config,
 // and the Doughnut chart defaults but this particular instance will have `animateScale` set to `true`.

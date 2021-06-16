@@ -1,13 +1,13 @@
 language: go
 
 go:
-    - 1.1
-    - 1.2
-    - tip
+  - 1.1
+  - 1.2
+  - tip
 
 install:
-    - go get github.com/stretchr/testify
+  - go get github.com/stretchr/testify
 
 script:
-    - go test
-    - go test -tags 'prod'
+  - go test
+  - go test -tags 'prod'

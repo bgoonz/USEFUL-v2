@@ -1,4 +1,5 @@
 # Gophercloud: an OpenStack SDK for Go
+
 [![Build Status](https://travis-ci.org/rackspace/gophercloud.svg?branch=master)](https://travis-ci.org/rackspace/gophercloud) [![Coverage Status](https://coveralls.io/repos/rackspace/gophercloud/badge.png)](https://coveralls.io/r/rackspace/gophercloud)
 
 Gophercloud is a flexible SDK that allows you to consume and work with OpenStack
@@ -9,10 +10,10 @@ documentation, unit tests and acceptance tests.
 
 ## Useful links
 
-* [Gophercloud homepage](http://gophercloud.io)
-* [Reference documentation](http://godoc.org/github.com/rackspace/gophercloud)
-* [Getting started guides](http://gophercloud.io/docs)
-* [Effective Go](https://golang.org/doc/effective_go.html)
+- [Gophercloud homepage](http://gophercloud.io)
+- [Reference documentation](http://godoc.org/github.com/rackspace/gophercloud)
+- [Getting started guides](http://gophercloud.io/docs)
+- [Effective Go](https://golang.org/doc/effective_go.html)
 
 ## How to install
 
@@ -52,10 +53,10 @@ control system without any security risk.
 
 You will need to retrieve the following:
 
-* username
-* password
-* tenant name or tenant ID
-* a valid Keystone identity URL
+- username
+- password
+- tenant name or tenant ID
+- a valid Keystone identity URL
 
 For users that have the OpenStack dashboard installed, there's a shortcut. If
 you visit the `project/access_and_security` path in Horizon and click on the
@@ -139,11 +140,11 @@ in the `server` variable (a
 Cool! You've handled authentication, got your `ProviderClient` and provisioned
 a new server. You're now ready to use more OpenStack services.
 
-* [Getting started with Compute](http://gophercloud.io/docs/compute)
-* [Getting started with Object Storage](http://gophercloud.io/docs/object-storage)
-* [Getting started with Networking](http://gophercloud.io/docs/networking)
-* [Getting started with Block Storage](http://gophercloud.io/docs/block-storage)
-* [Getting started with Identity](http://gophercloud.io/docs/identity)
+- [Getting started with Compute](http://gophercloud.io/docs/compute)
+- [Getting started with Object Storage](http://gophercloud.io/docs/object-storage)
+- [Getting started with Networking](http://gophercloud.io/docs/networking)
+- [Getting started with Block Storage](http://gophercloud.io/docs/block-storage)
+- [Getting started with Identity](http://gophercloud.io/docs/identity)
 
 ## Contributing
 

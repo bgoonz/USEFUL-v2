@@ -1,17 +1,17 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import {Link} from 'react-router';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router";
 
 class Layout extends React.Component {
   static propTypes = {
-    children: React.PropTypes.element.isRequired
+    children: React.PropTypes.element.isRequired,
   };
 
   render() {
     const { children } = this.props;
 
-    const styles = require('./Main.scss');
-    const logo = require('./hasura-small.png');
+    const styles = require("./Main.scss");
+    const logo = require("./hasura-small.png");
 
     return (
       <div className={styles.container}>

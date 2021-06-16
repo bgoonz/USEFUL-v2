@@ -1,23 +1,20 @@
-HTTP Authentication implementation in Go
-========================================
+# HTTP Authentication implementation in Go
 
 This is an implementation of HTTP Basic and HTTP Digest authentication
 in Go language. It is designed as a simple wrapper for
 http.RequestHandler functions.
 
-Features
---------
- 
- * Supports HTTP Basic and HTTP Digest authentication.
- * Supports htpasswd and htdigest formatted files.
- * Automatic reloading of password files.
- * Pluggable interface for user/password storage.
- * Supports MD5 and SHA1 for Basic authentication password storage.
- * Configurable Digest nonce cache size with expiration.
- * Wrapper for legacy http handlers (http.HandlerFunc interface)
- 
-Example usage
--------------
+## Features
+
+- Supports HTTP Basic and HTTP Digest authentication.
+- Supports htpasswd and htdigest formatted files.
+- Automatic reloading of password files.
+- Pluggable interface for user/password storage.
+- Supports MD5 and SHA1 for Basic authentication password storage.
+- Configurable Digest nonce cache size with expiration.
+- Wrapper for legacy http handlers (http.HandlerFunc interface)
+
+## Example usage
 
 This is a complete working example for Basic auth:
 
@@ -49,8 +46,7 @@ This is a complete working example for Basic auth:
 
 See more examples in the "examples" directory.
 
-Legal
------
+## Legal
 
 This module is developed under Apache 2.0 license, and can be used for
 open and proprietary projects.

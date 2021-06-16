@@ -1,4 +1,5 @@
 # Gophercloud: an OpenStack SDK for Go
+
 [![Build Status](https://travis-ci.org/gophercloud/gophercloud.svg?branch=master)](https://travis-ci.org/gophercloud/gophercloud)
 [![Coverage Status](https://coveralls.io/repos/github/gophercloud/gophercloud/badge.svg?branch=master)](https://coveralls.io/github/gophercloud/gophercloud?branch=master)
 
@@ -6,8 +7,8 @@ Gophercloud is an OpenStack Go SDK.
 
 ## Useful links
 
-* [Reference documentation](http://godoc.org/github.com/gophercloud/gophercloud)
-* [Effective Go](https://golang.org/doc/effective_go.html)
+- [Reference documentation](http://godoc.org/github.com/gophercloud/gophercloud)
+- [Effective Go](https://golang.org/doc/effective_go.html)
 
 ## How to install
 
@@ -47,9 +48,9 @@ control system without any security risk.
 
 You will need to retrieve the following:
 
-* username
-* password
-* a valid Keystone identity URL
+- username
+- password
+- a valid Keystone identity URL
 
 For users that have the OpenStack dashboard installed, there's a shortcut. If
 you visit the `project/access_and_security` path in Horizon and click on the

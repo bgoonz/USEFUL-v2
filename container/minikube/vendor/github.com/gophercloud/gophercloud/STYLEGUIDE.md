@@ -1,4 +1,3 @@
-
 ## On Pull Requests
 
 - Before you start a PR there needs to be a Github issue and a discussion about it

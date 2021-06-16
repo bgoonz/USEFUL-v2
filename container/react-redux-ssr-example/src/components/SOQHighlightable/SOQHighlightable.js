@@ -1,32 +1,36 @@
-import React from 'react';
-import { connect } from 'react-redux';
+import React from "react";
+import { connect } from "react-redux";
 
-import { toggleHighlight } from './Actions';
-import SOQuestion from '../SOQuestion/SOQuestion';
+import { toggleHighlight } from "./Actions";
+import SOQuestion from "../SOQuestion/SOQuestion";
 
 class SOQHighlightable extends React.Component {
   static propTypes = {
     question: React.PropTypes.shape({
       title: React.PropTypes.string.isRequired,
-      link: React.PropTypes.string.isRequired
+      link: React.PropTypes.string.isRequired,
     }).isRequired,
     unique: React.PropTypes.string.isRequired,
     highlighted: React.PropTypes.bool,
-    dispatch: React.PropTypes.func.isRequired
+    dispatch: React.PropTypes.func.isRequired,
   };
 
   render() {
     const { question, dispatch, unique, highlighted } = this.props;
 
     return (
-      <div style={ (highlighted) ? {backgroundColor: 'yellow'} : {} }>
-        <SOQuestion question={question}/>
-        <a onClick={
-          (e) => {
+      <div style={highlighted ? { backgroundColor: "yellow" } : {}}>
+        <SOQuestion question={question} />
+        <a
+          onClick={(e) => {
             e.preventDefault();
             dispatch(toggleHighlight(unique));
-          }
-        } href=""> Highlight</a>
+          }}
+          href=""
+        >
+          {" "}
+          Highlight
+        </a>
       </div>
     );
   }
@@ -35,7 +39,7 @@ class SOQHighlightable extends React.Component {
 const mapStateToProps = (state, ownProps) => {
   return {
     unique: ownProps.unique,
-    highlighted: state.soqh.questions.indexOf(ownProps.unique) > -1
+    highlighted: state.soqh.questions.indexOf(ownProps.unique) > -1,
   };
 };
 

@@ -1,25 +1,24 @@
 /* global window: false */
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	Chart.defaults.global.animation = {
 		duration: 1000,
-		easing: 'easeOutQuart',
+		easing: "easeOutQuart",
 		onProgress: helpers.noop,
-		onComplete: helpers.noop
+		onComplete: helpers.noop,
 	};
 
 	Chart.Animation = Chart.Element.extend({
 		currentStep: null, // the current animation step
 		numSteps: 60, // default number of steps
-		easing: '', // the easing to use for this animation
+		easing: "", // the easing to use for this animation
 		render: null, // render function used by the animation service
 
 		onAnimationProgress: null, // user specified callback to fire on each step of the animation
-		onAnimationComplete: null // user specified callback to fire when the animation finishes
+		onAnimationComplete: null, // user specified callback to fire when the animation finishes
 	});
 
 	Chart.animationService = {
@@ -35,7 +34,12 @@ module.exports = function(Chart) {
 		 * @param duration {Number} length of animation in ms
 		 * @param lazy {Boolean} if true, the chart is not marked as animating to enable more responsive interactions
 		 */
-		addAnimation: function(chartInstance, animationObject, duration, lazy) {
+		addAnimation: function (
+			chartInstance,
+			animationObject,
+			duration,
+			lazy
+		) {
 			var me = this;
 
 			if (!lazy) {
@@ -52,7 +56,7 @@ module.exports = function(Chart) {
 
 			me.animations.push({
 				chartInstance: chartInstance,
-				animationObject: animationObject
+				animationObject: animationObject,
 			});
 
 			// If there are no animations queued, manually kickstart a digest, for lack of a better word
@@ -61,29 +65,32 @@ module.exports = function(Chart) {
 			}
 		},
 		// Cancel the animation for a given chart instance
-		cancelAnimation: function(chartInstance) {
-			var index = helpers.findIndex(this.animations, function(animationWrapper) {
-				return animationWrapper.chartInstance === chartInstance;
-			});
+		cancelAnimation: function (chartInstance) {
+			var index = helpers.findIndex(
+				this.animations,
+				function (animationWrapper) {
+					return animationWrapper.chartInstance === chartInstance;
+				}
+			);
 
 			if (index !== -1) {
 				this.animations.splice(index, 1);
 				chartInstance.animating = false;
 			}
 		},
-		requestAnimationFrame: function() {
+		requestAnimationFrame: function () {
 			var me = this;
 			if (me.request === null) {
 				// Skip animation frame requests until the active one is executed.
 				// This can happen when processing mouse events, e.g. 'mousemove'
 				// and 'mouseout' events will trigger multiple renders.
-				me.request = helpers.requestAnimFrame.call(window, function() {
+				me.request = helpers.requestAnimFrame.call(window, function () {
 					me.request = null;
 					me.startDigest();
 				});
 			}
 		},
-		startDigest: function() {
+		startDigest: function () {
 			var me = this;
 
 			var startTime = Date.now();
@@ -100,20 +107,46 @@ module.exports = function(Chart) {
 					me.animations[i].animationObject.currentStep = 0;
 				}
 
-				me.animations[i].animationObject.currentStep += 1 + framesToDrop;
+				me.animations[i].animationObject.currentStep +=
+					1 + framesToDrop;
 
-				if (me.animations[i].animationObject.currentStep > me.animations[i].animationObject.numSteps) {
-					me.animations[i].animationObject.currentStep = me.animations[i].animationObject.numSteps;
+				if (
+					me.animations[i].animationObject.currentStep >
+					me.animations[i].animationObject.numSteps
+				) {
+					me.animations[i].animationObject.currentStep =
+						me.animations[i].animationObject.numSteps;
 				}
 
-				me.animations[i].animationObject.render(me.animations[i].chartInstance, me.animations[i].animationObject);
-				if (me.animations[i].animationObject.onAnimationProgress && me.animations[i].animationObject.onAnimationProgress.call) {
-					me.animations[i].animationObject.onAnimationProgress.call(me.animations[i].chartInstance, me.animations[i]);
+				me.animations[i].animationObject.render(
+					me.animations[i].chartInstance,
+					me.animations[i].animationObject
+				);
+				if (
+					me.animations[i].animationObject.onAnimationProgress &&
+					me.animations[i].animationObject.onAnimationProgress.call
+				) {
+					me.animations[i].animationObject.onAnimationProgress.call(
+						me.animations[i].chartInstance,
+						me.animations[i]
+					);
 				}
 
-				if (me.animations[i].animationObject.currentStep === me.animations[i].animationObject.numSteps) {
-					if (me.animations[i].animationObject.onAnimationComplete && me.animations[i].animationObject.onAnimationComplete.call) {
-						me.animations[i].animationObject.onAnimationComplete.call(me.animations[i].chartInstance, me.animations[i]);
+				if (
+					me.animations[i].animationObject.currentStep ===
+					me.animations[i].animationObject.numSteps
+				) {
+					if (
+						me.animations[i].animationObject.onAnimationComplete &&
+						me.animations[i].animationObject.onAnimationComplete
+							.call
+					) {
+						me.animations[
+							i
+						].animationObject.onAnimationComplete.call(
+							me.animations[i].chartInstance,
+							me.animations[i]
+						);
 					}
 
 					// executed the last frame. Remove the animation.
@@ -134,6 +167,6 @@ module.exports = function(Chart) {
 			if (me.animations.length > 0) {
 				me.requestAnimationFrame();
 			}
-		}
+		},
 	};
 };

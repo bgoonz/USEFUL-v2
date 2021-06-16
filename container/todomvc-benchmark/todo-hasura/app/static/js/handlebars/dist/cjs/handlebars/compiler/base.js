@@ -11,7 +11,9 @@ extend(yy, Helpers, AST);
 
 function parse(input) {
   // Just return if an already-compile AST was passed in.
-  if (input.constructor === AST.ProgramNode) { return input; }
+  if (input.constructor === AST.ProgramNode) {
+    return input;
+  }
 
   parser.yy = yy;
 

@@ -1,5 +1,4 @@
-health
-====
+# health
 
 A simple framework for implementing an HTTP health check endpoint on servers.
 
@@ -8,4 +7,3 @@ Users implement their `health.Checkable` types, and create a `health.Checker`, f
 ### Documentation
 
 For more details, visit the docs on [gopkgdoc](http://godoc.org/github.com/coreos/pkg/health)
-

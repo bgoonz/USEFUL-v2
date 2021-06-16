@@ -1,9 +1,9 @@
-import defaultState from './State';
+import defaultState from "./State";
 
-const LOAD_REQUEST = 'Layout/ONGOING_REQUEST';
-const DONE_REQUEST = 'Layout/DONE_REQUEST';
-const FAILED_REQUEST = 'Layout/FAILED_REQUEST';
-const ERROR_REQUEST = 'Layout/ERROR_REQUEST';
+const LOAD_REQUEST = "Layout/ONGOING_REQUEST";
+const DONE_REQUEST = "Layout/DONE_REQUEST";
+const FAILED_REQUEST = "Layout/FAILED_REQUEST";
+const ERROR_REQUEST = "Layout/ERROR_REQUEST";
 
 const progressBarReducer = (state = defaultState, action) => {
   switch (action.type) {
@@ -13,7 +13,7 @@ const progressBarReducer = (state = defaultState, action) => {
         ongoingRequest: true,
         percent: 10,
         requestSuccess: null,
-        requestError: null
+        requestError: null,
       };
 
     case DONE_REQUEST:
@@ -22,7 +22,7 @@ const progressBarReducer = (state = defaultState, action) => {
         percent: 100,
         ongoingRequest: false,
         requestSuccess: true,
-        requestError: null
+        requestError: null,
       };
 
     case FAILED_REQUEST:
@@ -31,7 +31,7 @@ const progressBarReducer = (state = defaultState, action) => {
         percent: 100,
         ongoingRequest: false,
         requestSuccess: null,
-        requestError: true
+        requestError: true,
       };
 
     case ERROR_REQUEST:
@@ -41,12 +41,13 @@ const progressBarReducer = (state = defaultState, action) => {
         error: action.data,
         reqURL: action.url,
         reqData: action.params,
-        statusCode: action.statusCode
+        statusCode: action.statusCode,
       };
 
-    default: return state;
+    default:
+      return state;
   }
 };
 
 export default progressBarReducer;
-export {LOAD_REQUEST, DONE_REQUEST, FAILED_REQUEST, ERROR_REQUEST};
+export { LOAD_REQUEST, DONE_REQUEST, FAILED_REQUEST, ERROR_REQUEST };

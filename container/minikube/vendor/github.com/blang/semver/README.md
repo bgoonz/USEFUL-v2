@@ -1,13 +1,13 @@
-semver for golang [![Build Status](https://drone.io/github.com/blang/semver/status.png)](https://drone.io/github.com/blang/semver/latest) [![GoDoc](https://godoc.org/github.com/blang/semver?status.png)](https://godoc.org/github.com/blang/semver) [![Coverage Status](https://img.shields.io/coveralls/blang/semver.svg)](https://coveralls.io/r/blang/semver?branch=master)
-======
+# semver for golang [![Build Status](https://drone.io/github.com/blang/semver/status.png)](https://drone.io/github.com/blang/semver/latest) [![GoDoc](https://godoc.org/github.com/blang/semver?status.png)](https://godoc.org/github.com/blang/semver) [![Coverage Status](https://img.shields.io/coveralls/blang/semver.svg)](https://coveralls.io/r/blang/semver?branch=master)
 
 semver is a [Semantic Versioning](http://semver.org/) library written in golang. It fully covers spec version `2.0.0`.
 
-Usage
------
+## Usage
+
 ```bash
 $ go get github.com/blang/semver
 ```
+
 Note: Always vendor your dependencies or fix on a specific version tag.
 
 ```go
@@ -19,8 +19,7 @@ v1.Compare(v2)
 
 Also check the [GoDocs](http://godoc.org/github.com/blang/semver).
 
-Why should I use this lib?
------
+## Why should I use this lib?
 
 - Fully spec compatible
 - No reflection
@@ -32,9 +31,7 @@ Why should I use this lib?
 - Uses values instead of pointers
 - Many features, see below
 
-
-Features
------
+## Features
 
 - Parsing and validation at all levels
 - Comparator-like comparisons
@@ -44,9 +41,7 @@ Features
 - database/sql compatible (sql.Scanner/Valuer)
 - encoding/json compatible (json.Marshaler/Unmarshaler)
 
-
-Example
------
+## Example
 
 Have a look at full examples in [examples/main.go](examples/main.go)
 
@@ -103,8 +98,7 @@ if err != nil {
 }
 ```
 
-Benchmarks
------
+## Benchmarks
 
     BenchmarkParseSimple         5000000      328    ns/op    49 B/op   1 allocs/op
     BenchmarkParseComplex        1000000     2105    ns/op   263 B/op   7 allocs/op
@@ -123,20 +117,14 @@ Benchmarks
 
 See benchmark cases at [semver_test.go](semver_test.go)
 
-
-Motivation
------
+## Motivation
 
 I simply couldn't find any lib supporting the full spec. Others were just wrong or used reflection and regex which i don't like.
 
-
-Contribution
------
+## Contribution
 
 Feel free to make a pull request. For bigger changes create a issue first to discuss about it.
 
-
-License
------
+## License
 
 See [LICENSE](LICENSE) file.

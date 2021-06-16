@@ -4,8 +4,9 @@ This application consists of metabase, postgres, a webhook microservice, and a c
 Going through this guide and setting this up on Hasura should take you about 15-10mins.
 
 Pre-requisites:
+
 - A [Hasura](https://hasura.io) account: register/login [here](https://dashboard.hasura.io/register).
-- Follow the [instructions](https://dashboard.hasura.io/onboarding) to install and login with the hasura CLI. 
+- Follow the [instructions](https://dashboard.hasura.io/onboarding) to install and login with the hasura CLI.
 - Enable [billing](https://dashboard.hasura.io/account/billing) on Hasura (the free tier on Hasura will not be able to run metabase).
 
 ### Step 1: Fork & clone this repo
@@ -23,7 +24,7 @@ Hit `y` when you're asked for confirmation:
 $ hasura cluster create -c hasura
 ```
 
-This might take 10-15 mins and will create a cluster named something like `juniper41`. 
+This might take 10-15 mins and will create a cluster named something like `juniper41`.
 This is what a successful output will look like:
 
 ```
@@ -33,12 +34,12 @@ This is what a successful output will look like:
 Continue? (y/n) y
 • Started provisioning cluster [juniper41]. This can take around 10-15 mins. Go ahead, grab a cup of coffee!
 
-Completed 1/4: [juniper41] Creating a Kubernetes cluster 
-Completed 2/4: [juniper41] Initializing Hasura cluster 
-Completed 3/4: [juniper41] Syncing Hasura cluster 
-Completed 4/4: [juniper41] Generating SSL certificates 
+Completed 1/4: [juniper41] Creating a Kubernetes cluster
+Completed 2/4: [juniper41] Initializing Hasura cluster
+Completed 3/4: [juniper41] Syncing Hasura cluster
+Completed 4/4: [juniper41] Generating SSL certificates
 ✓ Hasura cluster created name=juniper41
-✓ SSH key (/Users/tanmaigopal/.ssh/id_rsa.pub) added to the cluster                 
+✓ SSH key (/Users/tanmaigopal/.ssh/id_rsa.pub) added to the cluster
 ✓ Git remote added to this repo name=hasura url=ssh://hasura@juniper41.hasura-app.io:22/~/git/juniper41
 ✓ You can now 'git push' to clusters [hasura]
 ✓ Cluster added to project cluster-alias=hasura cluster-name=juniper41
@@ -65,10 +66,11 @@ $ hasura secrets update github.token 123whatamagicalsecret789
 The github org environment variable is in a kubernetes manifest file.
 
 Head to `microservices/app/k8s.yaml` and around Line#30 edit the environment variable called `GITHUB_ORG`:
+
 ```yaml
-- name: GITHUB_ORG                                                                                       
+- name: GITHUB_ORG
   value: "my-github-org"
-```  
+```
 
 ### Step 4: Deploy
 
@@ -85,7 +87,7 @@ Once this is done, to check if everything worked successfully, you can check if 
 ```
 $ hasura api-console
 • Trying to open console in browser. If it doesn't work, open the below URL manually:
-• Console URL: http://localhost:9695 
+• Console URL: http://localhost:9695
 ```
 
 This will open up a browser that is running an admin UI.
@@ -101,7 +103,7 @@ The `app` microservice running on the cluster has a bunch of APIs that help with
 ```bash
 # Open the app microservice URL:
 $ hasura microservice open app
-✓ https://app.juniper41.hasura-app.io/ opened in browser          
+✓ https://app.juniper41.hasura-app.io/ opened in browser
 ```
 
 This will open up the browser at a URL like: `app.clusterName.hasura-app.io`.
@@ -117,9 +119,10 @@ For example:
 ### Step 6: Initialise metabase
 
 Open up the `metabase` microservice:
+
 ```
 $ hasura microservice open metabase
-✓ https://metabase.juniper41.hasura-app.io/ opened in browser          
+✓ https://metabase.juniper41.hasura-app.io/ opened in browser
 ```
 
 Metabase takes a while to startup, so if you see a 502/504 for a minute or two, don't panic.

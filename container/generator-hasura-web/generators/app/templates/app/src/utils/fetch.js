@@ -1,4 +1,4 @@
-import 'isomorphic-fetch';
+import "isomorphic-fetch";
 
 /**
  * A generic fetch function which will perform an isomorphic-fetch.
@@ -15,70 +15,86 @@ import 'isomorphic-fetch';
  *
  * @return {Promise}            A promise object which tell if it is resolved or if its rejected.
  */
-const makeRequest = (url, options, ON_SUCCESS = null, ON_FAILURE = null, ON_LOADING = null, isJSON = true) => {
+const makeRequest = (
+  url,
+  options,
+  ON_SUCCESS = null,
+  ON_FAILURE = null,
+  ON_LOADING = null,
+  isJSON = true
+) => {
   return (dispatch) => {
     // During the load calls the ON_LOADING action.
-    if (ON_LOADING !== null ) {
+    if (ON_LOADING !== null) {
       dispatch({ type: ON_LOADING });
     }
     // A promise which tell if request is successful or not.
     const promise = new Promise((resolve, reject) => {
-      fetch(url, options).then((response) => {
-        if (response.ok) {
-          if (isJSON) {
-            response.json().then((data) => {
-              if (ON_SUCCESS !== null) {
-                dispatch({type: ON_SUCCESS, data});
-              }
-              resolve(data);
-              return;
-            }, (error) => {
-              console.error('Error : ');
-              console.error(error);
+      fetch(url, options).then(
+        (response) => {
+          if (response.ok) {
+            if (isJSON) {
+              response.json().then(
+                (data) => {
+                  if (ON_SUCCESS !== null) {
+                    dispatch({ type: ON_SUCCESS, data });
+                  }
+                  resolve(data);
+                  return;
+                },
+                (error) => {
+                  console.error("Error : ");
+                  console.error(error);
 
-              if (ON_FAILURE !== null) {
-                dispatch({type: ON_FAILURE, error});
-              }
-              reject(error);
-              return;
-            });
+                  if (ON_FAILURE !== null) {
+                    dispatch({ type: ON_FAILURE, error });
+                  }
+                  reject(error);
+                  return;
+                }
+              );
+            } else {
+              response.text().then(
+                (data) => {
+                  if (ON_SUCCESS !== null) {
+                    dispatch({ type: ON_SUCCESS, data: data });
+                  }
+                  resolve(data);
+                  return;
+                },
+                (error) => {
+                  console.error("Error : ");
+                  console.error(error);
+                  if (ON_FAILURE !== null) {
+                    dispatch({ type: ON_FAILURE, error: error });
+                  }
+                  reject(error);
+                  return;
+                }
+              );
+            }
           } else {
-            response.text().then((data) => {
-              if (ON_SUCCESS !== null) {
-                dispatch({ type: ON_SUCCESS, data: data });
-              }
-              resolve(data);
-              return;
-            }, (error) => {
-              console.error('Error : ');
-              console.error(error);
+            // if the fetch happended but the server gives a non-ok response.
+            response.json().then((errorObj) => {
+              console.error(errorObj);
               if (ON_FAILURE !== null) {
-                dispatch({ type: ON_FAILURE, error: error });
+                dispatch({ type: ON_FAILURE, error: errorObj });
               }
-              reject(error);
+              reject(errorObj);
               return;
             });
           }
-        } else {
-          // if the fetch happended but the server gives a non-ok response.
-          response.json().then((errorObj) => {
-            console.error(errorObj);
-            if (ON_FAILURE !== null) {
-              dispatch({ type: ON_FAILURE, error: errorObj });
-            }
-            reject(errorObj);
-            return;
-          });
+        },
+        (error) => {
+          console.error("Error : ");
+          console.error(error);
+          if (ON_FAILURE !== null) {
+            dispatch({ type: ON_FAILURE, error: error });
+          }
+          reject(error);
+          return;
         }
-      }, (error) => {
-        console.error('Error : ');
-        console.error(error);
-        if (ON_FAILURE !== null) {
-          dispatch({ type: ON_FAILURE, error: error });
-        }
-        reject(error);
-        return;
-      });
+      );
     });
     return promise;
   };
@@ -94,25 +110,27 @@ const makeRequest = (url, options, ON_SUCCESS = null, ON_FAILURE = null, ON_LOAD
  *
  * @return {Object}          the fetch option object.
  */
-const createDefaultFetchOption = (jsonBody = {}, includeCredentials = true, methodType = 'POST', isJSON = true) => {
+const createDefaultFetchOption = (
+  jsonBody = {},
+  includeCredentials = true,
+  methodType = "POST",
+  isJSON = true
+) => {
   const requestBuilder = {};
   requestBuilder.method = methodType;
 
   if (isJSON) {
-    requestBuilder.headers = { 'Content-Type': 'application/json' };
+    requestBuilder.headers = { "Content-Type": "application/json" };
   }
 
   if (includeCredentials) {
-    requestBuilder.credentials = 'include';
+    requestBuilder.credentials = "include";
   }
 
-  if (methodType.toUpperCase() !== 'GET' ) {
+  if (methodType.toUpperCase() !== "GET") {
     requestBuilder.body = JSON.stringify(jsonBody);
   }
   return requestBuilder;
 };
 
-export {
-  makeRequest,
-  createDefaultFetchOption
-};
+export { makeRequest, createDefaultFetchOption };

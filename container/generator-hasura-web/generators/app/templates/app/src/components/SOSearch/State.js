@@ -2,9 +2,9 @@ const state = {
   loaded: false,
   loading: false,
   data: {
-    query: '',
-    results: []
-  }
+    query: "",
+    results: [],
+  },
 };
 
 export default state;

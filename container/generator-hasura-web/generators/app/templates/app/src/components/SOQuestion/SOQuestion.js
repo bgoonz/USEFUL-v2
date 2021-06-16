@@ -1,12 +1,12 @@
-import React from 'react';
-import {Link} from 'react-router';
+import React from "react";
+import { Link } from "react-router";
 
 class SOQuestion extends React.Component {
   static propTypes = {
     question: React.PropTypes.shape({
       title: React.PropTypes.string.isRequired,
-      link: React.PropTypes.string.isRequired
-    }).isRequired
+      link: React.PropTypes.string.isRequired,
+    }).isRequired,
   };
 
   render() {
@@ -14,7 +14,10 @@ class SOQuestion extends React.Component {
 
     return (
       <div>
-        <Link to={question.link} dangerouslySetInnerHTML={{__html: question.title}} />
+        <Link
+          to={question.link}
+          dangerouslySetInnerHTML={{ __html: question.title }}
+        />
       </div>
     );
   }

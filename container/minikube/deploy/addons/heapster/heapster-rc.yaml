@@ -20,19 +20,19 @@ spec:
         k8s-app: heapster
     spec:
       containers:
-      - name: heapster
-        image: gcr.io/google_containers/heapster:v1.3.0
-        imagePullPolicy: IfNotPresent
-        command:
-        - /heapster
-        - --source=kubernetes
-        - --sink=influxdb:http://monitoring-influxdb:8086
-        - --metric_resolution=60s
-        volumeMounts:
-        - name: ssl-certs
-          mountPath: /etc/ssl/certs
-          readOnly: true
+        - name: heapster
+          image: gcr.io/google_containers/heapster:v1.3.0
+          imagePullPolicy: IfNotPresent
+          command:
+            - /heapster
+            - --source=kubernetes
+            - --sink=influxdb:http://monitoring-influxdb:8086
+            - --metric_resolution=60s
+          volumeMounts:
+            - name: ssl-certs
+              mountPath: /etc/ssl/certs
+              readOnly: true
       volumes:
-      - name: ssl-certs
-        hostPath:
-          path: /etc/ssl/certs
+        - name: ssl-certs
+          hostPath:
+            path: /etc/ssl/certs

@@ -1,28 +1,26 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	Chart.defaults.polarArea = {
-
 		scale: {
-			type: 'radialLinear',
+			type: "radialLinear",
 			lineArc: true, // so that lines are circular
 			ticks: {
-				beginAtZero: true
-			}
+				beginAtZero: true,
+			},
 		},
 
 		// Boolean - Whether to animate the rotation of the chart
 		animation: {
 			animateRotate: true,
-			animateScale: true
+			animateScale: true,
 		},
 
 		startAngle: -0.5 * Math.PI,
 		aspectRatio: 1,
-		legendCallback: function(chart) {
+		legendCallback: function (chart) {
 			var text = [];
 			text.push('<ul class="' + chart.id + '-legend">');
 
@@ -32,105 +30,149 @@ module.exports = function(Chart) {
 
 			if (datasets.length) {
 				for (var i = 0; i < datasets[0].data.length; ++i) {
-					text.push('<li><span style="background-color:' + datasets[0].backgroundColor[i] + '"></span>');
+					text.push(
+						'<li><span style="background-color:' +
+							datasets[0].backgroundColor[i] +
+							'"></span>'
+					);
 					if (labels[i]) {
 						text.push(labels[i]);
 					}
-					text.push('</li>');
+					text.push("</li>");
 				}
 			}
 
-			text.push('</ul>');
-			return text.join('');
+			text.push("</ul>");
+			return text.join("");
 		},
 		legend: {
 			labels: {
-				generateLabels: function(chart) {
+				generateLabels: function (chart) {
 					var data = chart.data;
 					if (data.labels.length && data.datasets.length) {
-						return data.labels.map(function(label, i) {
+						return data.labels.map(function (label, i) {
 							var meta = chart.getDatasetMeta(0);
 							var ds = data.datasets[0];
 							var arc = meta.data[i];
 							var custom = arc.custom || {};
-							var getValueAtIndexOrDefault = helpers.getValueAtIndexOrDefault;
+							var getValueAtIndexOrDefault =
+								helpers.getValueAtIndexOrDefault;
 							var arcOpts = chart.options.elements.arc;
-							var fill = custom.backgroundColor ? custom.backgroundColor : getValueAtIndexOrDefault(ds.backgroundColor, i, arcOpts.backgroundColor);
-							var stroke = custom.borderColor ? custom.borderColor : getValueAtIndexOrDefault(ds.borderColor, i, arcOpts.borderColor);
-							var bw = custom.borderWidth ? custom.borderWidth : getValueAtIndexOrDefault(ds.borderWidth, i, arcOpts.borderWidth);
+							var fill = custom.backgroundColor
+								? custom.backgroundColor
+								: getValueAtIndexOrDefault(
+										ds.backgroundColor,
+										i,
+										arcOpts.backgroundColor
+								  );
+							var stroke = custom.borderColor
+								? custom.borderColor
+								: getValueAtIndexOrDefault(
+										ds.borderColor,
+										i,
+										arcOpts.borderColor
+								  );
+							var bw = custom.borderWidth
+								? custom.borderWidth
+								: getValueAtIndexOrDefault(
+										ds.borderWidth,
+										i,
+										arcOpts.borderWidth
+								  );
 
 							return {
 								text: label,
 								fillStyle: fill,
 								strokeStyle: stroke,
 								lineWidth: bw,
-								hidden: isNaN(ds.data[i]) || meta.data[i].hidden,
+								hidden:
+									isNaN(ds.data[i]) || meta.data[i].hidden,
 
 								// Extra data used for toggling the correct item
-								index: i
+								index: i,
 							};
 						});
 					}
 					return [];
-				}
+				},
 			},
 
-			onClick: function(e, legendItem) {
+			onClick: function (e, legendItem) {
 				var index = legendItem.index;
 				var chart = this.chart;
 				var i, ilen, meta;
 
-				for (i = 0, ilen = (chart.data.datasets || []).length; i < ilen; ++i) {
+				for (
+					i = 0, ilen = (chart.data.datasets || []).length;
+					i < ilen;
+					++i
+				) {
 					meta = chart.getDatasetMeta(i);
 					meta.data[index].hidden = !meta.data[index].hidden;
 				}
 
 				chart.update();
-			}
+			},
 		},
 
 		// Need to override these to give a nice default
 		tooltips: {
 			callbacks: {
-				title: function() {
-					return '';
+				title: function () {
+					return "";
 				},
-				label: function(tooltipItem, data) {
-					return data.labels[tooltipItem.index] + ': ' + tooltipItem.yLabel;
-				}
-			}
-		}
+				label: function (tooltipItem, data) {
+					return (
+						data.labels[tooltipItem.index] +
+						": " +
+						tooltipItem.yLabel
+					);
+				},
+			},
+		},
 	};
 
 	Chart.controllers.polarArea = Chart.DatasetController.extend({
-
 		dataElementType: Chart.elements.Arc,
 
 		linkScales: helpers.noop,
 
-		update: function(reset) {
+		update: function (reset) {
 			var me = this;
 			var chart = me.chart;
 			var chartArea = chart.chartArea;
 			var meta = me.getMeta();
 			var opts = chart.options;
 			var arcOpts = opts.elements.arc;
-			var minSize = Math.min(chartArea.right - chartArea.left, chartArea.bottom - chartArea.top);
-			chart.outerRadius = Math.max((minSize - arcOpts.borderWidth / 2) / 2, 0);
-			chart.innerRadius = Math.max(opts.cutoutPercentage ? (chart.outerRadius / 100) * (opts.cutoutPercentage) : 1, 0);
-			chart.radiusLength = (chart.outerRadius - chart.innerRadius) / chart.getVisibleDatasetCount();
+			var minSize = Math.min(
+				chartArea.right - chartArea.left,
+				chartArea.bottom - chartArea.top
+			);
+			chart.outerRadius = Math.max(
+				(minSize - arcOpts.borderWidth / 2) / 2,
+				0
+			);
+			chart.innerRadius = Math.max(
+				opts.cutoutPercentage
+					? (chart.outerRadius / 100) * opts.cutoutPercentage
+					: 1,
+				0
+			);
+			chart.radiusLength =
+				(chart.outerRadius - chart.innerRadius) /
+				chart.getVisibleDatasetCount();
 
-			me.outerRadius = chart.outerRadius - (chart.radiusLength * me.index);
+			me.outerRadius = chart.outerRadius - chart.radiusLength * me.index;
 			me.innerRadius = me.outerRadius - chart.radiusLength;
 
 			meta.count = me.countVisibleElements();
 
-			helpers.each(meta.data, function(arc, index) {
+			helpers.each(meta.data, function (arc, index) {
 				me.updateElement(arc, index, reset);
 			});
 		},
 
-		updateElement: function(arc, index, reset) {
+		updateElement: function (arc, index, reset) {
 			var me = this;
 			var chart = me.chart;
 			var dataset = me.getDataset();
@@ -156,11 +198,15 @@ module.exports = function(Chart) {
 
 			// var negHalfPI = -0.5 * Math.PI;
 			var datasetStartAngle = opts.startAngle;
-			var distance = arc.hidden ? 0 : scale.getDistanceFromCenterForValue(dataset.data[index]);
-			var startAngle = datasetStartAngle + (circumference * visibleCount);
+			var distance = arc.hidden
+				? 0
+				: scale.getDistanceFromCenterForValue(dataset.data[index]);
+			var startAngle = datasetStartAngle + circumference * visibleCount;
 			var endAngle = startAngle + (arc.hidden ? 0 : circumference);
 
-			var resetRadius = animationOpts.animateScale ? 0 : scale.getDistanceFromCenterForValue(dataset.data[index]);
+			var resetRadius = animationOpts.animateScale
+				? 0
+				: scale.getDistanceFromCenterForValue(dataset.data[index]);
 
 			helpers.extend(arc, {
 				// Utility
@@ -174,10 +220,20 @@ module.exports = function(Chart) {
 					y: centerY,
 					innerRadius: 0,
 					outerRadius: reset ? resetRadius : distance,
-					startAngle: reset && animationOpts.animateRotate ? datasetStartAngle : startAngle,
-					endAngle: reset && animationOpts.animateRotate ? datasetStartAngle : endAngle,
-					label: getValueAtIndexOrDefault(labels, index, labels[index])
-				}
+					startAngle:
+						reset && animationOpts.animateRotate
+							? datasetStartAngle
+							: startAngle,
+					endAngle:
+						reset && animationOpts.animateRotate
+							? datasetStartAngle
+							: endAngle,
+					label: getValueAtIndexOrDefault(
+						labels,
+						index,
+						labels[index]
+					),
+				},
 			});
 
 			// Apply border and fill style
@@ -186,16 +242,20 @@ module.exports = function(Chart) {
 			arc.pivot();
 		},
 
-		removeHoverStyle: function(arc) {
-			Chart.DatasetController.prototype.removeHoverStyle.call(this, arc, this.chart.options.elements.arc);
+		removeHoverStyle: function (arc) {
+			Chart.DatasetController.prototype.removeHoverStyle.call(
+				this,
+				arc,
+				this.chart.options.elements.arc
+			);
 		},
 
-		countVisibleElements: function() {
+		countVisibleElements: function () {
 			var dataset = this.getDataset();
 			var meta = this.getMeta();
 			var count = 0;
 
-			helpers.each(meta.data, function(element, index) {
+			helpers.each(meta.data, function (element, index) {
 				if (!isNaN(dataset.data[index]) && !element.hidden) {
 					count++;
 				}
@@ -204,12 +264,12 @@ module.exports = function(Chart) {
 			return count;
 		},
 
-		calculateCircumference: function(value) {
+		calculateCircumference: function (value) {
 			var count = this.getMeta().count;
 			if (count > 0 && !isNaN(value)) {
 				return (2 * Math.PI) / count;
 			}
 			return 0;
-		}
+		},
 	});
 };

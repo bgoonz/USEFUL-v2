@@ -4,25 +4,24 @@ Cobra is both a library for creating powerful modern CLI applications as well as
 
 Many of the most widely used Go projects are built using Cobra including:
 
-* [Kubernetes](http://kubernetes.io/)
-* [Hugo](http://gohugo.io)
-* [rkt](https://github.com/coreos/rkt)
-* [etcd](https://github.com/coreos/etcd)
-* [Docker (distribution)](https://github.com/docker/distribution)
-* [OpenShift](https://www.openshift.com/)
-* [Delve](https://github.com/derekparker/delve)
-* [GopherJS](http://www.gopherjs.org/)
-* [CockroachDB](http://www.cockroachlabs.com/)
-* [Bleve](http://www.blevesearch.com/)
-* [ProjectAtomic (enterprise)](http://www.projectatomic.io/)
-* [Parse (CLI)](https://parse.com/)
-* [GiantSwarm's swarm](https://github.com/giantswarm/cli)
-* [Nanobox](https://github.com/nanobox-io/nanobox)/[Nanopack](https://github.com/nanopack)
-
+- [Kubernetes](http://kubernetes.io/)
+- [Hugo](http://gohugo.io)
+- [rkt](https://github.com/coreos/rkt)
+- [etcd](https://github.com/coreos/etcd)
+- [Docker (distribution)](https://github.com/docker/distribution)
+- [OpenShift](https://www.openshift.com/)
+- [Delve](https://github.com/derekparker/delve)
+- [GopherJS](http://www.gopherjs.org/)
+- [CockroachDB](http://www.cockroachlabs.com/)
+- [Bleve](http://www.blevesearch.com/)
+- [ProjectAtomic (enterprise)](http://www.projectatomic.io/)
+- [Parse (CLI)](https://parse.com/)
+- [GiantSwarm's swarm](https://github.com/giantswarm/cli)
+- [Nanobox](https://github.com/nanobox-io/nanobox)/[Nanopack](https://github.com/nanopack)
 
 [![Build Status](https://travis-ci.org/spf13/cobra.svg "Travis CI status")](https://travis-ci.org/spf13/cobra)
 [![CircleCI status](https://circleci.com/gh/spf13/cobra.png?circle-token=:circle-token "CircleCI status")](https://circleci.com/gh/spf13/cobra)
-[![GoDoc](https://godoc.org/github.com/spf13/cobra?status.svg)](https://godoc.org/github.com/spf13/cobra) 
+[![GoDoc](https://godoc.org/github.com/spf13/cobra?status.svg)](https://godoc.org/github.com/spf13/cobra)
 
 ![cobra](https://cloud.githubusercontent.com/assets/173412/10911369/84832a8e-8212-11e5-9f82-cc96660a4794.gif)
 
@@ -35,20 +34,21 @@ Cobra is also an application that will generate your application scaffolding to 
 develop a Cobra-based application.
 
 Cobra provides:
-* Easy subcommand-based CLIs: `app server`, `app fetch`, etc.
-* Fully POSIX-compliant flags (including short & long versions)
-* Nested subcommands
-* Global, local and cascading flags
-* Easy generation of applications & commands with `cobra create appname` & `cobra add cmdname`
-* Intelligent suggestions (`app srver`... did you mean `app server`?)
-* Automatic help generation for commands and flags
-* Automatic detailed help for `app help [command]`
-* Automatic help flag recognition of `-h`, `--help`, etc.
-* Automatically generated bash autocomplete for your application
-* Automatically generated man pages for your application
-* Command aliases so you can change things without breaking them
-* The flexibilty to define your own help, usage, etc.
-* Optional tight integration with [viper](http://github.com/spf13/viper) for 12-factor apps
+
+- Easy subcommand-based CLIs: `app server`, `app fetch`, etc.
+- Fully POSIX-compliant flags (including short & long versions)
+- Nested subcommands
+- Global, local and cascading flags
+- Easy generation of applications & commands with `cobra create appname` & `cobra add cmdname`
+- Intelligent suggestions (`app srver`... did you mean `app server`?)
+- Automatic help generation for commands and flags
+- Automatic detailed help for `app help [command]`
+- Automatic help flag recognition of `-h`, `--help`, etc.
+- Automatically generated bash autocomplete for your application
+- Automatically generated man pages for your application
+- Command aliases so you can change things without breaking them
+- The flexibilty to define your own help, usage, etc.
+- Optional tight integration with [viper](http://github.com/spf13/viper) for 12-factor apps
 
 Cobra has an exceptionally clean interface and simple design without needless
 constructors or initialization methods.
@@ -56,7 +56,7 @@ constructors or initialization methods.
 Applications built with Cobra commands are designed to be as user-friendly as
 possible. Flags can be placed before or after the command (as long as a
 confusing space isn’t provided). Both short and long flags can be used. A
-command need not even be fully typed.  Help is automatically generated and
+command need not even be fully typed. Help is automatically generated and
 available for the application or for a specific command using either the help
 command or the `--help` flag.
 
@@ -71,7 +71,7 @@ to use the application because they will natively understand how to use it.
 
 The pattern to follow is
 `APPNAME VERB NOUN --ADJECTIVE.`
-    or
+or
 `APPNAME COMMAND ARG --FLAG`
 
 A few good real world examples may better illustrate this point.
@@ -125,6 +125,7 @@ Once each command is defined with its corresponding flags, then the
 tree is assigned to the commander which is finally executed.
 
 # Installing
+
 Using Cobra is easy. First, use `go get` to install the latest version
 of the library. This command will install the `cobra` generator executible
 along with the library:
@@ -197,9 +198,9 @@ cobra init github.com/spf13/newAppName
 Once an application is initialized Cobra can create additional commands for you.
 Let's say you created an app and you wanted the following commands for it:
 
-* app serve
-* app config
-* app config create
+- app serve
+- app config
+- app config create
 
 In your project directory (where your main.go file is) you would run the following:
 
@@ -220,8 +221,7 @@ Once you have run these three commands you would have an app structure that woul
       main.go
 ```
 
-at this point you can run `go run main.go` and it would run your app. `go run
-main.go serve`, `go run main.go config`, `go run main.go config create` along
+at this point you can run `go run main.go` and it would run your app. `go run main.go serve`, `go run main.go config`, `go run main.go config create` along
 with `go run main.go help serve`, etc would all work.
 
 Obviously you haven't added your own code to these yet, the commands are ready
@@ -251,7 +251,7 @@ license:
 
     This is my license. There are many like it, but this one is mine.
     My license is my best friend. It is my life. I must master it as I must
-    master my life.  
+    master my life.
 ```
 
 ## Manually implementing Cobra
@@ -262,7 +262,6 @@ You will optionally provide additional commands as you see fit.
 ### Create the root command
 
 The root command represents your binary itself.
-
 
 #### Manually create rootCmd
 
@@ -323,7 +322,6 @@ func main() {
 }
 ```
 
-
 ### Create additional commands
 
 Additional commands can be defined and typically are each given their own file
@@ -354,7 +352,6 @@ var versionCmd = &cobra.Command{
 ```
 
 ### Attach command to its parent
-
 
 If you notice in the above example we attach the command to its parent. In
 this case the parent is the rootCmd. In this example we are attaching it to the
@@ -411,7 +408,6 @@ A flag can also be assigned locally which will only apply to that specific comma
 ```go
 RootCmd.Flags().StringVarP(&Source, "source", "s", "", "Source directory to read from")
 ```
-
 
 ## Example
 
@@ -489,7 +485,7 @@ Cobra automatically adds a help command to your application when you have subcom
 This will be called when a user runs 'app help'. Additionally, help will also
 support all other commands as input. Say, for instance, you have a command called
 'create' without any additional configuration; Cobra will work when 'app help
-create' is called.  Every command will automatically have the '--help' flag added.
+create' is called. Every command will automatically have the '--help' flag added.
 
 ### Example
 
@@ -551,7 +547,6 @@ command and flag definitions are needed.
 
     Use "hugo [command] --help" for more information about a command.
 
-
 Help is just a command like any other. There is no special logic or behavior
 around it. In fact, you can provide your own if you want.
 
@@ -594,6 +589,7 @@ When the user provides an invalid flag or invalid command, Cobra responds by
 showing the user the 'usage'.
 
 ### Example
+
 You may recognize this from the help above. That's because the default help
 embeds the usage as part of its output.
 
@@ -642,6 +638,7 @@ embeds the usage as part of its output.
       -w, --watch[=false]: watch filesystem for changes and recreate as needed
 
 ### Defining your own usage
+
 You can provide your own usage function or template for Cobra to use.
 
 The default usage function is:
@@ -663,7 +660,7 @@ command.SetUsageTemplate(s string)
 
 ## PreRun or PostRun Hooks
 
-It is possible to run functions before or after the main `Run` function of your command. The `PersistentPreRun` and `PreRun` functions will be executed before `Run`. `PersistentPostRun` and `PostRun` will be executed after `Run`.  The `Persistent*Run` functions will be inherrited by children if they do not declare their own.  These function are run in the following order:
+It is possible to run functions before or after the main `Run` function of your command. The `PersistentPreRun` and `PreRun` functions will be executed before `Run`. `PersistentPostRun` and `PostRun` will be executed after `Run`. The `Persistent*Run` functions will be inherrited by children if they do not declare their own. These function are run in the following order:
 
 - `PersistentPreRun`
 - `PreRun`
@@ -671,7 +668,7 @@ It is possible to run functions before or after the main `Run` function of your 
 - `PostRun`
 - `PersistentPostRun`
 
-An example of two commands which use all of these features is below.  When the subcommand is executed, it will run the root command's `PersistentPreRun` but not the root command's `PersistentPostRun`:
+An example of two commands which use all of these features is below. When the subcommand is executed, it will run the root command's `PersistentPreRun` but not the root command's `PersistentPostRun`:
 
 ```go
 package main
@@ -731,17 +728,16 @@ func main() {
 }
 ```
 
-
 ## Alternative Error Handling
 
 Cobra also has functions where the return signature is an error. This allows for errors to bubble up to the top,
 providing a way to handle the errors in one location. The current list of functions that return an error is:
 
-* PersistentPreRunE
-* PreRunE
-* RunE
-* PostRunE
-* PersistentPostRunE
+- PersistentPreRunE
+- PreRunE
+- RunE
+- PostRunE
+- PersistentPostRunE
 
 If you would like to silence the default `error` and `usage` output in favor of your own, you can set `SilenceUsage`
 and `SilenceErrors` to `false` on the command. A child command respects these flags if they are set on the parent
@@ -828,7 +824,7 @@ Cobra can generate a man page based on the subcommands, flags, etc. A simple exa
 
 ## Generating bash completions for your command
 
-Cobra can generate a bash-completion file. If you add more information to your command, these completions can be amazingly powerful and flexible.  Read more about it in [Bash Completions](bash_completions.md).
+Cobra can generate a bash-completion file. If you add more information to your command, these completions can be amazingly powerful and flexible. Read more about it in [Bash Completions](bash_completions.md).
 
 ## Debugging
 
@@ -842,37 +838,39 @@ command.DebugFlags()
 ```
 
 ## Release Notes
-* **0.9.0** June 17, 2014
-  * flags can appears anywhere in the args (provided they are unambiguous)
-  * --help prints usage screen for app or command
-  * Prefix matching for commands
-  * Cleaner looking help and usage output
-  * Extensive test suite
-* **0.8.0** Nov 5, 2013
-  * Reworked interface to remove commander completely
-  * Command now primary structure
-  * No initialization needed
-  * Usage & Help templates & functions definable at any level
-  * Updated Readme
-* **0.7.0** Sept 24, 2013
-  * Needs more eyes
-  * Test suite
-  * Support for automatic error messages
-  * Support for help command
-  * Support for printing to any io.Writer instead of os.Stderr
-  * Support for persistent flags which cascade down tree
-  * Ready for integration into Hugo
-* **0.1.0** Sept 3, 2013
-  * Implement first draft
+
+- **0.9.0** June 17, 2014
+  - flags can appears anywhere in the args (provided they are unambiguous)
+  - --help prints usage screen for app or command
+  - Prefix matching for commands
+  - Cleaner looking help and usage output
+  - Extensive test suite
+- **0.8.0** Nov 5, 2013
+  - Reworked interface to remove commander completely
+  - Command now primary structure
+  - No initialization needed
+  - Usage & Help templates & functions definable at any level
+  - Updated Readme
+- **0.7.0** Sept 24, 2013
+  - Needs more eyes
+  - Test suite
+  - Support for automatic error messages
+  - Support for help command
+  - Support for printing to any io.Writer instead of os.Stderr
+  - Support for persistent flags which cascade down tree
+  - Ready for integration into Hugo
+- **0.1.0** Sept 3, 2013
+  - Implement first draft
 
 ## Extensions
 
 Libraries for extending Cobra:
 
-* [cmdns](https://github.com/gosuri/cmdns): Enables name spacing a command's immediate children. It provides an alternative way to structure subcommands, similar to `heroku apps:create` and `ovrclk clusters:launch`.
+- [cmdns](https://github.com/gosuri/cmdns): Enables name spacing a command's immediate children. It provides an alternative way to structure subcommands, similar to `heroku apps:create` and `ovrclk clusters:launch`.
 
 ## ToDo
-* Launch proper documentation site
+
+- Launch proper documentation site
 
 ## Contributing
 
@@ -886,13 +884,12 @@ Libraries for extending Cobra:
 
 Names in no particular order:
 
-* [spf13](https://github.com/spf13),
-[eparis](https://github.com/eparis),
-[bep](https://github.com/bep), and many more!
+- [spf13](https://github.com/spf13),
+  [eparis](https://github.com/eparis),
+  [bep](https://github.com/bep), and many more!
 
 ## License
 
 Cobra is released under the Apache 2.0 license. See [LICENSE.txt](https://github.com/spf13/cobra/blob/master/LICENSE.txt)
-
 
 [![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/spf13/cobra/trend.png)](https://bitdeli.com/free "Bitdeli Badge")

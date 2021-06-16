@@ -32,12 +32,12 @@ Under Permissions, click on **Add Permissions for new Role** to add a new permis
 
 ![Alt text](https://github.com/hasura/Modules-Android/blob/master/Module_2-Registration/add_permissions_userdetails.png)
 
-
 ## 2: Configuring the Hasura Android SDK:
 
 Once you have created your android project, you will have to add Hasura-Android SDK and a few other dependencies. To do so, I am using Gradle.
 
 Add the following code to the App level build.gradle file
+
 ```
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.squareup.retrofit2:retrofit:2.1.0'
@@ -51,6 +51,7 @@ Add the following code to the App level build.gradle file
 ```
 
 Make the following changes to Project level build.gradle file
+
 ```
     allprojects {
         repositories {
@@ -69,6 +70,7 @@ For more information go to [Hasura Android SDK](https://github.com/hasura/androi
 To access your Hasura Project through android, you will have to first initialize it.
 
 This initialization should be before you start using the SDK(like beginning of your launcher activity), else you will get an error.
+
 ```
   Hasura.setProjectConfig(new ProjectConfig.Builder()
                 .setProjectName("Project-Name")
@@ -77,6 +79,7 @@ This initialization should be before you start using the SDK(like beginning of y
                 .initialise(this);
 
 ```
+
 ## 4: SignUp and Login:
 
 Regarding the signUp/Login part, please refer to [Hasura Android Module 1-Login](https://github.com/hasura/Modules-Android/tree/master/Module_1-Login).
@@ -94,6 +97,7 @@ To do this, we have to fire a select query.
 #### Modelling the UserDetails class:
 
 Create a new java file called UserDetails and insert the following:
+
 ```
 public class UserDetails {
     @SerializedName("name")
@@ -147,6 +151,7 @@ public class UserDetails {
 ```
 
 #### Modelling the SelectQuery:
+
 ```
 public class SelectQuery {
     @SerializedName("type")
@@ -179,9 +184,11 @@ public class SelectQuery {
 }
 
 ```
+
 For more about modelling, refer the [Hasura Data Docs](https://hasura.io/_docs/platform/0.6/ref/data/reference.html)
 
 To make calls to Hasura, we use the HasuraClient instance provided by the SDK
+
 ```
 HasuraClient client = Hasura.getClient();
 
@@ -192,6 +199,7 @@ HasuraClient client = Hasura.getClient();
 If we get the information, we will use the Hasura FileStore to download the profile picture.
 
 We extract File-Id from the response we get, and then download that particular file.
+
 ```
 client.useDataService()
                     .setRequestBody(new SelectQuery(userId)
@@ -201,29 +209,31 @@ client.useDataService()
                         public void onSuccess(List<UserDetails> userDetailsList) {
                             UserDetails userDetails = userDetailsList.get(0);
                             String fileId = userDetails.getFileId();
-                            
+
                             //Now download from file store once you have the fileId of the file.
                         }
 
                         @Override
                         public void onFailure(HasuraException e) {
-                        
+
                         }
                     });
 
 ```
+
 ##### Using FileStore for downloading data
+
 ```
 client.useFileStoreService()
            .downloadFile(fileId, new FileDownloadResponseListener() {
                 @Override
                 public void onDownloadComplete(byte[] bytes) {
-                                            
+
                 }
 
                 @Override
                 public void onDownloadFailed(HasuraException e) {
-                                            
+
                 }
 
                 @Override
@@ -233,11 +243,13 @@ client.useFileStoreService()
            });
 
 ```
+
 #### Uploading Data
 
 Depending on whether the user already has profile information stored or not, we will update/ insert into the table respectively.
 
 ##### Update Query:
+
 ```
 public class UpdateQuery {
     @SerializedName("type")
@@ -284,6 +296,7 @@ public class UpdateQuery {
 ```
 
 ##### Insert Query:
+
 ```
 public class InsertQuery {
     @SerializedName("type")
@@ -308,9 +321,11 @@ public class InsertQuery {
 }
 
 ```
+
 #### Making the call:
 
 When the submit button is clicked, we should add name,status and other details to the userDetails object and upload to the database.
+
 ```
 button.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -333,20 +348,20 @@ button.setOnClickListener(new View.OnClickListener() {
                                                  .enqueue(new Callback<ResponseMessage, HasuraException>() {
                                                      @Override
                                                      public void onSuccess(ResponseMessage responseMessage) {
-                                                     
+
                                                      }
 
                                                      @Override
                                                      public void onFailure(HasuraException e) {
-                                                     
+
                                                      }
                                                  });
-                                     } 
+                                     }
                                  }
 
                                  @Override
                                  public void onUploadFailed(HasuraException e) {
-                                 
+
                                  }
                         });
 

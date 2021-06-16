@@ -11,11 +11,11 @@ var dloc = document.location;
 function dlocHashEmpty() {
   // Non-IE browsers return '' when the address bar shows '#'; Director's logic
   // assumes both mean empty.
-  return dloc.hash === '' || dloc.hash === '#';
+  return dloc.hash === "" || dloc.hash === "#";
 }
 
 var listener = {
-  mode: 'modern',
+  mode: "modern",
   hash: dloc.hash,
   history: false,
 
@@ -28,10 +28,9 @@ var listener = {
   },
 
   fire: function () {
-    if (this.mode === 'modern') {
+    if (this.mode === "modern") {
       this.history === true ? window.onpopstate() : window.onhashchange();
-    }
-    else {
+    } else {
       this.onHashChanged();
     }
   },
@@ -51,8 +50,10 @@ var listener = {
     }
 
     //note IE8 is being counted as 'modern' because it has the hashchange event
-    if ('onhashchange' in window && (document.documentMode === undefined
-      || document.documentMode > 7)) {
+    if (
+      "onhashchange" in window &&
+      (document.documentMode === undefined || document.documentMode > 7)
+    ) {
       // At least for now HTML5 history is available for 'modern' browsers only
       if (this.history === true) {
         // There is an old bug in Chrome that causes onpopstate to fire even
@@ -60,37 +61,37 @@ var listener = {
         // this would cause Chrome to run it twise. Currently the only
         // workaround seems to be to set the handler after the initial page load
         // http://code.google.com/p/chromium/issues/detail?id=63040
-        setTimeout(function() {
+        setTimeout(function () {
           window.onpopstate = onchange;
         }, 500);
-      }
-      else {
+      } else {
         window.onhashchange = onchange;
       }
-      this.mode = 'modern';
-    }
-    else {
+      this.mode = "modern";
+    } else {
       //
       // IE support, based on a concept by Erik Arvidson ...
       //
-      var frame = document.createElement('iframe');
-      frame.id = 'state-frame';
-      frame.style.display = 'none';
+      var frame = document.createElement("iframe");
+      frame.id = "state-frame";
+      frame.style.display = "none";
       document.body.appendChild(frame);
-      this.writeFrame('');
+      this.writeFrame("");
 
-      if ('onpropertychange' in document && 'attachEvent' in document) {
-        document.attachEvent('onpropertychange', function () {
-          if (event.propertyName === 'location') {
+      if ("onpropertychange" in document && "attachEvent" in document) {
+        document.attachEvent("onpropertychange", function () {
+          if (event.propertyName === "location") {
             self.check();
           }
         });
       }
 
-      window.setInterval(function () { self.check(); }, 50);
+      window.setInterval(function () {
+        self.check();
+      }, 50);
 
       this.onHashChanged = onchange;
-      this.mode = 'legacy';
+      this.mode = "legacy";
     }
 
     Router.listeners.push(fn);
@@ -114,7 +115,7 @@ var listener = {
 
   setHash: function (s) {
     // Mozilla always adds an entry to the history
-    if (this.mode === 'legacy') {
+    if (this.mode === "legacy") {
       this.writeFrame(s);
     }
 
@@ -124,17 +125,19 @@ var listener = {
       // trigger the pop event.
       this.fire();
     } else {
-      dloc.hash = (s[0] === '/') ? s : '/' + s;
+      dloc.hash = s[0] === "/" ? s : "/" + s;
     }
     return this;
   },
 
   writeFrame: function (s) {
     // IE support...
-    var f = document.getElementById('state-frame');
+    var f = document.getElementById("state-frame");
     var d = f.contentDocument || f.contentWindow.document;
     d.open();
-    d.write("<script>_hash = '" + s + "'; onload = parent.listener.syncHash;<script>");
+    d.write(
+      "<script>_hash = '" + s + "'; onload = parent.listener.syncHash;<script>"
+    );
     d.close();
   },
 
@@ -147,34 +150,37 @@ var listener = {
     return this;
   },
 
-  onHashChanged: function () {}
+  onHashChanged: function () {},
 };
 
-var Router = exports.Router = function (routes) {
+var Router = (exports.Router = function (routes) {
   if (!(this instanceof Router)) return new Router(routes);
 
-  this.params   = {};
-  this.routes   = {};
-  this.methods  = ['on', 'once', 'after', 'before'];
-  this.scope    = [];
+  this.params = {};
+  this.routes = {};
+  this.methods = ["on", "once", "after", "before"];
+  this.scope = [];
   this._methods = {};
 
   this._insert = this.insert;
   this.insert = this.insertEx;
 
-  this.historySupport = (window.history != null ? window.history.pushState : null) != null
+  this.historySupport =
+    (window.history != null ? window.history.pushState : null) != null;
 
   this.configure();
   this.mount(routes || {});
-};
+});
 
 Router.prototype.init = function (r) {
-  var self = this
-    , routeTo;
-  this.handler = function(onChangeEvent) {
-    var newURL = onChangeEvent && onChangeEvent.newURL || window.location.hash;
-    var url = self.history === true ? self.getPath() : newURL.replace(/.*#/, '');
-    self.dispatch('on', url.charAt(0) === '/' ? url : '/' + url);
+  var self = this,
+    routeTo;
+  this.handler = function (onChangeEvent) {
+    var newURL =
+      (onChangeEvent && onChangeEvent.newURL) || window.location.hash;
+    var url =
+      self.history === true ? self.getPath() : newURL.replace(/.*#/, "");
+    self.dispatch("on", url.charAt(0) === "/" ? url : "/" + url);
   };
 
   listener.init(this.handler, this.history);
@@ -183,18 +189,21 @@ Router.prototype.init = function (r) {
     if (dlocHashEmpty() && r) {
       dloc.hash = r;
     } else if (!dlocHashEmpty()) {
-      self.dispatch('on', '/' + dloc.hash.replace(/^(#\/|#|\/)/, ''));
+      self.dispatch("on", "/" + dloc.hash.replace(/^(#\/|#|\/)/, ""));
     }
-  }
-  else {
+  } else {
     if (this.convert_hash_in_init) {
       // Use hash as route
-      routeTo = dlocHashEmpty() && r ? r : !dlocHashEmpty() ? dloc.hash.replace(/^#/, '') : null;
+      routeTo =
+        dlocHashEmpty() && r
+          ? r
+          : !dlocHashEmpty()
+          ? dloc.hash.replace(/^#/, "")
+          : null;
       if (routeTo) {
         window.history.replaceState({}, document.title, routeTo);
       }
-    }
-    else {
+    } else {
       // Use canonical url
       routeTo = this.getPath();
     }
@@ -211,24 +220,24 @@ Router.prototype.init = function (r) {
 
 Router.prototype.explode = function () {
   var v = this.history === true ? this.getPath() : dloc.hash;
-  if (v.charAt(1) === '/') { v=v.slice(1) }
+  if (v.charAt(1) === "/") {
+    v = v.slice(1);
+  }
   return v.slice(1, v.length).split("/");
 };
 
 Router.prototype.setRoute = function (i, v, val) {
   var url = this.explode();
 
-  if (typeof i === 'number' && typeof v === 'string') {
+  if (typeof i === "number" && typeof v === "string") {
     url[i] = v;
-  }
-  else if (typeof val === 'string') {
+  } else if (typeof val === "string") {
     url.splice(i, v, s);
-  }
-  else {
+  } else {
     url = [i];
   }
 
-  listener.setHash(url.join('/'));
+  listener.setHash(url.join("/"));
   return url;
 };
 
@@ -240,17 +249,17 @@ Router.prototype.setRoute = function (i, v, val) {
 // #### @parent {Object} **Optional** Parent "routes" to insert into.
 // insert a callback that will only occur once per the matched route.
 //
-Router.prototype.insertEx = function(method, path, route, parent) {
+Router.prototype.insertEx = function (method, path, route, parent) {
   if (method === "once") {
     method = "on";
-    route = function(route) {
+    route = (function (route) {
       var once = false;
-      return function() {
+      return function () {
         if (once) return;
         once = true;
         return route.apply(this, arguments);
       };
-    }(route);
+    })(route);
   }
   return this._insert(method, path, route, parent);
 };
@@ -260,12 +269,10 @@ Router.prototype.getRoute = function (v) {
 
   if (typeof v === "number") {
     ret = this.explode()[v];
-  }
-  else if (typeof v === "string"){
+  } else if (typeof v === "string") {
     var h = this.explode();
     ret = h.indexOf(v);
-  }
-  else {
+  } else {
     ret = this.explode();
   }
 
@@ -279,8 +286,8 @@ Router.prototype.destroy = function () {
 
 Router.prototype.getPath = function () {
   var path = window.location.pathname;
-  if (path.substr(0, 1) !== '/') {
-    path = '/' + path;
+  if (path.substr(0, 1) !== "/") {
+    path = "/" + path;
   }
   return path;
 };

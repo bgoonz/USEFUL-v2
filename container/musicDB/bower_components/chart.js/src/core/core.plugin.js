@@ -1,7 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	Chart.defaults.global.plugins = {};
@@ -30,9 +29,9 @@ module.exports = function(Chart) {
 		 * Registers the given plugin(s) if not already registered.
 		 * @param {Array|Object} plugins plugin instance(s).
 		 */
-		register: function(plugins) {
+		register: function (plugins) {
 			var p = this._plugins;
-			([]).concat(plugins).forEach(function(plugin) {
+			[].concat(plugins).forEach(function (plugin) {
 				if (p.indexOf(plugin) === -1) {
 					p.push(plugin);
 				}
@@ -45,9 +44,9 @@ module.exports = function(Chart) {
 		 * Unregisters the given plugin(s) only if registered.
 		 * @param {Array|Object} plugins plugin instance(s).
 		 */
-		unregister: function(plugins) {
+		unregister: function (plugins) {
 			var p = this._plugins;
-			([]).concat(plugins).forEach(function(plugin) {
+			[].concat(plugins).forEach(function (plugin) {
 				var idx = p.indexOf(plugin);
 				if (idx !== -1) {
 					p.splice(idx, 1);
@@ -61,7 +60,7 @@ module.exports = function(Chart) {
 		 * Remove all registered plugins.
 		 * @since 2.1.5
 		 */
-		clear: function() {
+		clear: function () {
 			this._plugins = [];
 			this._cacheId++;
 		},
@@ -71,7 +70,7 @@ module.exports = function(Chart) {
 		 * @returns {Number}
 		 * @since 2.1.5
 		 */
-		count: function() {
+		count: function () {
 			return this._plugins.length;
 		},
 
@@ -80,7 +79,7 @@ module.exports = function(Chart) {
 		 * @returns {Array} array of plugin objects.
 		 * @since 2.1.5
 		 */
-		getAll: function() {
+		getAll: function () {
 			return this._plugins;
 		},
 
@@ -93,16 +92,16 @@ module.exports = function(Chart) {
 		 * @param {Array} [args] - Extra arguments to apply to the hook call.
 		 * @returns {Boolean} false if any of the plugins return false, else returns true.
 		 */
-		notify: function(chart, hook, args) {
+		notify: function (chart, hook, args) {
 			var descriptors = this.descriptors(chart);
 			var ilen = descriptors.length;
 			var i, descriptor, plugin, params, method;
 
-			for (i=0; i<ilen; ++i) {
+			for (i = 0; i < ilen; ++i) {
 				descriptor = descriptors[i];
 				plugin = descriptor.plugin;
 				method = plugin[hook];
-				if (typeof method === 'function') {
+				if (typeof method === "function") {
 					params = [chart].concat(args || []);
 					params.push(descriptor.options);
 					if (method.apply(plugin, params) === false) {
@@ -119,7 +118,7 @@ module.exports = function(Chart) {
 		 * @returns {Array} [{ plugin, options }]
 		 * @private
 		 */
-		descriptors: function(chart) {
+		descriptors: function (chart) {
 			var cache = chart._plugins || (chart._plugins = {});
 			if (cache.id === this._cacheId) {
 				return cache.descriptors;
@@ -131,33 +130,35 @@ module.exports = function(Chart) {
 			var defaults = Chart.defaults.global.plugins;
 			var options = (config.options && config.options.plugins) || {};
 
-			this._plugins.concat(config.plugins || []).forEach(function(plugin) {
-				var idx = plugins.indexOf(plugin);
-				if (idx !== -1) {
-					return;
-				}
+			this._plugins
+				.concat(config.plugins || [])
+				.forEach(function (plugin) {
+					var idx = plugins.indexOf(plugin);
+					if (idx !== -1) {
+						return;
+					}
 
-				var id = plugin.id;
-				var opts = options[id];
-				if (opts === false) {
-					return;
-				}
+					var id = plugin.id;
+					var opts = options[id];
+					if (opts === false) {
+						return;
+					}
 
-				if (opts === true) {
-					opts = helpers.clone(defaults[id]);
-				}
+					if (opts === true) {
+						opts = helpers.clone(defaults[id]);
+					}
 
-				plugins.push(plugin);
-				descriptors.push({
-					plugin: plugin,
-					options: opts || {}
+					plugins.push(plugin);
+					descriptors.push({
+						plugin: plugin,
+						options: opts || {},
+					});
 				});
-			});
 
 			cache.descriptors = descriptors;
 			cache.id = this._cacheId;
 			return descriptors;
-		}
+		},
 	};
 
 	/**
@@ -194,7 +195,7 @@ module.exports = function(Chart) {
 	 */
 	/**
 	 * @method IPlugin#beforeDatasetsUpdate
- 	 * @desc Called before updating the `chart` datasets. If any plugin returns `false`,
+	 * @desc Called before updating the `chart` datasets. If any plugin returns `false`,
 	 * the datasets update is cancelled until another `update` is triggered.
 	 * @param {Chart.Controller} chart - The chart instance.
 	 * @param {Object} options - The plugin options.
@@ -259,7 +260,7 @@ module.exports = function(Chart) {
 	 */
 	/**
 	 * @method IPlugin#beforeDatasetsDraw
- 	 * @desc Called before drawing the `chart` datasets. If any plugin returns `false`,
+	 * @desc Called before drawing the `chart` datasets. If any plugin returns `false`,
 	 * the datasets drawing is cancelled until another `render` is triggered.
 	 * @param {Chart.Controller} chart - The chart instance.
 	 * @param {Number} easingValue - The current animation value, between 0.0 and 1.0.
@@ -276,7 +277,7 @@ module.exports = function(Chart) {
 	 */
 	/**
 	 * @method IPlugin#beforeEvent
- 	 * @desc Called before processing the specified `event`. If any plugin returns `false`,
+	 * @desc Called before processing the specified `event`. If any plugin returns `false`,
 	 * the event will be discarded.
 	 * @param {Chart.Controller} chart - The chart instance.
 	 * @param {IEvent} event - The event object.

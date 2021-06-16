@@ -1,10 +1,10 @@
-import React from 'react';
-import {connect} from 'react-redux';
-import './progress-bar.scss';
+import React from "react";
+import { connect } from "react-redux";
+import "./progress-bar.scss";
 
-import ProgressBar from 'react-progress-bar-plus';
+import ProgressBar from "react-progress-bar-plus";
 
-import {Link} from 'react-router';
+import { Link } from "react-router";
 
 class Layout extends React.Component {
   static propTypes = {
@@ -14,14 +14,14 @@ class Layout extends React.Component {
     ongoingRequest: React.PropTypes.bool,
     requestSuccess: React.PropTypes.bool,
     requestError: React.PropTypes.bool,
-    error: React.PropTypes.object
+    error: React.PropTypes.object,
   };
 
   render() {
     const { children } = this.props;
 
-    const styles = require('./Main.scss');
-    const logo = require('./hasura-small.png');
+    const styles = require("./Main.scss");
+    const logo = require("./hasura-small.png");
 
     return (
       <div className={styles.container}>
@@ -32,11 +32,14 @@ class Layout extends React.Component {
             </Link>
           </div>
         </div>
-        {this.props.ongoingRequest ?
-        <ProgressBar percent={this.props.percent}
-          autoIncrement={true} // eslint-disable-line react/jsx-boolean-value
-          intervalTime={this.props.intervalTime}
-          spinner={false} /> : null}
+        {this.props.ongoingRequest ? (
+          <ProgressBar
+            percent={this.props.percent}
+            autoIncrement={true} // eslint-disable-line react/jsx-boolean-value
+            intervalTime={this.props.intervalTime}
+            spinner={false}
+          />
+        ) : null}
         {children}
       </div>
     );
@@ -44,7 +47,7 @@ class Layout extends React.Component {
 }
 
 const mapStateToProps = (state) => {
-  return {...state.progressBar};
+  return { ...state.progressBar };
 };
 
 export default connect(mapStateToProps)(Layout);

@@ -1,5 +1,6 @@
 - args:
-    sql: CREATE TABLE "issue"("id" bigint NOT NULL, "title" text NOT NULL, "created"
+    sql:
+      CREATE TABLE "issue"("id" bigint NOT NULL, "title" text NOT NULL, "created"
       timestamptz NOT NULL, "assigned_member_login" text NOT NULL, "assigned_on" timestamptz
       NOT NULL, "project_title" text NOT NULL, "project_added_on" timestamptz NOT
       NULL, "done_on" timestamptz NOT NULL, "released_on" timestamptz NOT NULL, "closed"

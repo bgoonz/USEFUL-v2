@@ -20,16 +20,16 @@ Follow the steps mentioned below for git based pipeline
 2. Edit `app/src/server.js`
 3. Commit your changes
 
-    ```bash
-    $ git add .
-    $ git commit -m "message"
-    ```
+   ```bash
+   $ git add .
+   $ git commit -m "message"
+   ```
 
 4. Push the changes to git
 
-    ```bash
-    $ git push <remote> master
-    ```
+   ```bash
+   $ git push <remote> master
+   ```
 
 # Advanced usage
 

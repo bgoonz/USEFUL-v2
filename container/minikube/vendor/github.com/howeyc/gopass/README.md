@@ -5,6 +5,7 @@ Retrieve password from user terminal or piped input without echo.
 Verified on BSD, Linux, and Windows.
 
 Example:
+
 ```go
 package main
 

@@ -2,13 +2,11 @@
 
 > Common TodoMVC utilities used by our apps
 
-
 ## Install
 
 ```
 $ npm install --save todomvc-common
 ```
-
 
 ## License
 

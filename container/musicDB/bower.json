@@ -1,26 +1,13 @@
 {
   "name": "musicdb",
-  "authors": [
-    "Tirumarai Selvan <tiru@hasura.io>"
-  ],
+  "authors": ["Tirumarai Selvan <tiru@hasura.io>"],
   "description": "Fully featured Music Database using Hasura BaaS",
   "main": "index.html",
-  "keywords": [
-    "musicbrainz",
-    "hasura",
-    "postgres",
-    "baas"
-  ],
+  "keywords": ["musicbrainz", "hasura", "postgres", "baas"],
   "license": "MIT",
   "homepage": "https://hasura.io",
   "private": true,
-  "ignore": [
-    "**/.*",
-    "node_modules",
-    "bower_components",
-    "test",
-    "tests"
-  ],
+  "ignore": ["**/.*", "node_modules", "bower_components", "test", "tests"],
   "dependencies": {
     "angular-route": "^1.6.2",
     "angular": "^1.6.2",

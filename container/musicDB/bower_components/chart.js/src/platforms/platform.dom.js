@@ -1,7 +1,7 @@
-'use strict';
+"use strict";
 
 // Chart.Platform implementation for targeting a web browser
-module.exports = function(Chart) {
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	// DOM event types -> Chart.js event types.
@@ -9,17 +9,17 @@ module.exports = function(Chart) {
 	// https://developer.mozilla.org/en-US/docs/Web/Events
 	var eventTypeMap = {
 		// Touch events
-		touchstart: 'mousedown',
-		touchmove: 'mousemove',
-		touchend: 'mouseup',
+		touchstart: "mousedown",
+		touchmove: "mousemove",
+		touchend: "mouseup",
 
 		// Pointer events
-		pointerenter: 'mouseenter',
-		pointerdown: 'mousedown',
-		pointermove: 'mousemove',
-		pointerup: 'mouseup',
-		pointerleave: 'mouseout',
-		pointerout: 'mouseout'
+		pointerenter: "mouseenter",
+		pointerdown: "mousedown",
+		pointermove: "mousemove",
+		pointerup: "mouseup",
+		pointerleave: "mouseout",
+		pointerout: "mouseout",
 	};
 
 	/**
@@ -34,7 +34,7 @@ module.exports = function(Chart) {
 	function readUsedSize(element, property) {
 		var value = helpers.getStyle(element, property);
 		var matches = value && value.match(/(\d+)px/);
-		return matches? Number(matches[1]) : undefined;
+		return matches ? Number(matches[1]) : undefined;
 	}
 
 	/**
@@ -47,8 +47,8 @@ module.exports = function(Chart) {
 
 		// NOTE(SB) canvas.getAttribute('width') !== canvas.width: in the first case it
 		// returns null or '' if no explicit value has been set to the canvas attribute.
-		var renderHeight = canvas.getAttribute('height');
-		var renderWidth = canvas.getAttribute('width');
+		var renderHeight = canvas.getAttribute("height");
+		var renderWidth = canvas.getAttribute("width");
 
 		// Chart.js modifies some canvas values that we want to restore on destroy
 		canvas._chartjs = {
@@ -58,31 +58,32 @@ module.exports = function(Chart) {
 				style: {
 					display: style.display,
 					height: style.height,
-					width: style.width
-				}
-			}
+					width: style.width,
+				},
+			},
 		};
 
 		// Force canvas to display as block to avoid extra space caused by inline
 		// elements, which would interfere with the responsive resize process.
 		// https://github.com/chartjs/Chart.js/issues/2538
-		style.display = style.display || 'block';
+		style.display = style.display || "block";
 
-		if (renderWidth === null || renderWidth === '') {
-			var displayWidth = readUsedSize(canvas, 'width');
+		if (renderWidth === null || renderWidth === "") {
+			var displayWidth = readUsedSize(canvas, "width");
 			if (displayWidth !== undefined) {
 				canvas.width = displayWidth;
 			}
 		}
 
-		if (renderHeight === null || renderHeight === '') {
-			if (canvas.style.height === '') {
+		if (renderHeight === null || renderHeight === "") {
+			if (canvas.style.height === "") {
 				// If no explicit render height and style height, let's apply the aspect ratio,
 				// which one can be specified by the user but also by charts as default option
 				// (i.e. options.aspectRatio). If not specified, use canvas aspect ratio of 2.
-				canvas.height = canvas.width / (config.options.aspectRatio || 2);
+				canvas.height =
+					canvas.width / (config.options.aspectRatio || 2);
 			} else {
-				var displayHeight = readUsedSize(canvas, 'height');
+				var displayHeight = readUsedSize(canvas, "height");
 				if (displayWidth !== undefined) {
 					canvas.height = displayHeight;
 				}
@@ -97,8 +98,8 @@ module.exports = function(Chart) {
 			type: type,
 			chart: chart,
 			native: native || null,
-			x: x !== undefined? x : null,
-			y: y !== undefined? y : null,
+			x: x !== undefined ? x : null,
+			y: y !== undefined ? y : null,
 		};
 	}
 
@@ -109,22 +110,22 @@ module.exports = function(Chart) {
 	}
 
 	function createResizer(handler) {
-		var iframe = document.createElement('iframe');
-		iframe.className = 'chartjs-hidden-iframe';
+		var iframe = document.createElement("iframe");
+		iframe.className = "chartjs-hidden-iframe";
 		iframe.style.cssText =
-			'display:block;'+
-			'overflow:hidden;'+
-			'border:0;'+
-			'margin:0;'+
-			'top:0;'+
-			'left:0;'+
-			'bottom:0;'+
-			'right:0;'+
-			'height:100%;'+
-			'width:100%;'+
-			'position:absolute;'+
-			'pointer-events:none;'+
-			'z-index:-1;';
+			"display:block;" +
+			"overflow:hidden;" +
+			"border:0;" +
+			"margin:0;" +
+			"top:0;" +
+			"left:0;" +
+			"bottom:0;" +
+			"right:0;" +
+			"height:100%;" +
+			"width:100%;" +
+			"position:absolute;" +
+			"pointer-events:none;" +
+			"z-index:-1;";
 
 		// Prevent the iframe to gain focus on tab.
 		// https://github.com/chartjs/Chart.js/issues/3090
@@ -133,8 +134,8 @@ module.exports = function(Chart) {
 		// If the iframe is re-attached to the DOM, the resize listener is removed because the
 		// content is reloaded, so make sure to install the handler after the iframe is loaded.
 		// https://github.com/chartjs/Chart.js/issues/3521
-		helpers.addEvent(iframe, 'load', function() {
-			helpers.addEvent(iframe.contentWindow || iframe, 'resize', handler);
+		helpers.addEvent(iframe, "load", function () {
+			helpers.addEvent(iframe.contentWindow || iframe, "resize", handler);
 
 			// The iframe size might have changed while loading, which can also
 			// happen if the size has been changed while detached from the DOM.
@@ -145,18 +146,18 @@ module.exports = function(Chart) {
 	}
 
 	function addResizeListener(node, listener, chart) {
-		var stub = node._chartjs = {
-			ticking: false
-		};
+		var stub = (node._chartjs = {
+			ticking: false,
+		});
 
 		// Throttle the callback notification until the next animation frame.
-		var notify = function() {
+		var notify = function () {
 			if (!stub.ticking) {
 				stub.ticking = true;
-				helpers.requestAnimFrame.call(window, function() {
+				helpers.requestAnimFrame.call(window, function () {
 					if (stub.resizer) {
 						stub.ticking = false;
-						return listener(createEvent('resize', chart));
+						return listener(createEvent("resize", chart));
 					}
 				});
 			}
@@ -183,8 +184,8 @@ module.exports = function(Chart) {
 	}
 
 	return {
-		acquireContext: function(item, config) {
-			if (typeof item === 'string') {
+		acquireContext: function (item, config) {
+			if (typeof item === "string") {
 				item = document.getElementById(item);
 			} else if (item.length) {
 				// Support for array based queries (such as jQuery)
@@ -200,7 +201,7 @@ module.exports = function(Chart) {
 				// To prevent canvas fingerprinting, some add-ons undefine the getContext
 				// method, for example: https://github.com/kkapsner/CanvasBlocker
 				// https://github.com/chartjs/Chart.js/issues/2807
-				var context = item.getContext && item.getContext('2d');
+				var context = item.getContext && item.getContext("2d");
 				if (context instanceof CanvasRenderingContext2D) {
 					initCanvas(item, config);
 					return context;
@@ -210,14 +211,14 @@ module.exports = function(Chart) {
 			return null;
 		},
 
-		releaseContext: function(context) {
+		releaseContext: function (context) {
 			var canvas = context.canvas;
 			if (!canvas._chartjs) {
 				return;
 			}
 
 			var initial = canvas._chartjs.initial;
-			['height', 'width'].forEach(function(prop) {
+			["height", "width"].forEach(function (prop) {
 				var value = initial[prop];
 				if (value === undefined || value === null) {
 					canvas.removeAttribute(prop);
@@ -226,7 +227,7 @@ module.exports = function(Chart) {
 				}
 			});
 
-			helpers.each(initial.style || {}, function(value, key) {
+			helpers.each(initial.style || {}, function (value, key) {
 				canvas.style[key] = value;
 			});
 
@@ -239,9 +240,9 @@ module.exports = function(Chart) {
 			delete canvas._chartjs;
 		},
 
-		addEventListener: function(chart, type, listener) {
+		addEventListener: function (chart, type, listener) {
 			var canvas = chart.chart.canvas;
-			if (type === 'resize') {
+			if (type === "resize") {
 				// Note: the resize event is not supported on all browsers.
 				addResizeListener(canvas.parentNode, listener, chart.chart);
 				return;
@@ -249,16 +250,16 @@ module.exports = function(Chart) {
 
 			var stub = listener._chartjs || (listener._chartjs = {});
 			var proxies = stub.proxies || (stub.proxies = {});
-			var proxy = proxies[chart.id + '_' + type] = function(event) {
+			var proxy = (proxies[chart.id + "_" + type] = function (event) {
 				listener(fromNativeEvent(event, chart.chart));
-			};
+			});
 
 			helpers.addEvent(canvas, type, proxy);
 		},
 
-		removeEventListener: function(chart, type, listener) {
+		removeEventListener: function (chart, type, listener) {
 			var canvas = chart.chart.canvas;
-			if (type === 'resize') {
+			if (type === "resize") {
 				// Note: the resize event is not supported on all browsers.
 				removeResizeListener(canvas.parentNode, listener);
 				return;
@@ -266,12 +267,12 @@ module.exports = function(Chart) {
 
 			var stub = listener._chartjs || {};
 			var proxies = stub.proxies || {};
-			var proxy = proxies[chart.id + '_' + type];
+			var proxy = proxies[chart.id + "_" + type];
 			if (!proxy) {
 				return;
 			}
 
 			helpers.removeEvent(canvas, type, proxy);
-		}
+		},
 	};
 };

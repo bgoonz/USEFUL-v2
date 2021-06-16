@@ -1,5 +1,4 @@
-Overview [![Build Status](https://travis-ci.org/magiconair/properties.svg?branch=master)](https://travis-ci.org/magiconair/properties)
-========
+# Overview [![Build Status](https://travis-ci.org/magiconair/properties.svg?branch=master)](https://travis-ci.org/magiconair/properties)
 
 #### Current version: 1.7.0
 
@@ -8,7 +7,7 @@ properties is a Go library for reading and writing properties files.
 It supports reading from multiple files or URLs and Spring style recursive
 property expansion of expressions like `${key}` to their corresponding value.
 Value expressions can refer to other keys like in `${key}` or to environment
-variables like in `${USER}`.  Filenames can also contain environment variables
+variables like in `${USER}`. Filenames can also contain environment variables
 like in `/home/${USER}/myapp.properties`.
 
 Properties can be decoded into structs, maps, arrays and values through
@@ -25,8 +24,7 @@ changed from `panic` to `log.Fatal` but this is configurable and custom
 error handling functions can be provided. See the package documentation for
 details.
 
-Getting Started
----------------
+## Getting Started
 
 ```go
 import (
@@ -62,20 +60,18 @@ func main() {
 
 ```
 
-Read the full documentation on [GoDoc](https://godoc.org/github.com/magiconair/properties)   [![GoDoc](https://godoc.org/github.com/magiconair/properties?status.png)](https://godoc.org/github.com/magiconair/properties)
+Read the full documentation on [GoDoc](https://godoc.org/github.com/magiconair/properties) [![GoDoc](https://godoc.org/github.com/magiconair/properties?status.png)](https://godoc.org/github.com/magiconair/properties)
 
-Installation and Upgrade
-------------------------
+## Installation and Upgrade
 
 ```
 $ go get -u github.com/magiconair/properties
 ```
 
-License
--------
+## License
 
 2 clause BSD license. See [LICENSE](https://github.com/magiconair/properties/blob/master/LICENSE) file for details.
 
-ToDo
-----
-* Dump contents with passwords and secrets obscured
+## ToDo
+
+- Dump contents with passwords and secrets obscured

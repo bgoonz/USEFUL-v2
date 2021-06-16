@@ -16,7 +16,7 @@ We first need to serve the probing HTTP handler.
 
 Now we can start to probe the endpoint.
 
-``` go
+```go
     id := "example"
     probingInterval = 5 * time.Second
     url := "http://example.com:12345/health"

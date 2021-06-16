@@ -1,5 +1,4 @@
-ionic-v1-starter-kit
-====================
+# ionic-v1-starter-kit
 
 Ionic V1 starter-kit with Hasura Backend API integration.
 
@@ -14,4 +13,3 @@ $ ionic serve
 ```
 
 More info on running and compiling ionic apps can be found on the Ionic [Getting Started](https://ionicframework.com/getting-started) page and the [Ionic CLI](https://github.com/ionic-team/ionic-cli) repo.
-

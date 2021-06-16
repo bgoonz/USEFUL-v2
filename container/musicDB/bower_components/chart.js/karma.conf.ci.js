@@ -1,24 +1,24 @@
-module.exports = function(config) {
+module.exports = function (config) {
 	var configuration = {
-		browsers: ['Firefox'],
+		browsers: ["Firefox"],
 		customLaunchers: {
 			Chrome_travis_ci: {
-				base: 'Chrome',
-				flags: ['--no-sandbox']
-			}
+				base: "Chrome",
+				flags: ["--no-sandbox"],
+			},
 		},
-		frameworks: ['browserify', 'jasmine'],
-		reporters: ['progress', 'html'],
+		frameworks: ["browserify", "jasmine"],
+		reporters: ["progress", "html"],
 		preprocessors: {
-			'src/**/*.js': ['browserify']
+			"src/**/*.js": ["browserify"],
 		},
 		browserify: {
-			debug: true
-		}
+			debug: true,
+		},
 	};
 
 	if (process.env.TRAVIS) {
-		configuration.browsers.push('Chrome_travis_ci');
+		configuration.browsers.push("Chrome_travis_ci");
 	}
 
 	config.set(configuration);

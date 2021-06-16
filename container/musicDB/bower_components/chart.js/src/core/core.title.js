@@ -1,25 +1,23 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	Chart.defaults.global.title = {
 		display: false,
-		position: 'top',
+		position: "top",
 		fullWidth: true, // marks that this box should take the full width of the canvas (pushing down other boxes)
 
-		fontStyle: 'bold',
+		fontStyle: "bold",
 		padding: 10,
 
 		// actual title
-		text: ''
+		text: "",
 	};
 
 	var noop = helpers.noop;
 	Chart.Title = Chart.Element.extend({
-
-		initialize: function(config) {
+		initialize: function (config) {
 			var me = this;
 			helpers.extend(me, config);
 
@@ -30,7 +28,7 @@ module.exports = function(Chart) {
 		// These methods are ordered by lifecycle. Utilities then follow.
 
 		beforeUpdate: noop,
-		update: function(maxWidth, maxHeight, margins) {
+		update: function (maxWidth, maxHeight, margins) {
 			var me = this;
 
 			// Update Lifecycle - Probably don't want to ever extend or overwrite this function ;)
@@ -58,14 +56,13 @@ module.exports = function(Chart) {
 			me.afterUpdate();
 
 			return me.minSize;
-
 		},
 		afterUpdate: noop,
 
 		//
 
 		beforeSetDimensions: noop,
-		setDimensions: function() {
+		setDimensions: function () {
 			var me = this;
 			// Set the unconstrained dimension before label rotation
 			if (me.isHorizontal()) {
@@ -90,7 +87,7 @@ module.exports = function(Chart) {
 			// Reset minSize
 			me.minSize = {
 				width: 0,
-				height: 0
+				height: 0,
 			};
 		},
 		afterSetDimensions: noop,
@@ -104,37 +101,39 @@ module.exports = function(Chart) {
 		//
 
 		beforeFit: noop,
-		fit: function() {
+		fit: function () {
 			var me = this,
 				valueOrDefault = helpers.getValueOrDefault,
 				opts = me.options,
 				globalDefaults = Chart.defaults.global,
 				display = opts.display,
-				fontSize = valueOrDefault(opts.fontSize, globalDefaults.defaultFontSize),
+				fontSize = valueOrDefault(
+					opts.fontSize,
+					globalDefaults.defaultFontSize
+				),
 				minSize = me.minSize;
 
 			if (me.isHorizontal()) {
 				minSize.width = me.maxWidth; // fill all the width
-				minSize.height = display ? fontSize + (opts.padding * 2) : 0;
+				minSize.height = display ? fontSize + opts.padding * 2 : 0;
 			} else {
-				minSize.width = display ? fontSize + (opts.padding * 2) : 0;
+				minSize.width = display ? fontSize + opts.padding * 2 : 0;
 				minSize.height = me.maxHeight; // fill all the height
 			}
 
 			me.width = minSize.width;
 			me.height = minSize.height;
-
 		},
 		afterFit: noop,
 
 		// Shared Methods
-		isHorizontal: function() {
+		isHorizontal: function () {
 			var pos = this.options.position;
-			return pos === 'top' || pos === 'bottom';
+			return pos === "top" || pos === "bottom";
 		},
 
 		// Actually draw the title block on the canvas
-		draw: function() {
+		draw: function () {
 			var me = this,
 				ctx = me.ctx,
 				valueOrDefault = helpers.getValueOrDefault,
@@ -142,10 +141,23 @@ module.exports = function(Chart) {
 				globalDefaults = Chart.defaults.global;
 
 			if (opts.display) {
-				var fontSize = valueOrDefault(opts.fontSize, globalDefaults.defaultFontSize),
-					fontStyle = valueOrDefault(opts.fontStyle, globalDefaults.defaultFontStyle),
-					fontFamily = valueOrDefault(opts.fontFamily, globalDefaults.defaultFontFamily),
-					titleFont = helpers.fontString(fontSize, fontStyle, fontFamily),
+				var fontSize = valueOrDefault(
+						opts.fontSize,
+						globalDefaults.defaultFontSize
+					),
+					fontStyle = valueOrDefault(
+						opts.fontStyle,
+						globalDefaults.defaultFontStyle
+					),
+					fontFamily = valueOrDefault(
+						opts.fontFamily,
+						globalDefaults.defaultFontFamily
+					),
+					titleFont = helpers.fontString(
+						fontSize,
+						fontStyle,
+						fontFamily
+					),
 					rotation = 0,
 					titleX,
 					titleY,
@@ -155,37 +167,44 @@ module.exports = function(Chart) {
 					right = me.right,
 					maxWidth;
 
-				ctx.fillStyle = valueOrDefault(opts.fontColor, globalDefaults.defaultFontColor); // render in correct colour
+				ctx.fillStyle = valueOrDefault(
+					opts.fontColor,
+					globalDefaults.defaultFontColor
+				); // render in correct colour
 				ctx.font = titleFont;
 
 				// Horizontal
 				if (me.isHorizontal()) {
-					titleX = left + ((right - left) / 2); // midpoint of the width
-					titleY = top + ((bottom - top) / 2); // midpoint of the height
+					titleX = left + (right - left) / 2; // midpoint of the width
+					titleY = top + (bottom - top) / 2; // midpoint of the height
 					maxWidth = right - left;
 				} else {
-					titleX = opts.position === 'left' ? left + (fontSize / 2) : right - (fontSize / 2);
-					titleY = top + ((bottom - top) / 2);
+					titleX =
+						opts.position === "left"
+							? left + fontSize / 2
+							: right - fontSize / 2;
+					titleY = top + (bottom - top) / 2;
 					maxWidth = bottom - top;
-					rotation = Math.PI * (opts.position === 'left' ? -0.5 : 0.5);
+					rotation =
+						Math.PI * (opts.position === "left" ? -0.5 : 0.5);
 				}
 
 				ctx.save();
 				ctx.translate(titleX, titleY);
 				ctx.rotate(rotation);
-				ctx.textAlign = 'center';
-				ctx.textBaseline = 'middle';
+				ctx.textAlign = "center";
+				ctx.textBaseline = "middle";
 				ctx.fillText(opts.text, 0, 0, maxWidth);
 				ctx.restore();
 			}
-		}
+		},
 	});
 
 	function createNewTitleBlockAndAttach(chartInstance, titleOpts) {
 		var title = new Chart.Title({
 			ctx: chartInstance.chart.ctx,
 			options: titleOpts,
-			chart: chartInstance
+			chart: chartInstance,
 		});
 		chartInstance.titleBlock = title;
 		Chart.layoutService.addBox(chartInstance, title);
@@ -193,18 +212,21 @@ module.exports = function(Chart) {
 
 	// Register the title plugin
 	Chart.plugins.register({
-		beforeInit: function(chartInstance) {
+		beforeInit: function (chartInstance) {
 			var titleOpts = chartInstance.options.title;
 
 			if (titleOpts) {
 				createNewTitleBlockAndAttach(chartInstance, titleOpts);
 			}
 		},
-		beforeUpdate: function(chartInstance) {
+		beforeUpdate: function (chartInstance) {
 			var titleOpts = chartInstance.options.title;
 
 			if (titleOpts) {
-				titleOpts = helpers.configMerge(Chart.defaults.global.title, titleOpts);
+				titleOpts = helpers.configMerge(
+					Chart.defaults.global.title,
+					titleOpts
+				);
 
 				if (chartInstance.titleBlock) {
 					chartInstance.titleBlock.options = titleOpts;
@@ -212,9 +234,12 @@ module.exports = function(Chart) {
 					createNewTitleBlockAndAttach(chartInstance, titleOpts);
 				}
 			} else {
-				Chart.layoutService.removeBox(chartInstance, chartInstance.titleBlock);
+				Chart.layoutService.removeBox(
+					chartInstance,
+					chartInstance.titleBlock
+				);
 				delete chartInstance.titleBlock;
 			}
-		}
+		},
 	});
 };

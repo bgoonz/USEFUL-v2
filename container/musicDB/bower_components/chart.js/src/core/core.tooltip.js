@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	/**
- 	 * Helper method to merge the opacity into a color
- 	 */
+	 * Helper method to merge the opacity into a color
+	 */
 	function mergeOpacity(colorString, opacity) {
 		var color = helpers.color(colorString);
 		return color.alpha(opacity * color.alpha()).rgbaString();
@@ -15,35 +14,35 @@ module.exports = function(Chart) {
 	Chart.defaults.global.tooltips = {
 		enabled: true,
 		custom: null,
-		mode: 'nearest',
-		position: 'average',
+		mode: "nearest",
+		position: "average",
 		intersect: true,
-		backgroundColor: 'rgba(0,0,0,0.8)',
-		titleFontStyle: 'bold',
+		backgroundColor: "rgba(0,0,0,0.8)",
+		titleFontStyle: "bold",
 		titleSpacing: 2,
 		titleMarginBottom: 6,
-		titleFontColor: '#fff',
-		titleAlign: 'left',
+		titleFontColor: "#fff",
+		titleAlign: "left",
 		bodySpacing: 2,
-		bodyFontColor: '#fff',
-		bodyAlign: 'left',
-		footerFontStyle: 'bold',
+		bodyFontColor: "#fff",
+		bodyAlign: "left",
+		footerFontStyle: "bold",
 		footerSpacing: 2,
 		footerMarginTop: 6,
-		footerFontColor: '#fff',
-		footerAlign: 'left',
+		footerFontColor: "#fff",
+		footerAlign: "left",
 		yPadding: 6,
 		xPadding: 6,
 		caretSize: 5,
 		cornerRadius: 6,
-		multiKeyBackground: '#fff',
+		multiKeyBackground: "#fff",
 		displayColors: true,
 		callbacks: {
 			// Args are: (tooltipItems, data)
 			beforeTitle: helpers.noop,
-			title: function(tooltipItems, data) {
+			title: function (tooltipItems, data) {
 				// Pick first xLabel for now
-				var title = '';
+				var title = "";
 				var labels = data.labels;
 				var labelCount = labels ? labels.length : 0;
 
@@ -66,17 +65,20 @@ module.exports = function(Chart) {
 
 			// Args are: (tooltipItem, data)
 			beforeLabel: helpers.noop,
-			label: function(tooltipItem, data) {
-				var datasetLabel = data.datasets[tooltipItem.datasetIndex].label || '';
-				return datasetLabel + ': ' + tooltipItem.yLabel;
+			label: function (tooltipItem, data) {
+				var datasetLabel =
+					data.datasets[tooltipItem.datasetIndex].label || "";
+				return datasetLabel + ": " + tooltipItem.yLabel;
 			},
-			labelColor: function(tooltipItem, chartInstance) {
-				var meta = chartInstance.getDatasetMeta(tooltipItem.datasetIndex);
+			labelColor: function (tooltipItem, chartInstance) {
+				var meta = chartInstance.getDatasetMeta(
+					tooltipItem.datasetIndex
+				);
 				var activeElement = meta.data[tooltipItem.index];
 				var view = activeElement._view;
 				return {
 					borderColor: view.borderColor,
-					backgroundColor: view.backgroundColor
+					backgroundColor: view.backgroundColor,
 				};
 			},
 			afterLabel: helpers.noop,
@@ -87,8 +89,8 @@ module.exports = function(Chart) {
 			// Args are: (tooltipItems, data)
 			beforeFooter: helpers.noop,
 			footer: helpers.noop,
-			afterFooter: helpers.noop
-		}
+			afterFooter: helpers.noop,
+		},
 	};
 
 	// Helper to push or concat based on if the 2nd parameter is an array or not
@@ -115,12 +117,12 @@ module.exports = function(Chart) {
 			datasetIndex = element._datasetIndex;
 
 		return {
-			xLabel: xScale ? xScale.getLabelForIndex(index, datasetIndex) : '',
-			yLabel: yScale ? yScale.getLabelForIndex(index, datasetIndex) : '',
+			xLabel: xScale ? xScale.getLabelForIndex(index, datasetIndex) : "",
+			yLabel: yScale ? yScale.getLabelForIndex(index, datasetIndex) : "",
 			index: index,
 			datasetIndex: datasetIndex,
 			x: element._model.x,
-			y: element._model.y
+			y: element._model.y,
 		};
 	}
 
@@ -141,26 +143,53 @@ module.exports = function(Chart) {
 
 			// Body
 			bodyFontColor: tooltipOpts.bodyFontColor,
-			_bodyFontFamily: getValueOrDefault(tooltipOpts.bodyFontFamily, globalDefaults.defaultFontFamily),
-			_bodyFontStyle: getValueOrDefault(tooltipOpts.bodyFontStyle, globalDefaults.defaultFontStyle),
+			_bodyFontFamily: getValueOrDefault(
+				tooltipOpts.bodyFontFamily,
+				globalDefaults.defaultFontFamily
+			),
+			_bodyFontStyle: getValueOrDefault(
+				tooltipOpts.bodyFontStyle,
+				globalDefaults.defaultFontStyle
+			),
 			_bodyAlign: tooltipOpts.bodyAlign,
-			bodyFontSize: getValueOrDefault(tooltipOpts.bodyFontSize, globalDefaults.defaultFontSize),
+			bodyFontSize: getValueOrDefault(
+				tooltipOpts.bodyFontSize,
+				globalDefaults.defaultFontSize
+			),
 			bodySpacing: tooltipOpts.bodySpacing,
 
 			// Title
 			titleFontColor: tooltipOpts.titleFontColor,
-			_titleFontFamily: getValueOrDefault(tooltipOpts.titleFontFamily, globalDefaults.defaultFontFamily),
-			_titleFontStyle: getValueOrDefault(tooltipOpts.titleFontStyle, globalDefaults.defaultFontStyle),
-			titleFontSize: getValueOrDefault(tooltipOpts.titleFontSize, globalDefaults.defaultFontSize),
+			_titleFontFamily: getValueOrDefault(
+				tooltipOpts.titleFontFamily,
+				globalDefaults.defaultFontFamily
+			),
+			_titleFontStyle: getValueOrDefault(
+				tooltipOpts.titleFontStyle,
+				globalDefaults.defaultFontStyle
+			),
+			titleFontSize: getValueOrDefault(
+				tooltipOpts.titleFontSize,
+				globalDefaults.defaultFontSize
+			),
 			_titleAlign: tooltipOpts.titleAlign,
 			titleSpacing: tooltipOpts.titleSpacing,
 			titleMarginBottom: tooltipOpts.titleMarginBottom,
 
 			// Footer
 			footerFontColor: tooltipOpts.footerFontColor,
-			_footerFontFamily: getValueOrDefault(tooltipOpts.footerFontFamily, globalDefaults.defaultFontFamily),
-			_footerFontStyle: getValueOrDefault(tooltipOpts.footerFontStyle, globalDefaults.defaultFontStyle),
-			footerFontSize: getValueOrDefault(tooltipOpts.footerFontSize, globalDefaults.defaultFontSize),
+			_footerFontFamily: getValueOrDefault(
+				tooltipOpts.footerFontFamily,
+				globalDefaults.defaultFontFamily
+			),
+			_footerFontStyle: getValueOrDefault(
+				tooltipOpts.footerFontStyle,
+				globalDefaults.defaultFontStyle
+			),
+			footerFontSize: getValueOrDefault(
+				tooltipOpts.footerFontSize,
+				globalDefaults.defaultFontSize
+			),
 			_footerAlign: tooltipOpts.footerAlign,
 			footerSpacing: tooltipOpts.footerSpacing,
 			footerMarginTop: tooltipOpts.footerMarginTop,
@@ -171,7 +200,7 @@ module.exports = function(Chart) {
 			backgroundColor: tooltipOpts.backgroundColor,
 			opacity: 0,
 			legendColorBackground: tooltipOpts.multiKeyBackground,
-			displayColors: tooltipOpts.displayColors
+			displayColors: tooltipOpts.displayColors,
 		};
 	}
 
@@ -186,8 +215,13 @@ module.exports = function(Chart) {
 
 		// Count of all lines in the body
 		var body = model.body;
-		var combinedBodyLength = body.reduce(function(count, bodyItem) {
-			return count + bodyItem.before.length + bodyItem.lines.length + bodyItem.after.length;
+		var combinedBodyLength = body.reduce(function (count, bodyItem) {
+			return (
+				count +
+				bodyItem.before.length +
+				bodyItem.lines.length +
+				bodyItem.after.length
+			);
 		}, 0);
 		combinedBodyLength += model.beforeBody.length + model.afterBody.length;
 
@@ -198,30 +232,44 @@ module.exports = function(Chart) {
 			footerFontSize = model.footerFontSize;
 
 		height += titleLineCount * titleFontSize; // Title Lines
-		height += titleLineCount ? (titleLineCount - 1) * model.titleSpacing : 0; // Title Line Spacing
+		height += titleLineCount
+			? (titleLineCount - 1) * model.titleSpacing
+			: 0; // Title Line Spacing
 		height += titleLineCount ? model.titleMarginBottom : 0; // Title's bottom Margin
 		height += combinedBodyLength * bodyFontSize; // Body Lines
-		height += combinedBodyLength ? (combinedBodyLength - 1) * model.bodySpacing : 0; // Body Line Spacing
+		height += combinedBodyLength
+			? (combinedBodyLength - 1) * model.bodySpacing
+			: 0; // Body Line Spacing
 		height += footerLineCount ? model.footerMarginTop : 0; // Footer Margin
-		height += footerLineCount * (footerFontSize); // Footer Lines
-		height += footerLineCount ? (footerLineCount - 1) * model.footerSpacing : 0; // Footer Line Spacing
+		height += footerLineCount * footerFontSize; // Footer Lines
+		height += footerLineCount
+			? (footerLineCount - 1) * model.footerSpacing
+			: 0; // Footer Line Spacing
 
 		// Title width
 		var widthPadding = 0;
-		var maxLineWidth = function(line) {
+		var maxLineWidth = function (line) {
 			width = Math.max(width, ctx.measureText(line).width + widthPadding);
 		};
 
-		ctx.font = helpers.fontString(titleFontSize, model._titleFontStyle, model._titleFontFamily);
+		ctx.font = helpers.fontString(
+			titleFontSize,
+			model._titleFontStyle,
+			model._titleFontFamily
+		);
 		helpers.each(model.title, maxLineWidth);
 
 		// Body width
-		ctx.font = helpers.fontString(bodyFontSize, model._bodyFontStyle, model._bodyFontFamily);
+		ctx.font = helpers.fontString(
+			bodyFontSize,
+			model._bodyFontStyle,
+			model._bodyFontFamily
+		);
 		helpers.each(model.beforeBody.concat(model.afterBody), maxLineWidth);
 
 		// Body lines may include some extra width due to the color box
-		widthPadding = model.displayColors ? (bodyFontSize + 2) : 0;
-		helpers.each(body, function(bodyItem) {
+		widthPadding = model.displayColors ? bodyFontSize + 2 : 0;
+		helpers.each(body, function (bodyItem) {
 			helpers.each(bodyItem.before, maxLineWidth);
 			helpers.each(bodyItem.lines, maxLineWidth);
 			helpers.each(bodyItem.after, maxLineWidth);
@@ -231,7 +279,11 @@ module.exports = function(Chart) {
 		widthPadding = 0;
 
 		// Footer width
-		ctx.font = helpers.fontString(footerFontSize, model._footerFontStyle, model._footerFontFamily);
+		ctx.font = helpers.fontString(
+			footerFontSize,
+			model._footerFontStyle,
+			model._footerFontFamily
+		);
 		helpers.each(model.footer, maxLineWidth);
 
 		// Add padding
@@ -239,7 +291,7 @@ module.exports = function(Chart) {
 
 		return {
 			width: width,
-			height: height
+			height: height,
 		};
 	}
 
@@ -250,13 +302,13 @@ module.exports = function(Chart) {
 		var model = tooltip._model;
 		var chart = tooltip._chart;
 		var chartArea = tooltip._chartInstance.chartArea;
-		var xAlign = 'center';
-		var yAlign = 'center';
+		var xAlign = "center";
+		var yAlign = "center";
 
 		if (model.y < size.height) {
-			yAlign = 'top';
-		} else if (model.y > (chart.height - size.height)) {
-			yAlign = 'bottom';
+			yAlign = "top";
+		} else if (model.y > chart.height - size.height) {
+			yAlign = "bottom";
 		}
 
 		var lf, rf; // functions to determine left, right alignment
@@ -265,46 +317,46 @@ module.exports = function(Chart) {
 		var midX = (chartArea.left + chartArea.right) / 2;
 		var midY = (chartArea.top + chartArea.bottom) / 2;
 
-		if (yAlign === 'center') {
-			lf = function(x) {
+		if (yAlign === "center") {
+			lf = function (x) {
 				return x <= midX;
 			};
-			rf = function(x) {
+			rf = function (x) {
 				return x > midX;
 			};
 		} else {
-			lf = function(x) {
-				return x <= (size.width / 2);
+			lf = function (x) {
+				return x <= size.width / 2;
 			};
-			rf = function(x) {
-				return x >= (chart.width - (size.width / 2));
+			rf = function (x) {
+				return x >= chart.width - size.width / 2;
 			};
 		}
 
-		olf = function(x) {
+		olf = function (x) {
 			return x + size.width > chart.width;
 		};
-		orf = function(x) {
+		orf = function (x) {
 			return x - size.width < 0;
 		};
-		yf = function(y) {
-			return y <= midY ? 'top' : 'bottom';
+		yf = function (y) {
+			return y <= midY ? "top" : "bottom";
 		};
 
 		if (lf(model.x)) {
-			xAlign = 'left';
+			xAlign = "left";
 
 			// Is tooltip too wide and goes over the right side of the chart.?
 			if (olf(model.x)) {
-				xAlign = 'center';
+				xAlign = "center";
 				yAlign = yf(model.y);
 			}
 		} else if (rf(model.x)) {
-			xAlign = 'right';
+			xAlign = "right";
 
 			// Is tooltip too wide and goes outside left edge of canvas?
 			if (orf(model.x)) {
-				xAlign = 'center';
+				xAlign = "center";
 				yAlign = yf(model.y);
 			}
 		}
@@ -312,7 +364,7 @@ module.exports = function(Chart) {
 		var opts = tooltip._options;
 		return {
 			xAlign: opts.xAlign ? opts.xAlign : xAlign,
-			yAlign: opts.yAlign ? opts.yAlign : yAlign
+			yAlign: opts.yAlign ? opts.yAlign : yAlign,
 		};
 	}
 
@@ -332,46 +384,46 @@ module.exports = function(Chart) {
 			paddingAndSize = caretSize + caretPadding,
 			radiusAndPadding = cornerRadius + caretPadding;
 
-		if (xAlign === 'right') {
+		if (xAlign === "right") {
 			x -= size.width;
-		} else if (xAlign === 'center') {
-			x -= (size.width / 2);
+		} else if (xAlign === "center") {
+			x -= size.width / 2;
 		}
 
-		if (yAlign === 'top') {
+		if (yAlign === "top") {
 			y += paddingAndSize;
-		} else if (yAlign === 'bottom') {
+		} else if (yAlign === "bottom") {
 			y -= size.height + paddingAndSize;
 		} else {
-			y -= (size.height / 2);
+			y -= size.height / 2;
 		}
 
-		if (yAlign === 'center') {
-			if (xAlign === 'left') {
+		if (yAlign === "center") {
+			if (xAlign === "left") {
 				x += paddingAndSize;
-			} else if (xAlign === 'right') {
+			} else if (xAlign === "right") {
 				x -= paddingAndSize;
 			}
-		} else if (xAlign === 'left') {
+		} else if (xAlign === "left") {
 			x -= radiusAndPadding;
-		} else if (xAlign === 'right') {
+		} else if (xAlign === "right") {
 			x += radiusAndPadding;
 		}
 
 		return {
 			x: x,
-			y: y
+			y: y,
 		};
 	}
 
 	Chart.Tooltip = Chart.Element.extend({
-		initialize: function() {
+		initialize: function () {
 			this._model = getBaseModel(this._options);
 		},
 
 		// Get the title
 		// Args are: (tooltipItem, data)
-		getTitle: function() {
+		getTitle: function () {
 			var me = this;
 			var opts = me._options;
 			var callbacks = opts.callbacks;
@@ -389,26 +441,42 @@ module.exports = function(Chart) {
 		},
 
 		// Args are: (tooltipItem, data)
-		getBeforeBody: function() {
-			var lines = this._options.callbacks.beforeBody.apply(this, arguments);
-			return helpers.isArray(lines) ? lines : lines !== undefined ? [lines] : [];
+		getBeforeBody: function () {
+			var lines = this._options.callbacks.beforeBody.apply(
+				this,
+				arguments
+			);
+			return helpers.isArray(lines)
+				? lines
+				: lines !== undefined
+				? [lines]
+				: [];
 		},
 
 		// Args are: (tooltipItem, data)
-		getBody: function(tooltipItems, data) {
+		getBody: function (tooltipItems, data) {
 			var me = this;
 			var callbacks = me._options.callbacks;
 			var bodyItems = [];
 
-			helpers.each(tooltipItems, function(tooltipItem) {
+			helpers.each(tooltipItems, function (tooltipItem) {
 				var bodyItem = {
 					before: [],
 					lines: [],
-					after: []
+					after: [],
 				};
-				pushOrConcat(bodyItem.before, callbacks.beforeLabel.call(me, tooltipItem, data));
-				pushOrConcat(bodyItem.lines, callbacks.label.call(me, tooltipItem, data));
-				pushOrConcat(bodyItem.after, callbacks.afterLabel.call(me, tooltipItem, data));
+				pushOrConcat(
+					bodyItem.before,
+					callbacks.beforeLabel.call(me, tooltipItem, data)
+				);
+				pushOrConcat(
+					bodyItem.lines,
+					callbacks.label.call(me, tooltipItem, data)
+				);
+				pushOrConcat(
+					bodyItem.after,
+					callbacks.afterLabel.call(me, tooltipItem, data)
+				);
 
 				bodyItems.push(bodyItem);
 			});
@@ -417,14 +485,21 @@ module.exports = function(Chart) {
 		},
 
 		// Args are: (tooltipItem, data)
-		getAfterBody: function() {
-			var lines = this._options.callbacks.afterBody.apply(this, arguments);
-			return helpers.isArray(lines) ? lines : lines !== undefined ? [lines] : [];
+		getAfterBody: function () {
+			var lines = this._options.callbacks.afterBody.apply(
+				this,
+				arguments
+			);
+			return helpers.isArray(lines)
+				? lines
+				: lines !== undefined
+				? [lines]
+				: [];
 		},
 
 		// Get the footer and beforeFooter and afterFooter lines
 		// Args are: (tooltipItem, data)
-		getFooter: function() {
+		getFooter: function () {
 			var me = this;
 			var callbacks = me._options.callbacks;
 
@@ -440,7 +515,7 @@ module.exports = function(Chart) {
 			return lines;
 		},
 
-		update: function(changed) {
+		update: function (changed) {
 			var me = this;
 			var opts = me._options;
 
@@ -448,7 +523,7 @@ module.exports = function(Chart) {
 			// that does _view = _model if ease === 1. This causes the 2nd tooltip update to set properties in both the view and model at the same time
 			// which breaks any animations.
 			var existingModel = me._model;
-			var model = me._model = getBaseModel(opts);
+			var model = (me._model = getBaseModel(opts));
 			var active = me._active;
 
 			var data = me._data;
@@ -457,19 +532,19 @@ module.exports = function(Chart) {
 			// In the case where active.length === 0 we need to keep these at existing values for good animations
 			var alignment = {
 				xAlign: existingModel.xAlign,
-				yAlign: existingModel.yAlign
+				yAlign: existingModel.yAlign,
 			};
 			var backgroundPoint = {
 				x: existingModel.x,
-				y: existingModel.y
+				y: existingModel.y,
 			};
 			var tooltipSize = {
 				width: existingModel.width,
-				height: existingModel.height
+				height: existingModel.height,
 			};
 			var tooltipPosition = {
 				x: existingModel.caretX,
-				y: existingModel.caretY
+				y: existingModel.caretY,
 			};
 
 			var i, len;
@@ -478,7 +553,10 @@ module.exports = function(Chart) {
 				model.opacity = 1;
 
 				var labelColors = [];
-				tooltipPosition = Chart.Tooltip.positioners[opts.position](active, me._eventPosition);
+				tooltipPosition = Chart.Tooltip.positioners[opts.position](
+					active,
+					me._eventPosition
+				);
 
 				var tooltipItems = [];
 				for (i = 0, len = active.length; i < len; ++i) {
@@ -487,21 +565,27 @@ module.exports = function(Chart) {
 
 				// If the user provided a filter function, use it to modify the tooltip items
 				if (opts.filter) {
-					tooltipItems = tooltipItems.filter(function(a) {
+					tooltipItems = tooltipItems.filter(function (a) {
 						return opts.filter(a, data);
 					});
 				}
 
 				// If the user provided a sorting function, use it to modify the tooltip items
 				if (opts.itemSort) {
-					tooltipItems = tooltipItems.sort(function(a, b) {
+					tooltipItems = tooltipItems.sort(function (a, b) {
 						return opts.itemSort(a, b, data);
 					});
 				}
 
 				// Determine colors for boxes
-				helpers.each(tooltipItems, function(tooltipItem) {
-					labelColors.push(opts.callbacks.labelColor.call(me, tooltipItem, chartInstance));
+				helpers.each(tooltipItems, function (tooltipItem) {
+					labelColors.push(
+						opts.callbacks.labelColor.call(
+							me,
+							tooltipItem,
+							chartInstance
+						)
+					);
 				});
 
 				// Build the Text Lines
@@ -514,7 +598,10 @@ module.exports = function(Chart) {
 				// Initial positioning and colors
 				model.x = Math.round(tooltipPosition.x);
 				model.y = Math.round(tooltipPosition.y);
-				model.caretPadding = helpers.getValueOrDefault(tooltipPosition.padding, 2);
+				model.caretPadding = helpers.getValueOrDefault(
+					tooltipPosition.padding,
+					2
+				);
 				model.labelColors = labelColors;
 
 				// data points
@@ -524,7 +611,11 @@ module.exports = function(Chart) {
 				tooltipSize = getTooltipSize(this, model);
 				alignment = determineAlignment(this, tooltipSize);
 				// Final Size and Position
-				backgroundPoint = getBackgroundPoint(model, tooltipSize, alignment);
+				backgroundPoint = getBackgroundPoint(
+					model,
+					tooltipSize,
+					alignment
+				);
 			} else {
 				model.opacity = 0;
 			}
@@ -548,7 +639,7 @@ module.exports = function(Chart) {
 
 			return me;
 		},
-		drawCaret: function(tooltipPoint, size, opacity) {
+		drawCaret: function (tooltipPoint, size, opacity) {
 			var vm = this._view;
 			var ctx = this._chart.ctx;
 			var x1, x2, x3;
@@ -562,9 +653,9 @@ module.exports = function(Chart) {
 			var width = size.width,
 				height = size.height;
 
-			if (yAlign === 'center') {
+			if (yAlign === "center") {
 				// Left or right side
-				if (xAlign === 'left') {
+				if (xAlign === "left") {
 					x1 = ptX;
 					x2 = x1 - caretSize;
 					x3 = x1;
@@ -574,25 +665,25 @@ module.exports = function(Chart) {
 					x3 = x1;
 				}
 
-				y2 = ptY + (height / 2);
+				y2 = ptY + height / 2;
 				y1 = y2 - caretSize;
 				y3 = y2 + caretSize;
 			} else {
-				if (xAlign === 'left') {
+				if (xAlign === "left") {
 					x1 = ptX + cornerRadius;
 					x2 = x1 + caretSize;
 					x3 = x2 + caretSize;
-				} else if (xAlign === 'right') {
+				} else if (xAlign === "right") {
 					x1 = ptX + width - cornerRadius;
 					x2 = x1 - caretSize;
 					x3 = x2 - caretSize;
 				} else {
-					x2 = ptX + (width / 2);
+					x2 = ptX + width / 2;
 					x1 = x2 - caretSize;
 					x3 = x2 + caretSize;
 				}
 
-				if (yAlign === 'top') {
+				if (yAlign === "top") {
 					y1 = ptY;
 					y2 = y1 - caretSize;
 					y3 = y1;
@@ -611,18 +702,22 @@ module.exports = function(Chart) {
 			ctx.closePath();
 			ctx.fill();
 		},
-		drawTitle: function(pt, vm, ctx, opacity) {
+		drawTitle: function (pt, vm, ctx, opacity) {
 			var title = vm.title;
 
 			if (title.length) {
 				ctx.textAlign = vm._titleAlign;
-				ctx.textBaseline = 'top';
+				ctx.textBaseline = "top";
 
 				var titleFontSize = vm.titleFontSize,
 					titleSpacing = vm.titleSpacing;
 
 				ctx.fillStyle = mergeOpacity(vm.titleFontColor, opacity);
-				ctx.font = helpers.fontString(titleFontSize, vm._titleFontStyle, vm._titleFontFamily);
+				ctx.font = helpers.fontString(
+					titleFontSize,
+					vm._titleFontStyle,
+					vm._titleFontFamily
+				);
 
 				var i, len;
 				for (i = 0, len = title.length; i < len; ++i) {
@@ -635,21 +730,25 @@ module.exports = function(Chart) {
 				}
 			}
 		},
-		drawBody: function(pt, vm, ctx, opacity) {
+		drawBody: function (pt, vm, ctx, opacity) {
 			var bodyFontSize = vm.bodyFontSize;
 			var bodySpacing = vm.bodySpacing;
 			var body = vm.body;
 
 			ctx.textAlign = vm._bodyAlign;
-			ctx.textBaseline = 'top';
+			ctx.textBaseline = "top";
 
 			var textColor = mergeOpacity(vm.bodyFontColor, opacity);
 			ctx.fillStyle = textColor;
-			ctx.font = helpers.fontString(bodyFontSize, vm._bodyFontStyle, vm._bodyFontFamily);
+			ctx.font = helpers.fontString(
+				bodyFontSize,
+				vm._bodyFontStyle,
+				vm._bodyFontFamily
+			);
 
 			// Before Body
 			var xLinePadding = 0;
-			var fillLineOfText = function(line) {
+			var fillLineOfText = function (line) {
 				ctx.fillText(line, pt.x + xLinePadding, pt.y);
 				pt.y += bodyFontSize + bodySpacing;
 			};
@@ -658,26 +757,40 @@ module.exports = function(Chart) {
 			helpers.each(vm.beforeBody, fillLineOfText);
 
 			var drawColorBoxes = vm.displayColors;
-			xLinePadding = drawColorBoxes ? (bodyFontSize + 2) : 0;
+			xLinePadding = drawColorBoxes ? bodyFontSize + 2 : 0;
 
 			// Draw body lines now
-			helpers.each(body, function(bodyItem, i) {
+			helpers.each(body, function (bodyItem, i) {
 				helpers.each(bodyItem.before, fillLineOfText);
 
-				helpers.each(bodyItem.lines, function(line) {
+				helpers.each(bodyItem.lines, function (line) {
 					// Draw Legend-like boxes if needed
 					if (drawColorBoxes) {
 						// Fill a white rect so that colours merge nicely if the opacity is < 1
-						ctx.fillStyle = mergeOpacity(vm.legendColorBackground, opacity);
+						ctx.fillStyle = mergeOpacity(
+							vm.legendColorBackground,
+							opacity
+						);
 						ctx.fillRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
 						// Border
-						ctx.strokeStyle = mergeOpacity(vm.labelColors[i].borderColor, opacity);
+						ctx.strokeStyle = mergeOpacity(
+							vm.labelColors[i].borderColor,
+							opacity
+						);
 						ctx.strokeRect(pt.x, pt.y, bodyFontSize, bodyFontSize);
 
 						// Inner square
-						ctx.fillStyle = mergeOpacity(vm.labelColors[i].backgroundColor, opacity);
-						ctx.fillRect(pt.x + 1, pt.y + 1, bodyFontSize - 2, bodyFontSize - 2);
+						ctx.fillStyle = mergeOpacity(
+							vm.labelColors[i].backgroundColor,
+							opacity
+						);
+						ctx.fillRect(
+							pt.x + 1,
+							pt.y + 1,
+							bodyFontSize - 2,
+							bodyFontSize - 2
+						);
 
 						ctx.fillStyle = textColor;
 					}
@@ -695,30 +808,41 @@ module.exports = function(Chart) {
 			helpers.each(vm.afterBody, fillLineOfText);
 			pt.y -= bodySpacing; // Remove last body spacing
 		},
-		drawFooter: function(pt, vm, ctx, opacity) {
+		drawFooter: function (pt, vm, ctx, opacity) {
 			var footer = vm.footer;
 
 			if (footer.length) {
 				pt.y += vm.footerMarginTop;
 
 				ctx.textAlign = vm._footerAlign;
-				ctx.textBaseline = 'top';
+				ctx.textBaseline = "top";
 
 				ctx.fillStyle = mergeOpacity(vm.footerFontColor, opacity);
-				ctx.font = helpers.fontString(vm.footerFontSize, vm._footerFontStyle, vm._footerFontFamily);
+				ctx.font = helpers.fontString(
+					vm.footerFontSize,
+					vm._footerFontStyle,
+					vm._footerFontFamily
+				);
 
-				helpers.each(footer, function(line) {
+				helpers.each(footer, function (line) {
 					ctx.fillText(line, pt.x, pt.y);
 					pt.y += vm.footerFontSize + vm.footerSpacing;
 				});
 			}
 		},
-		drawBackground: function(pt, vm, ctx, tooltipSize, opacity) {
+		drawBackground: function (pt, vm, ctx, tooltipSize, opacity) {
 			ctx.fillStyle = mergeOpacity(vm.backgroundColor, opacity);
-			helpers.drawRoundedRectangle(ctx, pt.x, pt.y, tooltipSize.width, tooltipSize.height, vm.cornerRadius);
+			helpers.drawRoundedRectangle(
+				ctx,
+				pt.x,
+				pt.y,
+				tooltipSize.width,
+				tooltipSize.height,
+				vm.cornerRadius
+			);
 			ctx.fill();
 		},
-		draw: function() {
+		draw: function () {
 			var ctx = this._chart.ctx;
 			var vm = this._view;
 
@@ -728,11 +852,11 @@ module.exports = function(Chart) {
 
 			var tooltipSize = {
 				width: vm.width,
-				height: vm.height
+				height: vm.height,
 			};
 			var pt = {
 				x: vm.x,
-				y: vm.y
+				y: vm.y,
 			};
 
 			// IE11/Edge does not like very small opacities, so snap to 0
@@ -766,7 +890,7 @@ module.exports = function(Chart) {
 		 * @param {IEvent} event - The event to handle
 		 * @returns {Boolean} true if the tooltip changed
 		 */
-		handleEvent: function(e) {
+		handleEvent: function (e) {
 			var me = this;
 			var options = me._options;
 			var changed = false;
@@ -774,10 +898,14 @@ module.exports = function(Chart) {
 			me._lastActive = me._lastActive || [];
 
 			// Find Active Elements for tooltips
-			if (e.type === 'mouseout') {
+			if (e.type === "mouseout") {
 				me._active = [];
 			} else {
-				me._active = me._chartInstance.getElementsAtEventForMode(e, options.mode, options);
+				me._active = me._chartInstance.getElementsAtEventForMode(
+					e,
+					options.mode,
+					options
+				);
 			}
 
 			// Remember Last Actives
@@ -787,7 +915,7 @@ module.exports = function(Chart) {
 			if (options.enabled || options.custom) {
 				me._eventPosition = {
 					x: e.x,
-					y: e.y
+					y: e.y,
 				};
 
 				var model = me._model;
@@ -795,11 +923,11 @@ module.exports = function(Chart) {
 				me.pivot();
 
 				// See if our tooltip position changed
-				changed |= (model.x !== me._model.x) || (model.y !== me._model.y);
+				changed |= model.x !== me._model.x || model.y !== me._model.y;
 			}
 
 			return changed;
-		}
+		},
 	});
 
 	/**
@@ -812,7 +940,7 @@ module.exports = function(Chart) {
 		 * @param elements {ChartElement[]} the elements being displayed in the tooltip
 		 * @returns {Point} tooltip position
 		 */
-		average: function(elements) {
+		average: function (elements) {
 			if (!elements.length) {
 				return false;
 			}
@@ -834,7 +962,7 @@ module.exports = function(Chart) {
 
 			return {
 				x: Math.round(x / count),
-				y: Math.round(y / count)
+				y: Math.round(y / count),
 			};
 		},
 
@@ -845,7 +973,7 @@ module.exports = function(Chart) {
 		 * @param eventPosition {Point} the position of the event in canvas coordinates
 		 * @returns {Point} the tooltip position
 		 */
-		nearest: function(elements, eventPosition) {
+		nearest: function (elements, eventPosition) {
 			var x = eventPosition.x;
 			var y = eventPosition.y;
 
@@ -856,7 +984,10 @@ module.exports = function(Chart) {
 				var el = elements[i];
 				if (el && el.hasValue()) {
 					var center = el.getCenterPoint();
-					var d = helpers.distanceBetweenPoints(eventPosition, center);
+					var d = helpers.distanceBetweenPoints(
+						eventPosition,
+						center
+					);
 
 					if (d < minDistance) {
 						minDistance = d;
@@ -873,8 +1004,8 @@ module.exports = function(Chart) {
 
 			return {
 				x: x,
-				y: y
+				y: y,
 			};
-		}
+		},
 	};
 };

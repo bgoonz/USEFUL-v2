@@ -11,22 +11,22 @@ configuration struct and `value` is the value to set.
 Valid `key`s can be found by examining the documentation for the Kubernetes `componentconfigs` for each component.
 Here is the documentation for each supported configuration:
 
-* [kubelet](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeletConfiguration)
-* [apiserver](https://godoc.org/k8s.io/kubernetes/cmd/kube-apiserver/app/options#APIServer)
-* [proxy](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeProxyConfiguration)
-* [controller-manager](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeControllerManagerConfiguration)
-* [etcd](https://godoc.org/github.com/coreos/etcd/etcdserver#ServerConfig)
-* [scheduler](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeSchedulerConfiguration)
+- [kubelet](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeletConfiguration)
+- [apiserver](https://godoc.org/k8s.io/kubernetes/cmd/kube-apiserver/app/options#APIServer)
+- [proxy](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeProxyConfiguration)
+- [controller-manager](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeControllerManagerConfiguration)
+- [etcd](https://godoc.org/github.com/coreos/etcd/etcdserver#ServerConfig)
+- [scheduler](https://godoc.org/k8s.io/kubernetes/pkg/apis/componentconfig#KubeSchedulerConfiguration)
 
-You can enable feature gates for alpha and experimental features with the `--feature-gates` flag on `minikube start`.  As of v1.5.1, the options are:
+You can enable feature gates for alpha and experimental features with the `--feature-gates` flag on `minikube start`. As of v1.5.1, the options are:
 
-* AllAlpha=true|false (ALPHA - default=false)
-* AllowExtTrafficLocalEndpoints=true|false (BETA - default=true)
-* AppArmor=true|false (BETA - default=true)
-* DynamicKubeletConfig=true|false (ALPHA - default=false)
-* DynamicVolumeProvisioning=true|false (ALPHA - default=true)
-* ExperimentalHostUserNamespaceDefaulting=true|false (ALPHA - default=false)
-* StreamingProxyRedirects=true|false (ALPHA - default=false)
+- AllAlpha=true|false (ALPHA - default=false)
+- AllowExtTrafficLocalEndpoints=true|false (BETA - default=true)
+- AppArmor=true|false (BETA - default=true)
+- DynamicKubeletConfig=true|false (ALPHA - default=false)
+- DynamicVolumeProvisioning=true|false (ALPHA - default=true)
+- ExperimentalHostUserNamespaceDefaulting=true|false (ALPHA - default=false)
+- StreamingProxyRedirects=true|false (ALPHA - default=false)
 
 Note: All alpha and experimental features are not guaranteed to work with minikube.
 

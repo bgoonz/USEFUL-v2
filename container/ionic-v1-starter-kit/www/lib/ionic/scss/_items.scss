@@ -4,7 +4,11 @@
  */
 
 .item {
-  @include item-style($item-default-bg, $item-default-border, $item-default-text);
+  @include item-style(
+    $item-default-bg,
+    $item-default-border,
+    $item-default-text
+  );
 
   position: relative;
   z-index: $z-index-item; // Make sure the borders and stuff don't get hidden by children
@@ -30,7 +34,8 @@
     margin: 0 0 4px 0;
     font-size: 12px;
   }
-  h5, h6 {
+  h5,
+  h6 {
     margin: 0 0 3px 0;
     font-size: 10px;
   }
@@ -72,22 +77,42 @@
     @include item-style($item-light-bg, $item-light-border, $item-light-text);
   }
   &.item-stable {
-    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
+    @include item-style(
+      $item-stable-bg,
+      $item-stable-border,
+      $item-stable-text
+    );
   }
   &.item-positive {
-    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
+    @include item-style(
+      $item-positive-bg,
+      $item-positive-border,
+      $item-positive-text
+    );
   }
   &.item-calm {
     @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
   }
   &.item-assertive {
-    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
+    @include item-style(
+      $item-assertive-bg,
+      $item-assertive-border,
+      $item-assertive-text
+    );
   }
   &.item-balanced {
-    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
+    @include item-style(
+      $item-balanced-bg,
+      $item-balanced-border,
+      $item-balanced-text
+    );
   }
   &.item-energized {
-    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
+    @include item-style(
+      $item-energized-bg,
+      $item-energized-border,
+      $item-energized-text
+    );
   }
   &.item-royal {
     @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
@@ -99,7 +124,6 @@
   &[ng-click]:hover {
     cursor: pointer;
   }
-
 }
 
 .list-borderless .item,
@@ -114,32 +138,56 @@
 .item-complex.activated .item-content,
 .item .item-content.active,
 .item .item-content.activated {
-  @include item-active-style($item-default-active-bg, $item-default-active-border);
+  @include item-active-style(
+    $item-default-active-bg,
+    $item-default-active-border
+  );
 
   // Different active themes for <a> and <button> items
   &.item-light {
-    @include item-active-style($item-light-active-bg, $item-light-active-border);
+    @include item-active-style(
+      $item-light-active-bg,
+      $item-light-active-border
+    );
   }
   &.item-stable {
-    @include item-active-style($item-stable-active-bg, $item-stable-active-border);
+    @include item-active-style(
+      $item-stable-active-bg,
+      $item-stable-active-border
+    );
   }
   &.item-positive {
-    @include item-active-style($item-positive-active-bg, $item-positive-active-border);
+    @include item-active-style(
+      $item-positive-active-bg,
+      $item-positive-active-border
+    );
   }
   &.item-calm {
     @include item-active-style($item-calm-active-bg, $item-calm-active-border);
   }
   &.item-assertive {
-    @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
+    @include item-active-style(
+      $item-assertive-active-bg,
+      $item-assertive-active-border
+    );
   }
   &.item-balanced {
-    @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
+    @include item-active-style(
+      $item-balanced-active-bg,
+      $item-balanced-active-border
+    );
   }
   &.item-energized {
-    @include item-active-style($item-energized-active-bg, $item-energized-active-border);
+    @include item-active-style(
+      $item-energized-active-bg,
+      $item-energized-active-border
+    );
   }
   &.item-royal {
-    @include item-active-style($item-royal-active-bg, $item-royal-active-border);
+    @include item-active-style(
+      $item-royal-active-bg,
+      $item-royal-active-border
+    );
   }
   &.item-dark {
     @include item-active-style($item-dark-active-bg, $item-dark-active-border);
@@ -179,7 +227,6 @@ a.item {
   }
 }
 
-
 /**
  * Complex Items
  * --------------------------------------------------
@@ -199,7 +246,8 @@ button.item.item-complex {
 .item-radio .item-content {
   position: relative;
   z-index: $z-index-item;
-  padding: $item-padding (ceil( ($item-padding * 3) + ($item-padding / 3) ) - 5) $item-padding $item-padding;
+  padding: $item-padding (ceil(($item-padding * 3) + ($item-padding / 3)) - 5)
+    $item-padding $item-padding;
   border: none;
   background-color: $item-default-bg;
 }
@@ -245,64 +293,119 @@ a.item-content {
 
 // Link and Button Active States
 
-.item-complex{
+.item-complex {
   // Stylized items
-  &.item-light > .item-content{
+  &.item-light > .item-content {
     @include item-style($item-light-bg, $item-light-border, $item-light-text);
-    &.active, &:active {
-      @include item-active-style($item-light-active-bg, $item-light-active-border);
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-light-active-bg,
+        $item-light-active-border
+      );
     }
   }
-  &.item-stable > .item-content{
-    @include item-style($item-stable-bg, $item-stable-border, $item-stable-text);
-    &.active, &:active {
-      @include item-active-style($item-stable-active-bg, $item-stable-active-border);
+  &.item-stable > .item-content {
+    @include item-style(
+      $item-stable-bg,
+      $item-stable-border,
+      $item-stable-text
+    );
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-stable-active-bg,
+        $item-stable-active-border
+      );
     }
   }
-  &.item-positive > .item-content{
-    @include item-style($item-positive-bg, $item-positive-border, $item-positive-text);
-    &.active, &:active {
-      @include item-active-style($item-positive-active-bg, $item-positive-active-border);
+  &.item-positive > .item-content {
+    @include item-style(
+      $item-positive-bg,
+      $item-positive-border,
+      $item-positive-text
+    );
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-positive-active-bg,
+        $item-positive-active-border
+      );
     }
   }
-  &.item-calm > .item-content{
+  &.item-calm > .item-content {
     @include item-style($item-calm-bg, $item-calm-border, $item-calm-text);
-    &.active, &:active {
-      @include item-active-style($item-calm-active-bg, $item-calm-active-border);
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-calm-active-bg,
+        $item-calm-active-border
+      );
     }
   }
-  &.item-assertive > .item-content{
-    @include item-style($item-assertive-bg, $item-assertive-border, $item-assertive-text);
-    &.active, &:active {
-      @include item-active-style($item-assertive-active-bg, $item-assertive-active-border);
+  &.item-assertive > .item-content {
+    @include item-style(
+      $item-assertive-bg,
+      $item-assertive-border,
+      $item-assertive-text
+    );
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-assertive-active-bg,
+        $item-assertive-active-border
+      );
     }
   }
-  &.item-balanced > .item-content{
-    @include item-style($item-balanced-bg, $item-balanced-border, $item-balanced-text);
-    &.active, &:active {
-      @include item-active-style($item-balanced-active-bg, $item-balanced-active-border);
+  &.item-balanced > .item-content {
+    @include item-style(
+      $item-balanced-bg,
+      $item-balanced-border,
+      $item-balanced-text
+    );
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-balanced-active-bg,
+        $item-balanced-active-border
+      );
     }
   }
-  &.item-energized > .item-content{
-    @include item-style($item-energized-bg, $item-energized-border, $item-energized-text);
-    &.active, &:active {
-      @include item-active-style($item-energized-active-bg, $item-energized-active-border);
+  &.item-energized > .item-content {
+    @include item-style(
+      $item-energized-bg,
+      $item-energized-border,
+      $item-energized-text
+    );
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-energized-active-bg,
+        $item-energized-active-border
+      );
     }
   }
-  &.item-royal > .item-content{
+  &.item-royal > .item-content {
     @include item-style($item-royal-bg, $item-royal-border, $item-royal-text);
-    &.active, &:active {
-      @include item-active-style($item-royal-active-bg, $item-royal-active-border);
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-royal-active-bg,
+        $item-royal-active-border
+      );
     }
   }
-  &.item-dark > .item-content{
+  &.item-dark > .item-content {
     @include item-style($item-dark-bg, $item-dark-border, $item-dark-text);
-    &.active, &:active {
-      @include item-active-style($item-dark-active-bg, $item-dark-active-border);
+    &.active,
+    &:active {
+      @include item-active-style(
+        $item-dark-active-bg,
+        $item-dark-active-border
+      );
     }
   }
 }
-
 
 /**
  * Item Icons
@@ -332,32 +435,32 @@ a.item-content {
 }
 
 .item-icon-left {
-  padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
+  padding-left: ceil(($item-padding * 3) + ($item-padding / 3));
 
   .icon {
-    left: ceil( ($item-padding / 3) * 2);
+    left: ceil(($item-padding / 3) * 2);
   }
 }
 .item-complex.item-icon-left {
   padding-left: 0;
 
   .item-content {
-    padding-left: ceil( ($item-padding * 3) + ($item-padding / 3) );
+    padding-left: ceil(($item-padding * 3) + ($item-padding / 3));
   }
 }
 
 .item-icon-right {
-  padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
+  padding-right: ceil(($item-padding * 3) + ($item-padding / 3));
 
   .icon {
-    right: ceil( ($item-padding / 3) * 2);
+    right: ceil(($item-padding / 3) * 2);
   }
 }
 .item-complex.item-icon-right {
   padding-right: 0;
 
   .item-content {
-    padding-right: ceil( ($item-padding * 3) + ($item-padding / 3) );
+    padding-right: ceil(($item-padding * 3) + ($item-padding / 3));
   }
 }
 
@@ -381,7 +484,6 @@ a.item-content {
   right: floor($item-padding / 5);
 }
 
-
 /**
  * Item Button
  * --------------------------------------------------
@@ -398,7 +500,7 @@ a.item-content {
   @include align-items(center);
   position: absolute;
   top: ceil($item-padding / 2);
-  left: ceil( ($item-padding / 3) * 2);
+  left: ceil(($item-padding / 3) * 2);
   min-width: $item-icon-font-size + ($button-border-width * 2);
   min-height: $item-icon-font-size + ($button-border-width * 2);
   font-size: $item-button-font-size;
@@ -455,15 +557,15 @@ button.item.item-button-right {
   }
 }
 
-.item-button-left.item-button-right{
-   .button{
-     &:first-child {
+.item-button-left.item-button-right {
+  .button {
+    &:first-child {
       right: auto;
     }
-     &:last-child {
+    &:last-child {
       left: auto;
     }
-   }
+  }
 }
 
 // Item Avatar
@@ -506,7 +608,6 @@ button.item.item-button-right {
     border-radius: $item-avatar-border-radius;
   }
 }
-
 
 // Item Thumbnails
 // -------------------------------
@@ -558,7 +659,6 @@ button.item.item-button-right {
   padding-right: 0;
 }
 
-
 // Item Image
 // -------------------------------
 
@@ -566,12 +666,12 @@ button.item.item-button-right {
   padding: 0;
   text-align: center;
 
-  img:first-child, .list-img {
+  img:first-child,
+  .list-img {
     width: 100%;
     vertical-align: middle;
   }
 }
-
 
 // Item Body
 // -------------------------------
@@ -582,12 +682,17 @@ button.item.item-button-right {
   text-overflow: inherit;
   white-space: normal;
 
-  h1, h2, h3, h4, h5, h6, p {
+  h1,
+  h2,
+  h3,
+  h4,
+  h5,
+  h6,
+  p {
     margin-top: $item-padding;
     margin-bottom: $item-padding;
   }
 }
-
 
 // Item Divider
 // -------------------------------
@@ -617,7 +722,6 @@ button.item.item-button-right {
   font-size: 13px;
 }
 
-
 // Item Note
 // -------------------------------
 
@@ -627,18 +731,17 @@ button.item.item-button-right {
   font-size: 14px;
 }
 
-
 // Item Editing
 // -------------------------------
 
 .item-left-editable .item-content,
 .item-right-editable .item-content {
   // setup standard transition settings
-  @include transition-duration( $item-edit-transition-duration );
-  @include transition-timing-function( $item-edit-transition-function );
+  @include transition-duration($item-edit-transition-duration);
+  @include transition-timing-function($item-edit-transition-function);
   -webkit-transition-property: -webkit-transform;
-     -moz-transition-property: -moz-transform;
-          transition-property: transform;
+  -moz-transition-property: -moz-transform;
+  transition-property: transform;
 }
 
 .list-left-editing .item-left-editable .item-content,
@@ -649,17 +752,17 @@ button.item.item-button-right {
 
 .item-remove-animate {
   &.ng-leave {
-    @include transition-duration( $item-remove-transition-duration );
+    @include transition-duration($item-remove-transition-duration);
   }
   &.ng-leave .item-content,
   &.ng-leave:last-of-type {
-    @include transition-duration( $item-remove-transition-duration );
-    @include transition-timing-function( $item-remove-transition-function );
-    @include transition-property( all );
+    @include transition-duration($item-remove-transition-duration);
+    @include transition-timing-function($item-remove-transition-function);
+    @include transition-property(all);
   }
 
   &.ng-leave.ng-leave-active .item-content {
-    opacity:0;
+    opacity: 0;
     -webkit-transform: translate3d(-100%, 0, 0) !important;
     transform: translate3d(-100%, 0, 0) !important;
   }
@@ -668,21 +771,23 @@ button.item.item-button-right {
   }
 
   &.ng-leave.ng-leave-active ~ ion-item:not(.ng-leave) {
-    -webkit-transform: translate3d(0, unquote('-webkit-calc(-100% + 1px)'), 0);
+    -webkit-transform: translate3d(0, unquote("-webkit-calc(-100% + 1px)"), 0);
     transform: translate3d(0, calc(-100% + 1px), 0);
-    @include transition-duration( $item-remove-transition-duration );
-    @include transition-timing-function( $item-remove-descendents-transition-function );
-    @include transition-property( all );
+    @include transition-duration($item-remove-transition-duration);
+    @include transition-timing-function(
+      $item-remove-descendents-transition-function
+    );
+    @include transition-property(all);
   }
 }
-
-
 
 // Item Left Edit Button
 // -------------------------------
 
 .item-left-edit {
-  @include transition(all $item-edit-transition-function $item-edit-transition-duration / 2);
+  @include transition(
+    all $item-edit-transition-function $item-edit-transition-duration / 2
+  );
   position: absolute;
   top: 0;
   left: 0;
@@ -705,7 +810,11 @@ button.item.item-button-right {
 
   display: none;
   opacity: 0;
-  @include translate3d( ($item-left-edit-left - $item-left-edit-open-width) / 2, 0, 0);
+  @include translate3d(
+    ($item-left-edit-left - $item-left-edit-open-width) / 2,
+    0,
+    0
+  );
   &.visible {
     display: block;
     &.active {
@@ -726,21 +835,22 @@ button.item.item-button-right {
   font-size: $item-delete-icon-size;
 
   &:hover {
-    opacity: .7;
+    opacity: 0.7;
   }
 }
-
 
 // Item Right Edit Button
 // -------------------------------
 
 .item-right-edit {
-  @include transition(all $item-edit-transition-function $item-edit-transition-duration);
+  @include transition(
+    all $item-edit-transition-function $item-edit-transition-duration
+  );
   position: absolute;
   top: 0;
   right: 0;
   z-index: $z-index-item-reorder;
-  width: $item-right-edit-open-width *  1.5;
+  width: $item-right-edit-open-width * 1.5;
   height: 100%;
   background: inherit;
   padding-left: 20px;
@@ -761,7 +871,7 @@ button.item.item-button-right {
 
   display: block;
   opacity: 0;
-  @include translate3d($item-right-edit-open-width *  1.5, 0, 0);
+  @include translate3d($item-right-edit-open-width * 1.5, 0, 0);
   &.visible {
     display: block;
     &.active {
@@ -770,7 +880,6 @@ button.item.item-button-right {
     }
   }
 }
-
 
 // Item Reordering (Right side edit button)
 // -------------------------------
@@ -799,7 +908,6 @@ button.item.item-button-right {
   opacity: 0.7;
 }
 
-
 /**
  * The hidden right-side buttons that can be exposed under a list item
  * with dragging.
@@ -818,7 +926,7 @@ button.item.item-button-right {
     @include display-inline-flex();
     @include align-items(center);
 
-    &:before{
+    &:before {
       margin: 0 auto;
     }
   }

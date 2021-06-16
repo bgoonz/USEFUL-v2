@@ -1,11 +1,11 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import { Link } from 'react-router';
-import { push } from 'react-router-redux';
+import React from "react";
+import { connect } from "react-redux";
+import { Link } from "react-router";
+import { push } from "react-router-redux";
 
-import { load as loadResults } from './Actions';
-import SOQuestionsList from '../SOQuestionsList/SOQuestionsList';
-import SOHot from '../SOHot/SOHot';
+import { load as loadResults } from "./Actions";
+import SOQuestionsList from "../SOQuestionsList/SOQuestionsList";
+import SOHot from "../SOHot/SOHot";
 
 class SOSearch extends React.Component {
   static propTypes = {
@@ -13,12 +13,12 @@ class SOSearch extends React.Component {
     questions: React.PropTypes.array.isRequired,
     dispatch: React.PropTypes.func.isRequired,
     loaded: React.PropTypes.bool.isRequired,
-    loading: React.PropTypes.bool.isRequired
+    loading: React.PropTypes.bool.isRequired,
   };
 
   componentWillMount() {
     const { dispatch, query, loaded } = this.props;
-    if (query !== '' && !loaded) {
+    if (query !== "" && !loaded) {
       // Remember to make it into an object
       dispatch(loadResults({ query: query }));
     }
@@ -26,7 +26,7 @@ class SOSearch extends React.Component {
 
   // IMPORTANT: Used when we show the same component with different props
   componentWillUpdate(next) {
-    if (next.query !== '' && (next.query !== this.props.query)) {
+    if (next.query !== "" && next.query !== this.props.query) {
       next.dispatch(loadResults({ query: next.query }));
     }
   }
@@ -43,18 +43,20 @@ class SOSearch extends React.Component {
             <Link to="/sosearch/World">World</Link>
             <Link to="/sosearch/React">React</Link>
           </p>
-          <input type="text" name="search" onChange={
-            (e) => {
+          <input
+            type="text"
+            name="search"
+            onChange={(e) => {
               e.preventDefault();
-              dispatch(push('/sosearch/' + e.target.value));
-            }
-          } value={query} />
-          {
-            (loading) ?
-              <p>Loading...</p>
-            :
-              <SOQuestionsList questions={questions} />
-          }
+              dispatch(push("/sosearch/" + e.target.value));
+            }}
+            value={query}
+          />
+          {loading ? (
+            <p>Loading...</p>
+          ) : (
+            <SOQuestionsList questions={questions} />
+          )}
         </div>
         <div className="col-md-4">
           <SOHot />
@@ -64,13 +66,11 @@ class SOSearch extends React.Component {
   }
 }
 
-const mapStateToProps = (state, ownProps) => (
-  {
-    query: ownProps.params ? ownProps.params.query : state.sosearch.data.query,
-    questions: state.sosearch.data.results,
-    loaded: state.sosearch.loaded,
-    loading: state.sosearch.loading || false
-  }
-);
+const mapStateToProps = (state, ownProps) => ({
+  query: ownProps.params ? ownProps.params.query : state.sosearch.data.query,
+  questions: state.sosearch.data.results,
+  loaded: state.sosearch.loaded,
+  loading: state.sosearch.loading || false,
+});
 
 export default connect(mapStateToProps)(SOSearch);

@@ -1,13 +1,21 @@
 "use strict";
 
-var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+var errorProps = [
+  "description",
+  "fileName",
+  "lineNumber",
+  "message",
+  "name",
+  "number",
+  "stack",
+];
 
 function Exception(message, node) {
   var line;
   if (node && node.firstLine) {
     line = node.firstLine;
 
-    message += ' - ' + line + ':' + node.firstColumn;
+    message += " - " + line + ":" + node.firstColumn;
   }
 
   var tmp = Error.prototype.constructor.call(this, message);

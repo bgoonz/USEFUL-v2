@@ -15,15 +15,15 @@ Alamofire is an HTTP networking library written in Swift.
 - [Communication](#communication)
 - [Installation](#installation)
 - [Usage](#usage)
-    - **Intro -** [Making a Request](#making-a-request), [Response Handling](#response-handling), [Response Validation](#response-validation), [Response Caching](#response-caching)
-	- **HTTP -** [HTTP Methods](#http-methods), [Parameter Encoding](#parameter-encoding), [HTTP Headers](#http-headers), [Authentication](#authentication)
-	- **Large Data -** [Downloading Data to a File](#downloading-data-to-a-file), [Uploading Data to a Server](#uploading-data-to-a-server)
-	- **Tools -** [Statistical Metrics](#statistical-metrics), [cURL Command Output](#curl-command-output)
+  - **Intro -** [Making a Request](#making-a-request), [Response Handling](#response-handling), [Response Validation](#response-validation), [Response Caching](#response-caching)
+  - **HTTP -** [HTTP Methods](#http-methods), [Parameter Encoding](#parameter-encoding), [HTTP Headers](#http-headers), [Authentication](#authentication)
+  - **Large Data -** [Downloading Data to a File](#downloading-data-to-a-file), [Uploading Data to a Server](#uploading-data-to-a-server)
+  - **Tools -** [Statistical Metrics](#statistical-metrics), [cURL Command Output](#curl-command-output)
 - [Advanced Usage](#advanced-usage)
-	- **URL Session -** [Session Manager](#session-manager), [Session Delegate](#session-delegate), [Request](#request)
-	- **Routing -** [Routing Requests](#routing-requests), [Adapting and Retrying Requests](#adapting-and-retrying-requests)
-	- **Model Objects -** [Custom Response Serialization](#custom-response-serialization)
-	- **Connection -** [Security](#security), [Network Reachability](#network-reachability)
+  - **URL Session -** [Session Manager](#session-manager), [Session Delegate](#session-delegate), [Request](#request)
+  - **Routing -** [Routing Requests](#routing-requests), [Adapting and Retrying Requests](#adapting-and-retrying-requests)
+  - **Model Objects -** [Custom Response Serialization](#custom-response-serialization)
+  - **Connection -** [Security](#security), [Network Reachability](#network-reachability)
 - [Open Radars](#open-radars)
 - [FAQ](#faq)
 - [Credits](#credits)
@@ -124,7 +124,7 @@ Run `carthage update` to build the framework and drag the built `Alamofire.frame
 
 ### Swift Pacakge Manager
 
-The [Swift Pacakage Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler. It is in early development, but Alamofire does support its use on supported platforms. 
+The [Swift Pacakage Manager](https://swift.org/package-manager/) is a tool for automating the distribution of Swift code and is integrated into the `swift` compiler. It is in early development, but Alamofire does support its use on supported platforms.
 
 Once you have your Swift package set up, adding Alamofire as a dependency is as easy as adding it to the `dependencies` value of your `Package.swift`.
 
@@ -143,18 +143,20 @@ If you prefer not to use either of the aforementioned dependency managers, you c
 - Open up Terminal, `cd` into your top-level project directory, and run the following command "if" your project is not initialized as a git repository:
 
   ```bash
-$ git init
-```
+  $ git init
+  ```
+
+````
 
 - Add Alamofire as a git [submodule](http://git-scm.com/docs/git-submodule) by running the following command:
 
   ```bash
 $ git submodule add https://github.com/Alamofire/Alamofire.git
-```
+````
 
 - Open the new `Alamofire` folder, and drag the `Alamofire.xcodeproj` into the Project Navigator of your application's Xcode project.
 
-    > It should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
+  > It should appear nested underneath your application's blue project icon. Whether it is above or below all the other Xcode groups does not matter.
 
 - Select the `Alamofire.xcodeproj` in the Project Navigator and verify the deployment target matches that of your application target.
 - Next, select your application project in the Project Navigator (blue project icon) to navigate to the target configuration window and select the application target under the "Targets" heading in the sidebar.
@@ -162,11 +164,11 @@ $ git submodule add https://github.com/Alamofire/Alamofire.git
 - Click on the `+` button under the "Embedded Binaries" section.
 - You will see two different `Alamofire.xcodeproj` folders each with two different versions of the `Alamofire.framework` nested inside a `Products` folder.
 
-    > It does not matter which `Products` folder you choose from, but it does matter whether you choose the top or bottom `Alamofire.framework`.
+  > It does not matter which `Products` folder you choose from, but it does matter whether you choose the top or bottom `Alamofire.framework`.
 
 - Select the top `Alamofire.framework` for iOS and the bottom one for OS X.
 
-    > You can verify which one you selected by inspecting the build log for your project. The build target for `Alamofire` will be listed as either `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
+  > You can verify which one you selected by inspecting the build log for your project. The build target for `Alamofire` will be listed as either `Alamofire iOS`, `Alamofire macOS`, `Alamofire tvOS` or `Alamofire watchOS`.
 
 - And that's it!
 
@@ -1305,10 +1307,10 @@ class OAuth2Handler: RequestAdapter, RequestRetrier {
             .responseJSON { [weak self] response in
                 guard let strongSelf = self else { return }
 
-                if 
-                    let json = response.result.value as? [String: Any], 
-                    let accessToken = json["access_token"] as? String, 
-                    let refreshToken = json["refresh_token"] as? String 
+                if
+                    let json = response.result.value as? [String: Any],
+                    let accessToken = json["access_token"] as? String,
+                    let refreshToken = json["refresh_token"] as? String
                 {
                     completion(true, accessToken, refreshToken)
                 } else {
@@ -1586,11 +1588,11 @@ let serverTrustPolicy = ServerTrustPolicy.pinCertificates(
 
 There are many different cases of server trust evaluation giving you complete control over the validation process:
 
-* `performDefaultEvaluation`: Uses the default server trust evaluation while allowing you to control whether to validate the host provided by the challenge.
-* `pinCertificates`: Uses the pinned certificates to validate the server trust. The server trust is considered valid if one of the pinned certificates match one of the server certificates.
-* `pinPublicKeys`: Uses the pinned public keys to validate the server trust. The server trust is considered valid if one of the pinned public keys match one of the server certificate public keys.
-* `disableEvaluation`: Disables all evaluation which in turn will always consider any server trust as valid.
-* `customEvaluation`: Uses the associated closure to evaluate the validity of the server trust thus giving you complete control over the validation process. Use with caution.
+- `performDefaultEvaluation`: Uses the default server trust evaluation while allowing you to control whether to validate the host provided by the challenge.
+- `pinCertificates`: Uses the pinned certificates to validate the server trust. The server trust is considered valid if one of the pinned certificates match one of the server certificates.
+- `pinPublicKeys`: Uses the pinned public keys to validate the server trust. The server trust is considered valid if one of the pinned public keys match one of the server certificate public keys.
+- `disableEvaluation`: Disables all evaluation which in turn will always consider any server trust as valid.
+- `customEvaluation`: Uses the associated closure to evaluate the validity of the server trust thus giving you complete control over the validation process. Use with caution.
 
 #### Server Trust Policy Manager
 
@@ -1616,9 +1618,9 @@ let sessionManager = SessionManager(
 These server trust policies will result in the following behavior:
 
 - `test.example.com` will always use certificate pinning with certificate chain and host validation enabled thus requiring the following criteria to be met to allow the TLS handshake to succeed:
-	- Certificate chain MUST be valid.
-	- Certificate chain MUST include one of the pinned certificates.
-	- Challenge host MUST match the host in the certificate chain's leaf certificate.
+  - Certificate chain MUST be valid.
+  - Certificate chain MUST include one of the pinned certificates.
+  - Challenge host MUST match the host in the certificate chain's leaf certificate.
 - `insecure.expired-apis.com` will never evaluate the certificate chain and will always allow the TLS handshake to succeed.
 - All other hosts will use the default evaluation provided by Apple.
 
@@ -1704,11 +1706,11 @@ manager?.startListening()
 There are some important things to remember when using network reachability to determine what to do next.
 
 - **Do NOT** use Reachability to determine if a network request should be sent.
-    - You should **ALWAYS** send it.
+  - You should **ALWAYS** send it.
 - When Reachability is restored, use the event to retry failed network requests.
-    - Even though the network requests may still fail, this is a good moment to retry them.
+  - Even though the network requests may still fail, this is a good moment to retry them.
 - The network reachability status can be useful for determining why a network request may have failed.
-    - If a network request fails, it is more useful to tell the user that the network request failed due to being offline rather than a more technical error, such as "request timed out."
+  - If a network request fails, it is more useful to tell the user that the network request failed due to being offline rather than a more technical error, such as "request timed out."
 
 > It is recommended to check out [WWDC 2012 Session 706, "Networking Best Practices"](https://developer.apple.com/videos/play/wwdc2012-706/) for more info.
 

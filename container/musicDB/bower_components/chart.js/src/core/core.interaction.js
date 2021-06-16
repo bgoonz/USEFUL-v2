@@ -1,6 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	/**
@@ -13,7 +13,7 @@ module.exports = function(Chart) {
 		if (e.native) {
 			return {
 				x: e.x,
-				y: e.y
+				y: e.y,
 			};
 		}
 
@@ -53,7 +53,7 @@ module.exports = function(Chart) {
 	function getIntersectItems(chart, position) {
 		var elements = [];
 
-		parseVisibleItems(chart, function(element) {
+		parseVisibleItems(chart, function (element) {
 			if (element.inRange(position.x, position.y)) {
 				elements.push(element);
 			}
@@ -78,7 +78,7 @@ module.exports = function(Chart) {
 			distanceMetric = helpers.distanceBetweenPoints;
 		}
 
-		parseVisibleItems(chart, function(element) {
+		parseVisibleItems(chart, function (element) {
 			if (intersect && !element.inRange(position.x, position.y)) {
 				return;
 			}
@@ -100,17 +100,19 @@ module.exports = function(Chart) {
 
 	function indexMode(chart, e, options) {
 		var position = getRelativePosition(e, chart.chart);
-		var distanceMetric = function(pt1, pt2) {
+		var distanceMetric = function (pt1, pt2) {
 			return Math.abs(pt1.x - pt2.x);
 		};
-		var items = options.intersect ? getIntersectItems(chart, position) : getNearestItems(chart, position, false, distanceMetric);
+		var items = options.intersect
+			? getIntersectItems(chart, position)
+			: getNearestItems(chart, position, false, distanceMetric);
 		var elements = [];
 
 		if (!items.length) {
 			return [];
 		}
 
-		chart.data.datasets.forEach(function(dataset, datasetIndex) {
+		chart.data.datasets.forEach(function (dataset, datasetIndex) {
 			if (chart.isDatasetVisible(datasetIndex)) {
 				var meta = chart.getDatasetMeta(datasetIndex),
 					element = meta.data[items[0]._index];
@@ -141,11 +143,11 @@ module.exports = function(Chart) {
 	Chart.Interaction = {
 		// Helper function for different modes
 		modes: {
-			single: function(chart, e) {
+			single: function (chart, e) {
 				var position = getRelativePosition(e, chart.chart);
 				var elements = [];
 
-				parseVisibleItems(chart, function(element) {
+				parseVisibleItems(chart, function (element) {
 					if (element.inRange(position.x, position.y)) {
 						elements.push(element);
 						return elements;
@@ -182,9 +184,11 @@ module.exports = function(Chart) {
 			 * @param options {IInteractionOptions} options to use during interaction
 			 * @return {Chart.Element[]} Array of elements that are under the point. If none are found, an empty array is returned
 			 */
-			dataset: function(chart, e, options) {
+			dataset: function (chart, e, options) {
 				var position = getRelativePosition(e, chart.chart);
-				var items = options.intersect ? getIntersectItems(chart, position) : getNearestItems(chart, position, false);
+				var items = options.intersect
+					? getIntersectItems(chart, position)
+					: getNearestItems(chart, position, false);
 
 				if (items.length > 0) {
 					items = chart.getDatasetMeta(items[0]._datasetIndex).data;
@@ -197,7 +201,7 @@ module.exports = function(Chart) {
 			 * @function Chart.Interaction.modes.x-axis
 			 * @deprecated since version 2.4.0. Use index mode and intersect == true
 			 */
-			'x-axis': function(chart, e) {
+			"x-axis": function (chart, e) {
 				return indexMode(chart, e, true);
 			},
 
@@ -209,7 +213,7 @@ module.exports = function(Chart) {
 			 * @param e {Event} the event we are find things at
 			 * @return {Chart.Element[]} Array of elements that are under the point. If none are found, an empty array is returned
 			 */
-			point: function(chart, e) {
+			point: function (chart, e) {
 				var position = getRelativePosition(e, chart.chart);
 				return getIntersectItems(chart, position);
 			},
@@ -222,13 +226,17 @@ module.exports = function(Chart) {
 			 * @param options {IInteractionOptions} options to use
 			 * @return {Chart.Element[]} Array of elements that are under the point. If none are found, an empty array is returned
 			 */
-			nearest: function(chart, e, options) {
+			nearest: function (chart, e, options) {
 				var position = getRelativePosition(e, chart.chart);
-				var nearestItems = getNearestItems(chart, position, options.intersect);
+				var nearestItems = getNearestItems(
+					chart,
+					position,
+					options.intersect
+				);
 
 				// We have multiple items at the same distance from the event. Now sort by smallest
 				if (nearestItems.length > 1) {
-					nearestItems.sort(function(a, b) {
+					nearestItems.sort(function (a, b) {
 						var sizeA = a.getArea();
 						var sizeB = b.getArea();
 						var ret = sizeA - sizeB;
@@ -254,12 +262,12 @@ module.exports = function(Chart) {
 			 * @param options {IInteractionOptions} options to use
 			 * @return {Chart.Element[]} Array of elements that are under the point. If none are found, an empty array is returned
 			 */
-			x: function(chart, e, options) {
+			x: function (chart, e, options) {
 				var position = getRelativePosition(e, chart.chart);
 				var items = [];
 				var intersectsItem = false;
 
-				parseVisibleItems(chart, function(element) {
+				parseVisibleItems(chart, function (element) {
 					if (element.inXRange(position.x)) {
 						items.push(element);
 					}
@@ -285,12 +293,12 @@ module.exports = function(Chart) {
 			 * @param options {IInteractionOptions} options to use
 			 * @return {Chart.Element[]} Array of elements that are under the point. If none are found, an empty array is returned
 			 */
-			y: function(chart, e, options) {
+			y: function (chart, e, options) {
 				var position = getRelativePosition(e, chart.chart);
 				var items = [];
 				var intersectsItem = false;
 
-				parseVisibleItems(chart, function(element) {
+				parseVisibleItems(chart, function (element) {
 					if (element.inYRange(position.y)) {
 						items.push(element);
 					}
@@ -306,7 +314,7 @@ module.exports = function(Chart) {
 					items = [];
 				}
 				return items;
-			}
-		}
+			},
+		},
 	};
 };

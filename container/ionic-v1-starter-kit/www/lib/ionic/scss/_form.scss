@@ -21,7 +21,7 @@ legend {
 
   small {
     color: $stable;
-    font-size: $line-height-base * .75;
+    font-size: $line-height-base * 0.75;
   }
 }
 
@@ -31,7 +31,11 @@ input,
 button,
 select,
 textarea {
-  @include font-shorthand($font-size-base, normal, $line-height-base); // Set size, weight, line-height here
+  @include font-shorthand(
+    $font-size-base,
+    normal,
+    $line-height-base
+  ); // Set size, weight, line-height here
 }
 input,
 button,
@@ -39,7 +43,6 @@ select,
 textarea {
   font-family: $font-family-base; // And only set font-family here for those that need it (note the missing label element)
 }
-
 
 // Input List
 // -------------------------------
@@ -80,7 +83,7 @@ textarea {
   }
 }
 // prevent flex-shrink on WP
-.platform-windowsphone .item-input input{
+.platform-windowsphone .item-input input {
   flex-shrink: 1;
 }
 
@@ -137,7 +140,8 @@ textarea {
   background-color: transparent;
   box-shadow: none;
 
-  .input-label, .icon {
+  .input-label,
+  .icon {
     display: inline-block;
     padding: 4px 0 0 0px;
     vertical-align: middle;
@@ -160,7 +164,7 @@ textarea {
   position: relative;
   padding: 0px;
   max-width: 90%;
-  direction:ltr;
+  direction: ltr;
   white-space: pre-wrap;
   margin: -3px;
 }
@@ -175,16 +179,15 @@ textarea {
     padding: 5px 0 0 0;
     opacity: 0;
     top: 10px;
-    @include transition(opacity .15s ease-in, top .2s linear);
+    @include transition(opacity 0.15s ease-in, top 0.2s linear);
 
     &.has-input {
       opacity: 1;
       top: 0;
-      @include transition(opacity .15s ease-in, top .2s linear);
+      @include transition(opacity 0.15s ease-in, top 0.2s linear);
     }
   }
 }
-
 
 // Form Controls
 // -------------------------------
@@ -296,14 +299,12 @@ input[type="file"] {
   width: 200px;
 }
 
-
 // Placeholder
 // -------------------------------
 input,
 textarea {
   @include placeholder();
 }
-
 
 // DISABLED STATE
 // -------------------------------

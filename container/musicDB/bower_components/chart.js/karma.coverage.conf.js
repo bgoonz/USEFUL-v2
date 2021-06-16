@@ -1,42 +1,47 @@
-module.exports = function(config) {
+module.exports = function (config) {
 	var configuration = {
-		browsers: ['Firefox'],
+		browsers: ["Firefox"],
 
-		frameworks: ['browserify', 'jasmine'],
+		frameworks: ["browserify", "jasmine"],
 
 		preprocessors: {
-			'src/**/*.js': ['browserify']
+			"src/**/*.js": ["browserify"],
 		},
 		browserify: {
 			debug: true,
-			transform: [['browserify-istanbul', {
-				instrumenterConfig: {
-					embed: true
-				}
-			}]]
+			transform: [
+				[
+					"browserify-istanbul",
+					{
+						instrumenterConfig: {
+							embed: true,
+						},
+					},
+				],
+			],
 		},
-		
-		reporters: ['progress', 'coverage'],
+
+		reporters: ["progress", "coverage"],
 		coverageReporter: {
-			dir: 'coverage/',
+			dir: "coverage/",
 			reporters: [
-				{ type: 'html', subdir: 'report-html' },
-				{ type: 'lcovonly', subdir: '.', file: 'lcov.info' }
-			]
-		}
+				{ type: "html", subdir: "report-html" },
+				{ type: "lcovonly", subdir: ".", file: "lcov.info" },
+			],
+		},
 	};
 
 	// If on the CI, use the CI chrome launcher
 	if (process.env.TRAVIS) {
-		configuration.browsers.push('Chrome_travis_ci');
+		configuration.browsers.push("Chrome_travis_ci");
 		configuration.customLaunchers = {
 			Chrome_travis_ci: {
-				base: 'Chrome',
-				flags: ['--no-sandbox']
-			}
+				base: "Chrome",
+				flags: ["--no-sandbox"],
+			},
 		};
 	} else {
-		configuration.browsers.push('Chrome');
+		configuration.browsers.push("Chrome");
 	}
 
 	config.set(configuration);

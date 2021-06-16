@@ -10,45 +10,47 @@ function JavaScriptCompiler() {}
 JavaScriptCompiler.prototype = {
   // PUBLIC API: You can override these methods in a subclass to provide
   // alternative compiled forms for name lookup and buffering semantics
-  nameLookup: function(parent, name /* , type*/) {
+  nameLookup: function (parent, name /* , type*/) {
     if (JavaScriptCompiler.isValidJavaScriptVariableName(name)) {
       return parent + "." + name;
     } else {
       return parent + "['" + name + "']";
     }
   },
-  depthedLookup: function(name) {
-    this.aliases.lookup = 'this.lookup';
+  depthedLookup: function (name) {
+    this.aliases.lookup = "this.lookup";
 
     return 'lookup(depths, "' + name + '")';
   },
 
-  compilerInfo: function() {
+  compilerInfo: function () {
     var revision = COMPILER_REVISION,
-        versions = REVISION_CHANGES[revision];
+      versions = REVISION_CHANGES[revision];
     return [revision, versions];
   },
 
-  appendToBuffer: function(string) {
+  appendToBuffer: function (string) {
     if (this.environment.isSimple) {
       return "return " + string + ";";
     } else {
       return {
         appendToBuffer: true,
         content: string,
-        toString: function() { return "buffer += " + string + ";"; }
+        toString: function () {
+          return "buffer += " + string + ";";
+        },
       };
     }
   },
 
-  initializeBuffer: function() {
+  initializeBuffer: function () {
     return this.quotedString("");
   },
 
   namespace: "Handlebars",
   // END PUBLIC API
 
-  compile: function(environment, options, context, asObject) {
+  compile: function (environment, options, context, asObject) {
     this.environment = environment;
     this.options = options;
     this.stringParams = this.options.stringParams;
@@ -59,7 +61,7 @@ JavaScriptCompiler.prototype = {
     this.isChild = !!context;
     this.context = context || {
       programs: [],
-      environments: []
+      environments: [],
     };
 
     this.preamble();
@@ -74,12 +76,13 @@ JavaScriptCompiler.prototype = {
 
     this.compileChildren(environment, options);
 
-    this.useDepths = this.useDepths || environment.depths.list.length || this.options.compat;
+    this.useDepths =
+      this.useDepths || environment.depths.list.length || this.options.compat;
 
     var opcodes = environment.opcodes,
-        opcode,
-        i,
-        l;
+      opcode,
+      i,
+      l;
 
     for (i = 0, l = opcodes.length; i < l; i++) {
       opcode = opcodes[i];
@@ -88,18 +91,18 @@ JavaScriptCompiler.prototype = {
     }
 
     // Flush any trailing content that might be pending.
-    this.pushSource('');
+    this.pushSource("");
 
     /* istanbul ignore next */
     if (this.stackSlot || this.inlineStack.length || this.compileStack.length) {
-      throw new Exception('Compile completed with content left on stack');
+      throw new Exception("Compile completed with content left on stack");
     }
 
     var fn = this.createFunctionContext(asObject);
     if (!this.isChild) {
       var ret = {
         compiler: this.compilerInfo(),
-        main: fn
+        main: fn,
       };
       var programs = this.context.programs;
       for (i = 0, l = programs.length; i < l; i++) {
@@ -132,32 +135,32 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  preamble: function() {
+  preamble: function () {
     // track the last context pushed into place to allow skipping the
     // getContext opcode when it would be a noop
     this.lastContext = 0;
     this.source = [];
   },
 
-  createFunctionContext: function(asObject) {
-    var varDeclarations = '';
+  createFunctionContext: function (asObject) {
+    var varDeclarations = "";
 
     var locals = this.stackVars.concat(this.registers.list);
-    if(locals.length > 0) {
+    if (locals.length > 0) {
       varDeclarations += ", " + locals.join(", ");
     }
 
     // Generate minimizer alias mappings
     for (var alias in this.aliases) {
       if (this.aliases.hasOwnProperty(alias)) {
-        varDeclarations += ', ' + alias + '=' + this.aliases[alias];
+        varDeclarations += ", " + alias + "=" + this.aliases[alias];
       }
     }
 
     var params = ["depth0", "helpers", "partials", "data"];
 
     if (this.useDepths) {
-      params.push('depths');
+      params.push("depths");
     }
 
     // Perform a second pass over the output to merge content when possible
@@ -168,20 +171,20 @@ JavaScriptCompiler.prototype = {
 
       return Function.apply(this, params);
     } else {
-      return 'function(' + params.join(',') + ') {\n  ' + source + '}';
+      return "function(" + params.join(",") + ") {\n  " + source + "}";
     }
   },
-  mergeSource: function(varDeclarations) {
-    var source = '',
-        buffer,
-        appendOnly = !this.forceBuffer,
-        appendFirst;
+  mergeSource: function (varDeclarations) {
+    var source = "",
+      buffer,
+      appendOnly = !this.forceBuffer,
+      appendFirst;
 
     for (var i = 0, len = this.source.length; i < len; i++) {
       var line = this.source[i];
       if (line.appendToBuffer) {
         if (buffer) {
-          buffer = buffer + '\n    + ' + line.content;
+          buffer = buffer + "\n    + " + line.content;
         } else {
           buffer = line.content;
         }
@@ -189,13 +192,13 @@ JavaScriptCompiler.prototype = {
         if (buffer) {
           if (!source) {
             appendFirst = true;
-            source = buffer + ';\n  ';
+            source = buffer + ";\n  ";
           } else {
-            source += 'buffer += ' + buffer + ';\n  ';
+            source += "buffer += " + buffer + ";\n  ";
           }
           buffer = undefined;
         }
-        source += line + '\n  ';
+        source += line + "\n  ";
 
         if (!this.environment.isSimple) {
           appendOnly = false;
@@ -205,19 +208,24 @@ JavaScriptCompiler.prototype = {
 
     if (appendOnly) {
       if (buffer || !source) {
-        source += 'return ' + (buffer || '""') + ';\n';
+        source += "return " + (buffer || '""') + ";\n";
       }
     } else {
-      varDeclarations += ", buffer = " + (appendFirst ? '' : this.initializeBuffer());
+      varDeclarations +=
+        ", buffer = " + (appendFirst ? "" : this.initializeBuffer());
       if (buffer) {
-        source += 'return buffer + ' + buffer + ';\n';
+        source += "return buffer + " + buffer + ";\n";
       } else {
-        source += 'return buffer;\n';
+        source += "return buffer;\n";
       }
     }
 
     if (varDeclarations) {
-      source = 'var ' + varDeclarations.substring(2) + (appendFirst ? '' : ';\n  ') + source;
+      source =
+        "var " +
+        varDeclarations.substring(2) +
+        (appendFirst ? "" : ";\n  ") +
+        source;
     }
 
     return source;
@@ -232,8 +240,8 @@ JavaScriptCompiler.prototype = {
   // `{{#this.foo}}...{{/this.foo}}`, resolve the value of `foo`, and
   // replace it on the stack with the result of properly
   // invoking blockHelperMissing.
-  blockValue: function(name) {
-    this.aliases.blockHelperMissing = 'helpers.blockHelperMissing';
+  blockValue: function (name) {
+    this.aliases.blockHelperMissing = "helpers.blockHelperMissing";
 
     var params = [this.contextName(0)];
     this.setupParams(name, 0, params);
@@ -241,7 +249,7 @@ JavaScriptCompiler.prototype = {
     var blockName = this.popStack();
     params.splice(1, 0, blockName);
 
-    this.push('blockHelperMissing.call(' + params.join(', ') + ')');
+    this.push("blockHelperMissing.call(" + params.join(", ") + ")");
   },
 
   // [ambiguousBlockValue]
@@ -250,19 +258,27 @@ JavaScriptCompiler.prototype = {
   // Compiler value, before: lastHelper=value of last found helper, if any
   // On stack, after, if no lastHelper: same as [blockValue]
   // On stack, after, if lastHelper: value
-  ambiguousBlockValue: function() {
-    this.aliases.blockHelperMissing = 'helpers.blockHelperMissing';
+  ambiguousBlockValue: function () {
+    this.aliases.blockHelperMissing = "helpers.blockHelperMissing";
 
     // We're being a bit cheeky and reusing the options value from the prior exec
     var params = [this.contextName(0)];
-    this.setupParams('', 0, params, true);
+    this.setupParams("", 0, params, true);
 
     this.flushInline();
 
     var current = this.topStack();
     params.splice(1, 0, current);
 
-    this.pushSource("if (!" + this.lastHelper + ") { " + current + " = blockHelperMissing.call(" + params.join(", ") + "); }");
+    this.pushSource(
+      "if (!" +
+        this.lastHelper +
+        ") { " +
+        current +
+        " = blockHelperMissing.call(" +
+        params.join(", ") +
+        "); }"
+    );
   },
 
   // [appendContent]
@@ -271,7 +287,7 @@ JavaScriptCompiler.prototype = {
   // On stack, after: ...
   //
   // Appends the string value of `content` to the current buffer
-  appendContent: function(content) {
+  appendContent: function (content) {
     if (this.pendingContent) {
       content = this.pendingContent + content;
     }
@@ -288,12 +304,14 @@ JavaScriptCompiler.prototype = {
   //
   // If `value` is truthy, or 0, it is coerced into a string and appended
   // Otherwise, the empty string is appended
-  append: function() {
+  append: function () {
     // Force anything that is inlined onto the stack so we don't have duplication
     // when we examine local
     this.flushInline();
     var local = this.popStack();
-    this.pushSource('if (' + local + ' != null) { ' + this.appendToBuffer(local) + ' }');
+    this.pushSource(
+      "if (" + local + " != null) { " + this.appendToBuffer(local) + " }"
+    );
     if (this.environment.isSimple) {
       this.pushSource("else { " + this.appendToBuffer("''") + " }");
     }
@@ -305,10 +323,12 @@ JavaScriptCompiler.prototype = {
   // On stack, after: ...
   //
   // Escape `value` and append it to the buffer
-  appendEscaped: function() {
-    this.aliases.escapeExpression = 'this.escapeExpression';
+  appendEscaped: function () {
+    this.aliases.escapeExpression = "this.escapeExpression";
 
-    this.pushSource(this.appendToBuffer("escapeExpression(" + this.popStack() + ")"));
+    this.pushSource(
+      this.appendToBuffer("escapeExpression(" + this.popStack() + ")")
+    );
   },
 
   // [getContext]
@@ -318,7 +338,7 @@ JavaScriptCompiler.prototype = {
   // Compiler value, after: lastContext=depth
   //
   // Set the value of the `lastContext` compiler value to the depth
-  getContext: function(depth) {
+  getContext: function (depth) {
     this.lastContext = depth;
   },
 
@@ -328,7 +348,7 @@ JavaScriptCompiler.prototype = {
   // On stack, after: currentContext, ...
   //
   // Pushes the value of the current context onto the stack.
-  pushContext: function() {
+  pushContext: function () {
     this.pushStackLiteral(this.contextName(this.lastContext));
   },
 
@@ -339,10 +359,10 @@ JavaScriptCompiler.prototype = {
   //
   // Looks up the value of `name` on the current context and pushes
   // it onto the stack.
-  lookupOnContext: function(parts, falsy, scoped) {
+  lookupOnContext: function (parts, falsy, scoped) {
     /*jshint -W083 */
     var i = 0,
-        len = parts.length;
+      len = parts.length;
 
     if (!scoped && this.options.compat && !this.lastContext) {
       // The depthed query is expected to handle the undefined logic for the root level that
@@ -353,15 +373,15 @@ JavaScriptCompiler.prototype = {
     }
 
     for (; i < len; i++) {
-      this.replaceStack(function(current) {
-        var lookup = this.nameLookup(current, parts[i], 'context');
+      this.replaceStack(function (current) {
+        var lookup = this.nameLookup(current, parts[i], "context");
         // We want to ensure that zero and false are handled properly if the context (falsy flag)
         // needs to have the special handling for these values.
         if (!falsy) {
-          return ' != null ? ' + lookup + ' : ' + current;
+          return " != null ? " + lookup + " : " + current;
         } else {
           // Otherwise we can use generic falsy handling
-          return ' && ' + lookup;
+          return " && " + lookup;
         }
       });
     }
@@ -373,18 +393,18 @@ JavaScriptCompiler.prototype = {
   // On stack, after: data, ...
   //
   // Push the data lookup operator
-  lookupData: function(depth, parts) {
+  lookupData: function (depth, parts) {
     /*jshint -W083 */
     if (!depth) {
-      this.pushStackLiteral('data');
+      this.pushStackLiteral("data");
     } else {
-      this.pushStackLiteral('this.data(data, ' + depth + ')');
+      this.pushStackLiteral("this.data(data, " + depth + ")");
     }
 
     var len = parts.length;
     for (var i = 0; i < len; i++) {
-      this.replaceStack(function(current) {
-        return ' && ' + this.nameLookup(current, parts[i], 'data');
+      this.replaceStack(function (current) {
+        return " && " + this.nameLookup(current, parts[i], "data");
       });
     }
   },
@@ -396,10 +416,10 @@ JavaScriptCompiler.prototype = {
   //
   // If the `value` is a lambda, replace it on the stack by
   // the return value of the lambda
-  resolvePossibleLambda: function() {
-    this.aliases.lambda = 'this.lambda';
+  resolvePossibleLambda: function () {
+    this.aliases.lambda = "this.lambda";
 
-    this.push('lambda(' + this.popStack() + ', ' + this.contextName(0) + ')');
+    this.push("lambda(" + this.popStack() + ", " + this.contextName(0) + ")");
   },
 
   // [pushStringParam]
@@ -410,14 +430,14 @@ JavaScriptCompiler.prototype = {
   // This opcode is designed for use in string mode, which
   // provides the string value of a parameter along with its
   // depth rather than resolving it immediately.
-  pushStringParam: function(string, type) {
+  pushStringParam: function (string, type) {
     this.pushContext();
     this.pushString(type);
 
     // If it's a subexpression, the string result
     // will be pushed after this opcode.
-    if (type !== 'sexpr') {
-      if (typeof string === 'string') {
+    if (type !== "sexpr") {
+      if (typeof string === "string") {
         this.pushString(string);
       } else {
         this.pushStackLiteral(string);
@@ -425,36 +445,36 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  emptyHash: function() {
-    this.pushStackLiteral('{}');
+  emptyHash: function () {
+    this.pushStackLiteral("{}");
 
     if (this.trackIds) {
-      this.push('{}'); // hashIds
+      this.push("{}"); // hashIds
     }
     if (this.stringParams) {
-      this.push('{}'); // hashContexts
-      this.push('{}'); // hashTypes
+      this.push("{}"); // hashContexts
+      this.push("{}"); // hashTypes
     }
   },
-  pushHash: function() {
+  pushHash: function () {
     if (this.hash) {
       this.hashes.push(this.hash);
     }
-    this.hash = {values: [], types: [], contexts: [], ids: []};
+    this.hash = { values: [], types: [], contexts: [], ids: [] };
   },
-  popHash: function() {
+  popHash: function () {
     var hash = this.hash;
     this.hash = this.hashes.pop();
 
     if (this.trackIds) {
-      this.push('{' + hash.ids.join(',') + '}');
+      this.push("{" + hash.ids.join(",") + "}");
     }
     if (this.stringParams) {
-      this.push('{' + hash.contexts.join(',') + '}');
-      this.push('{' + hash.types.join(',') + '}');
+      this.push("{" + hash.contexts.join(",") + "}");
+      this.push("{" + hash.types.join(",") + "}");
     }
 
-    this.push('{\n    ' + hash.values.join(',\n    ') + '\n  }');
+    this.push("{\n    " + hash.values.join(",\n    ") + "\n  }");
   },
 
   // [pushString]
@@ -463,7 +483,7 @@ JavaScriptCompiler.prototype = {
   // On stack, after: quotedString(string), ...
   //
   // Push a quoted version of `string` onto the stack
-  pushString: function(string) {
+  pushString: function (string) {
     this.pushStackLiteral(this.quotedString(string));
   },
 
@@ -473,7 +493,7 @@ JavaScriptCompiler.prototype = {
   // On stack, after: expr, ...
   //
   // Push an expression onto the stack
-  push: function(expr) {
+  push: function (expr) {
     this.inlineStack.push(expr);
     return expr;
   },
@@ -486,7 +506,7 @@ JavaScriptCompiler.prototype = {
   // Pushes a value onto the stack. This operation prevents
   // the compiler from creating a temporary variable to hold
   // it.
-  pushLiteral: function(value) {
+  pushLiteral: function (value) {
     this.pushStackLiteral(value);
   },
 
@@ -498,7 +518,7 @@ JavaScriptCompiler.prototype = {
   // Push a program expression onto the stack. This takes
   // a compile-time guid and converts it into a runtime-accessible
   // expression.
-  pushProgram: function(guid) {
+  pushProgram: function (guid) {
     if (guid != null) {
       this.pushStackLiteral(this.programExpression(guid));
     } else {
@@ -515,14 +535,15 @@ JavaScriptCompiler.prototype = {
   // and pushes the helper's return value onto the stack.
   //
   // If the helper is not found, `helperMissing` is called.
-  invokeHelper: function(paramSize, name, isSimple) {
-    this.aliases.helperMissing = 'helpers.helperMissing';
+  invokeHelper: function (paramSize, name, isSimple) {
+    this.aliases.helperMissing = "helpers.helperMissing";
 
     var nonHelper = this.popStack();
     var helper = this.setupHelper(paramSize, name);
 
-    var lookup = (isSimple ? helper.name + ' || ' : '') + nonHelper + ' || helperMissing';
-    this.push('((' + lookup + ').call(' + helper.callParams + '))');
+    var lookup =
+      (isSimple ? helper.name + " || " : "") + nonHelper + " || helperMissing";
+    this.push("((" + lookup + ").call(" + helper.callParams + "))");
   },
 
   // [invokeKnownHelper]
@@ -532,7 +553,7 @@ JavaScriptCompiler.prototype = {
   //
   // This operation is used when the helper is known to exist,
   // so a `helperMissing` fallback is not required.
-  invokeKnownHelper: function(paramSize, name) {
+  invokeKnownHelper: function (paramSize, name) {
     var helper = this.setupHelper(paramSize, name);
     this.push(helper.name + ".call(" + helper.callParams + ")");
   },
@@ -549,22 +570,34 @@ JavaScriptCompiler.prototype = {
   // This operation emits more code than the other options,
   // and can be avoided by passing the `knownHelpers` and
   // `knownHelpersOnly` flags at compile-time.
-  invokeAmbiguous: function(name, helperCall) {
+  invokeAmbiguous: function (name, helperCall) {
     this.aliases.functionType = '"function"';
-    this.aliases.helperMissing = 'helpers.helperMissing';
-    this.useRegister('helper');
+    this.aliases.helperMissing = "helpers.helperMissing";
+    this.useRegister("helper");
 
     var nonHelper = this.popStack();
 
     this.emptyHash();
     var helper = this.setupHelper(0, name, helperCall);
 
-    var helperName = this.lastHelper = this.nameLookup('helpers', name, 'helper');
+    var helperName = (this.lastHelper = this.nameLookup(
+      "helpers",
+      name,
+      "helper"
+    ));
 
     this.push(
-      '((helper = (helper = ' + helperName + ' || ' + nonHelper + ') != null ? helper : helperMissing'
-        + (helper.paramsInit ? '),(' + helper.paramsInit : '') + '),'
-      + '(typeof helper === functionType ? helper.call(' + helper.callParams + ') : helper))');
+      "((helper = (helper = " +
+        helperName +
+        " || " +
+        nonHelper +
+        ") != null ? helper : helperMissing" +
+        (helper.paramsInit ? "),(" + helper.paramsInit : "") +
+        ")," +
+        "(typeof helper === functionType ? helper.call(" +
+        helper.callParams +
+        ") : helper))"
+    );
   },
 
   // [invokePartial]
@@ -574,16 +607,24 @@ JavaScriptCompiler.prototype = {
   //
   // This operation pops off a context, invokes a partial with that context,
   // and pushes the result of the invocation back.
-  invokePartial: function(name, indent) {
-    var params = [this.nameLookup('partials', name, 'partial'), "'" + indent + "'", "'" + name + "'", this.popStack(), this.popStack(), "helpers", "partials"];
+  invokePartial: function (name, indent) {
+    var params = [
+      this.nameLookup("partials", name, "partial"),
+      "'" + indent + "'",
+      "'" + name + "'",
+      this.popStack(),
+      this.popStack(),
+      "helpers",
+      "partials",
+    ];
 
     if (this.options.data) {
       params.push("data");
     } else if (this.options.compat) {
-      params.push('undefined');
+      params.push("undefined");
     }
     if (this.options.compat) {
-      params.push('depths');
+      params.push("depths");
     }
 
     this.push("this.invokePartial(" + params.join(", ") + ")");
@@ -595,11 +636,11 @@ JavaScriptCompiler.prototype = {
   // On stack, after: ..., hash, ...
   //
   // Pops a value off the stack and assigns it to the current hash
-  assignToHash: function(key) {
+  assignToHash: function (key) {
     var value = this.popStack(),
-        context,
-        type,
-        id;
+      context,
+      type,
+      id;
 
     if (this.trackIds) {
       id = this.popStack();
@@ -622,13 +663,13 @@ JavaScriptCompiler.prototype = {
     hash.values.push("'" + key + "': (" + value + ")");
   },
 
-  pushId: function(type, name) {
-    if (type === 'ID' || type === 'DATA') {
+  pushId: function (type, name) {
+    if (type === "ID" || type === "DATA") {
       this.pushString(name);
-    } else if (type === 'sexpr') {
-      this.pushStackLiteral('true');
+    } else if (type === "sexpr") {
+      this.pushStackLiteral("true");
     } else {
-      this.pushStackLiteral('null');
+      this.pushStackLiteral("null");
     }
   },
 
@@ -636,31 +677,38 @@ JavaScriptCompiler.prototype = {
 
   compiler: JavaScriptCompiler,
 
-  compileChildren: function(environment, options) {
-    var children = environment.children, child, compiler;
+  compileChildren: function (environment, options) {
+    var children = environment.children,
+      child,
+      compiler;
 
-    for(var i=0, l=children.length; i<l; i++) {
+    for (var i = 0, l = children.length; i < l; i++) {
       child = children[i];
       compiler = new this.compiler();
 
       var index = this.matchExistingProgram(child);
 
       if (index == null) {
-        this.context.programs.push('');     // Placeholder to prevent name conflicts for nested children
+        this.context.programs.push(""); // Placeholder to prevent name conflicts for nested children
         index = this.context.programs.length;
         child.index = index;
-        child.name = 'program' + index;
-        this.context.programs[index] = compiler.compile(child, options, this.context, !this.precompile);
+        child.name = "program" + index;
+        this.context.programs[index] = compiler.compile(
+          child,
+          options,
+          this.context,
+          !this.precompile
+        );
         this.context.environments[index] = child;
 
         this.useDepths = this.useDepths || compiler.useDepths;
       } else {
         child.index = index;
-        child.name = 'program' + index;
+        child.name = "program" + index;
       }
     }
   },
-  matchExistingProgram: function(child) {
+  matchExistingProgram: function (child) {
     for (var i = 0, len = this.context.environments.length; i < len; i++) {
       var environment = this.context.environments[i];
       if (environment && environment.equals(child)) {
@@ -669,35 +717,37 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  programExpression: function(guid) {
+  programExpression: function (guid) {
     var child = this.environment.children[guid],
-        depths = child.depths.list,
-        useDepths = this.useDepths,
-        depth;
+      depths = child.depths.list,
+      useDepths = this.useDepths,
+      depth;
 
-    var programParams = [child.index, 'data'];
+    var programParams = [child.index, "data"];
 
     if (useDepths) {
-      programParams.push('depths');
+      programParams.push("depths");
     }
 
-    return 'this.program(' + programParams.join(', ') + ')';
+    return "this.program(" + programParams.join(", ") + ")";
   },
 
-  useRegister: function(name) {
-    if(!this.registers[name]) {
+  useRegister: function (name) {
+    if (!this.registers[name]) {
       this.registers[name] = true;
       this.registers.list.push(name);
     }
   },
 
-  pushStackLiteral: function(item) {
+  pushStackLiteral: function (item) {
     return this.push(new Literal(item));
   },
 
-  pushSource: function(source) {
+  pushSource: function (source) {
     if (this.pendingContent) {
-      this.source.push(this.appendToBuffer(this.quotedString(this.pendingContent)));
+      this.source.push(
+        this.appendToBuffer(this.quotedString(this.pendingContent))
+      );
       this.pendingContent = undefined;
     }
 
@@ -706,7 +756,7 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  pushStack: function(item) {
+  pushStack: function (item) {
     this.flushInline();
 
     var stack = this.incrStack();
@@ -715,16 +765,16 @@ JavaScriptCompiler.prototype = {
     return stack;
   },
 
-  replaceStack: function(callback) {
-    var prefix = '',
-        inline = this.isInline(),
-        stack,
-        createdStack,
-        usedLiteral;
+  replaceStack: function (callback) {
+    var prefix = "",
+      inline = this.isInline(),
+      stack,
+      createdStack,
+      usedLiteral;
 
     /* istanbul ignore next */
     if (!this.isInline()) {
-      throw new Exception('replaceStack on non-inline');
+      throw new Exception("replaceStack on non-inline");
     }
 
     // We want to merge the inline statement into the replacement statement via ','
@@ -739,7 +789,7 @@ JavaScriptCompiler.prototype = {
       createdStack = !this.stackSlot;
       var name = !createdStack ? this.topStackName() : this.incrStack();
 
-      prefix = '(' + this.push(name) + ' = ' + top + ')';
+      prefix = "(" + this.push(name) + " = " + top + ")";
       stack = this.topStack();
     }
 
@@ -751,18 +801,20 @@ JavaScriptCompiler.prototype = {
     if (createdStack) {
       this.stackSlot--;
     }
-    this.push('(' + prefix + item + ')');
+    this.push("(" + prefix + item + ")");
   },
 
-  incrStack: function() {
+  incrStack: function () {
     this.stackSlot++;
-    if(this.stackSlot > this.stackVars.length) { this.stackVars.push("stack" + this.stackSlot); }
+    if (this.stackSlot > this.stackVars.length) {
+      this.stackVars.push("stack" + this.stackSlot);
+    }
     return this.topStackName();
   },
-  topStackName: function() {
+  topStackName: function () {
     return "stack" + this.stackSlot;
   },
-  flushInline: function() {
+  flushInline: function () {
     var inlineStack = this.inlineStack;
     if (inlineStack.length) {
       this.inlineStack = [];
@@ -776,21 +828,21 @@ JavaScriptCompiler.prototype = {
       }
     }
   },
-  isInline: function() {
+  isInline: function () {
     return this.inlineStack.length;
   },
 
-  popStack: function(wrapped) {
+  popStack: function (wrapped) {
     var inline = this.isInline(),
-        item = (inline ? this.inlineStack : this.compileStack).pop();
+      item = (inline ? this.inlineStack : this.compileStack).pop();
 
-    if (!wrapped && (item instanceof Literal)) {
+    if (!wrapped && item instanceof Literal) {
       return item.value;
     } else {
       if (!inline) {
         /* istanbul ignore next */
         if (!this.stackSlot) {
-          throw new Exception('Invalid stack pop');
+          throw new Exception("Invalid stack pop");
         }
         this.stackSlot--;
       }
@@ -798,9 +850,9 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  topStack: function() {
-    var stack = (this.isInline() ? this.inlineStack : this.compileStack),
-        item = stack[stack.length - 1];
+  topStack: function () {
+    var stack = this.isInline() ? this.inlineStack : this.compileStack,
+      item = stack[stack.length - 1];
 
     if (item instanceof Literal) {
       return item.value;
@@ -809,51 +861,61 @@ JavaScriptCompiler.prototype = {
     }
   },
 
-  contextName: function(context) {
+  contextName: function (context) {
     if (this.useDepths && context) {
-      return 'depths[' + context + ']';
+      return "depths[" + context + "]";
     } else {
-      return 'depth' + context;
+      return "depth" + context;
     }
   },
 
-  quotedString: function(str) {
-    return '"' + str
-      .replace(/\\/g, '\\\\')
-      .replace(/"/g, '\\"')
-      .replace(/\n/g, '\\n')
-      .replace(/\r/g, '\\r')
-      .replace(/\u2028/g, '\\u2028')   // Per Ecma-262 7.3 + 7.8.4
-      .replace(/\u2029/g, '\\u2029') + '"';
+  quotedString: function (str) {
+    return (
+      '"' +
+      str
+        .replace(/\\/g, "\\\\")
+        .replace(/"/g, '\\"')
+        .replace(/\n/g, "\\n")
+        .replace(/\r/g, "\\r")
+        .replace(/\u2028/g, "\\u2028") // Per Ecma-262 7.3 + 7.8.4
+        .replace(/\u2029/g, "\\u2029") +
+      '"'
+    );
   },
 
-  objectLiteral: function(obj) {
+  objectLiteral: function (obj) {
     var pairs = [];
 
     for (var key in obj) {
       if (obj.hasOwnProperty(key)) {
-        pairs.push(this.quotedString(key) + ':' + obj[key]);
+        pairs.push(this.quotedString(key) + ":" + obj[key]);
       }
     }
 
-    return '{' + pairs.join(',') + '}';
+    return "{" + pairs.join(",") + "}";
   },
 
-  setupHelper: function(paramSize, name, blockHelper) {
+  setupHelper: function (paramSize, name, blockHelper) {
     var params = [],
-        paramsInit = this.setupParams(name, paramSize, params, blockHelper);
-    var foundHelper = this.nameLookup('helpers', name, 'helper');
+      paramsInit = this.setupParams(name, paramSize, params, blockHelper);
+    var foundHelper = this.nameLookup("helpers", name, "helper");
 
     return {
       params: params,
       paramsInit: paramsInit,
       name: foundHelper,
-      callParams: [this.contextName(0)].concat(params).join(", ")
+      callParams: [this.contextName(0)].concat(params).join(", "),
     };
   },
 
-  setupOptions: function(helper, paramSize, params) {
-    var options = {}, contexts = [], types = [], ids = [], param, inverse, program;
+  setupOptions: function (helper, paramSize, params) {
+    var options = {},
+      contexts = [],
+      types = [],
+      ids = [],
+      param,
+      inverse,
+      program;
 
     options.name = this.quotedString(helper);
     options.hash = this.popStack();
@@ -873,11 +935,11 @@ JavaScriptCompiler.prototype = {
     // helpers to do a check for `if (options.fn)`
     if (program || inverse) {
       if (!program) {
-        program = 'this.noop';
+        program = "this.noop";
       }
 
       if (!inverse) {
-        inverse = 'this.noop';
+        inverse = "this.noop";
       }
 
       options.fn = program;
@@ -917,18 +979,20 @@ JavaScriptCompiler.prototype = {
 
   // the params and contexts arguments are passed in arrays
   // to fill in
-  setupParams: function(helperName, paramSize, params, useRegister) {
-    var options = this.objectLiteral(this.setupOptions(helperName, paramSize, params));
+  setupParams: function (helperName, paramSize, params, useRegister) {
+    var options = this.objectLiteral(
+      this.setupOptions(helperName, paramSize, params)
+    );
 
     if (useRegister) {
-      this.useRegister('options');
-      params.push('options');
-      return 'options=' + options;
+      this.useRegister("options");
+      params.push("options");
+      return "options=" + options;
     } else {
       params.push(options);
-      return '';
+      return "";
     }
-  }
+  },
 };
 
 var reservedWords = (
@@ -949,14 +1013,17 @@ var reservedWords = (
   " double import public let yield"
 ).split(" ");
 
-var compilerWords = JavaScriptCompiler.RESERVED_WORDS = {};
+var compilerWords = (JavaScriptCompiler.RESERVED_WORDS = {});
 
-for(var i=0, l=reservedWords.length; i<l; i++) {
+for (var i = 0, l = reservedWords.length; i < l; i++) {
   compilerWords[reservedWords[i]] = true;
 }
 
-JavaScriptCompiler.isValidJavaScriptVariableName = function(name) {
-  return !JavaScriptCompiler.RESERVED_WORDS[name] && /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name);
+JavaScriptCompiler.isValidJavaScriptVariableName = function (name) {
+  return (
+    !JavaScriptCompiler.RESERVED_WORDS[name] &&
+    /^[a-zA-Z_$][0-9a-zA-Z_$]*$/.test(name)
+  );
 };
 
 export default JavaScriptCompiler;

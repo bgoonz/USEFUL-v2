@@ -21,5 +21,5 @@ To compile the log scanner run:
 # Contributing
 
 When sending pull requests, please ensure that everything's been run
-through ```gofmt``` beforehand so we can keep everything nice and
+through `gofmt` beforehand so we can keep everything nice and
 tidy.

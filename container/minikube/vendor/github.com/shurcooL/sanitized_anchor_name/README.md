@@ -6,15 +6,13 @@ Its logic can be reused by multiple packages to create interoperable anchor name
 
 At this time, it does not try to ensure that generated anchor names are unique, that responsibility falls on the caller.
 
-Installation
-------------
+## Installation
 
 ```bash
 go get -u github.com/shurcooL/sanitized_anchor_name
 ```
 
-Example
--------
+## Example
 
 ```Go
 anchorName := sanitized_anchor_name.Create("This is a header")
@@ -25,7 +23,6 @@ fmt.Println(anchorName)
 // this-is-a-header
 ```
 
-License
--------
+## License
 
 - [MIT License](LICENSE)

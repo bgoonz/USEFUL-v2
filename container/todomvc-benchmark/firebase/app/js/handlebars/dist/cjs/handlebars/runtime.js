@@ -6,24 +6,34 @@ var REVISION_CHANGES = require("./base").REVISION_CHANGES;
 var createFrame = require("./base").createFrame;
 
 function checkRevision(compilerInfo) {
-  var compilerRevision = compilerInfo && compilerInfo[0] || 1,
-      currentRevision = COMPILER_REVISION;
+  var compilerRevision = (compilerInfo && compilerInfo[0]) || 1,
+    currentRevision = COMPILER_REVISION;
 
   if (compilerRevision !== currentRevision) {
     if (compilerRevision < currentRevision) {
       var runtimeVersions = REVISION_CHANGES[currentRevision],
-          compilerVersions = REVISION_CHANGES[compilerRevision];
-      throw new Exception("Template was precompiled with an older version of Handlebars than the current runtime. "+
-            "Please update your precompiler to a newer version ("+runtimeVersions+") or downgrade your runtime to an older version ("+compilerVersions+").");
+        compilerVersions = REVISION_CHANGES[compilerRevision];
+      throw new Exception(
+        "Template was precompiled with an older version of Handlebars than the current runtime. " +
+          "Please update your precompiler to a newer version (" +
+          runtimeVersions +
+          ") or downgrade your runtime to an older version (" +
+          compilerVersions +
+          ")."
+      );
     } else {
       // Use the embedded version info since the runtime doesn't know about this revision yet
-      throw new Exception("Template was precompiled with a newer version of Handlebars than the current runtime. "+
-            "Please update your runtime to a newer version ("+compilerInfo[1]+").");
+      throw new Exception(
+        "Template was precompiled with a newer version of Handlebars than the current runtime. " +
+          "Please update your runtime to a newer version (" +
+          compilerInfo[1] +
+          ")."
+      );
     }
   }
 }
 
-exports.checkRevision = checkRevision;// TODO: Remove this line and break up compilePartial
+exports.checkRevision = checkRevision; // TODO: Remove this line and break up compilePartial
 
 function template(templateSpec, env) {
   /* istanbul ignore next */
@@ -31,28 +41,56 @@ function template(templateSpec, env) {
     throw new Exception("No environment passed to template");
   }
   if (!templateSpec || !templateSpec.main) {
-    throw new Exception('Unknown template object: ' + typeof templateSpec);
+    throw new Exception("Unknown template object: " + typeof templateSpec);
   }
 
   // Note: Using env.VM references rather than local var references throughout this section to allow
   // for external users to override these as psuedo-supported APIs.
   env.VM.checkRevision(templateSpec.compiler);
 
-  var invokePartialWrapper = function(partial, indent, name, context, hash, helpers, partials, data, depths) {
+  var invokePartialWrapper = function (
+    partial,
+    indent,
+    name,
+    context,
+    hash,
+    helpers,
+    partials,
+    data,
+    depths
+  ) {
     if (hash) {
       context = Utils.extend({}, context, hash);
     }
 
-    var result = env.VM.invokePartial.call(this, partial, name, context, helpers, partials, data, depths);
+    var result = env.VM.invokePartial.call(
+      this,
+      partial,
+      name,
+      context,
+      helpers,
+      partials,
+      data,
+      depths
+    );
 
     if (result == null && env.compile) {
-      var options = { helpers: helpers, partials: partials, data: data, depths: depths };
-      partials[name] = env.compile(partial, { data: data !== undefined, compat: templateSpec.compat }, env);
+      var options = {
+        helpers: helpers,
+        partials: partials,
+        data: data,
+        depths: depths,
+      };
+      partials[name] = env.compile(
+        partial,
+        { data: data !== undefined, compat: templateSpec.compat },
+        env
+      );
       result = partials[name](context, options);
     }
     if (result != null) {
       if (indent) {
-        var lines = result.split('\n');
+        var lines = result.split("\n");
         for (var i = 0, l = lines.length; i < l; i++) {
           if (!lines[i] && i + 1 === l) {
             break;
@@ -60,17 +98,21 @@ function template(templateSpec, env) {
 
           lines[i] = indent + lines[i];
         }
-        result = lines.join('\n');
+        result = lines.join("\n");
       }
       return result;
     } else {
-      throw new Exception("The partial " + name + " could not be compiled when running in runtime-only mode");
+      throw new Exception(
+        "The partial " +
+          name +
+          " could not be compiled when running in runtime-only mode"
+      );
     }
   };
 
   // Just add water
   var container = {
-    lookup: function(depths, name) {
+    lookup: function (depths, name) {
       var len = depths.length;
       for (var i = 0; i < len; i++) {
         if (depths[i] && depths[i][name] != null) {
@@ -78,21 +120,21 @@ function template(templateSpec, env) {
         }
       }
     },
-    lambda: function(current, context) {
-      return typeof current === 'function' ? current.call(context) : current;
+    lambda: function (current, context) {
+      return typeof current === "function" ? current.call(context) : current;
     },
 
     escapeExpression: Utils.escapeExpression,
     invokePartial: invokePartialWrapper,
 
-    fn: function(i) {
+    fn: function (i) {
       return templateSpec[i];
     },
 
     programs: [],
-    program: function(i, data, depths) {
+    program: function (i, data, depths) {
       var programWrapper = this.programs[i],
-          fn = this.fn(i);
+        fn = this.fn(i);
       if (data || depths) {
         programWrapper = program(this, i, fn, data, depths);
       } else if (!programWrapper) {
@@ -101,16 +143,16 @@ function template(templateSpec, env) {
       return programWrapper;
     },
 
-    data: function(data, depth) {
+    data: function (data, depth) {
       while (data && depth--) {
         data = data._parent;
       }
       return data;
     },
-    merge: function(param, common) {
+    merge: function (param, common) {
       var ret = param || common;
 
-      if (param && common && (param !== common)) {
+      if (param && common && param !== common) {
         ret = Utils.extend({}, common, param);
       }
 
@@ -118,10 +160,10 @@ function template(templateSpec, env) {
     },
 
     noop: env.VM.noop,
-    compilerInfo: templateSpec.compiler
+    compilerInfo: templateSpec.compiler,
   };
 
-  var ret = function(context, options) {
+  var ret = function (context, options) {
     options = options || {};
     var data = options.data;
 
@@ -134,11 +176,18 @@ function template(templateSpec, env) {
       depths = options.depths ? [context].concat(options.depths) : [context];
     }
 
-    return templateSpec.main.call(container, context, container.helpers, container.partials, data, depths);
+    return templateSpec.main.call(
+      container,
+      context,
+      container.helpers,
+      container.partials,
+      data,
+      depths
+    );
   };
   ret.isTop = true;
 
-  ret._setup = function(options) {
+  ret._setup = function (options) {
     if (!options.partial) {
       container.helpers = container.merge(options.helpers, env.helpers);
 
@@ -151,9 +200,9 @@ function template(templateSpec, env) {
     }
   };
 
-  ret._child = function(i, data, depths) {
+  ret._child = function (i, data, depths) {
     if (templateSpec.useDepths && !depths) {
-      throw new Exception('must pass parent depths');
+      throw new Exception("must pass parent depths");
     }
 
     return program(container, i, templateSpec[i], data, depths);
@@ -161,31 +210,58 @@ function template(templateSpec, env) {
   return ret;
 }
 
-exports.template = template;function program(container, i, fn, data, depths) {
-  var prog = function(context, options) {
+exports.template = template;
+function program(container, i, fn, data, depths) {
+  var prog = function (context, options) {
     options = options || {};
 
-    return fn.call(container, context, container.helpers, container.partials, options.data || data, depths && [context].concat(depths));
+    return fn.call(
+      container,
+      context,
+      container.helpers,
+      container.partials,
+      options.data || data,
+      depths && [context].concat(depths)
+    );
   };
   prog.program = i;
   prog.depth = depths ? depths.length : 0;
   return prog;
 }
 
-exports.program = program;function invokePartial(partial, name, context, helpers, partials, data, depths) {
-  var options = { partial: true, helpers: helpers, partials: partials, data: data, depths: depths };
+exports.program = program;
+function invokePartial(
+  partial,
+  name,
+  context,
+  helpers,
+  partials,
+  data,
+  depths
+) {
+  var options = {
+    partial: true,
+    helpers: helpers,
+    partials: partials,
+    data: data,
+    depths: depths,
+  };
 
-  if(partial === undefined) {
+  if (partial === undefined) {
     throw new Exception("The partial " + name + " could not be found");
-  } else if(partial instanceof Function) {
+  } else if (partial instanceof Function) {
     return partial(context, options);
   }
 }
 
-exports.invokePartial = invokePartial;function noop() { return ""; }
+exports.invokePartial = invokePartial;
+function noop() {
+  return "";
+}
 
-exports.noop = noop;function initData(context, data) {
-  if (!data || !('root' in data)) {
+exports.noop = noop;
+function initData(context, data) {
+  if (!data || !("root" in data)) {
     data = data ? createFrame(data) : {};
     data.root = context;
   }

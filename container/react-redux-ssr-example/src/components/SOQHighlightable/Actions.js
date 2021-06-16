@@ -1,15 +1,14 @@
-import defaultState from './State';
+import defaultState from "./State";
 
-const HIGHLIGHT = 'SOQHighlightable/toggleHighlight';
+const HIGHLIGHT = "SOQHighlightable/toggleHighlight";
 
 const toggleHighlight = (i) => ({
   type: HIGHLIGHT,
-  questionKey: i
+  questionKey: i,
 });
 
 const soqhReducer = (state = defaultState, action) => {
   switch (action.type) {
-
     case HIGHLIGHT:
       const newQuestions = state.questions;
 
@@ -22,11 +21,11 @@ const soqhReducer = (state = defaultState, action) => {
 
       return {
         ...state,
-        questions: newQuestions
+        questions: newQuestions,
       };
 
     default:
-      return {...state};
+      return { ...state };
   }
 };
 

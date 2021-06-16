@@ -5,6 +5,6 @@ const defaultState = {
   requestSuccess: null,
   requestError: null,
   modalOpen: false,
-  error: null
+  error: null,
 };
 export default defaultState;

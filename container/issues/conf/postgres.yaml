@@ -17,4 +17,4 @@ password:
   secretKeyRef:
     key: postgres.password
     name: hasura-secrets
-volume: {{ cluster.metadata.postgres.volume|json }}
+volume: { { cluster.metadata.postgres.volume|json } }

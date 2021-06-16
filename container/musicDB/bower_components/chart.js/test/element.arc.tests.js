@@ -1,10 +1,10 @@
 // Test the rectangle element
 
-describe('Arc element tests', function() {
-	it ('Should be constructed', function() {
+describe("Arc element tests", function () {
+	it("Should be constructed", function () {
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		expect(arc).not.toBe(undefined);
@@ -12,10 +12,10 @@ describe('Arc element tests', function() {
 		expect(arc._index).toBe(1);
 	});
 
-	it ('should determine if in range', function() {
+	it("should determine if in range", function () {
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Make sure we can run these before the view is added
@@ -39,10 +39,10 @@ describe('Arc element tests', function() {
 		expect(arc.inRange(-1.0 * Math.sqrt(7), Math.sqrt(7))).toBe(false);
 	});
 
-	it ('should get the tooltip position', function() {
+	it("should get the tooltip position", function () {
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Mock out the view as if the controller put it there
@@ -60,10 +60,10 @@ describe('Arc element tests', function() {
 		expect(pos.y).toBeCloseTo(0.5);
 	});
 
-	it ('should get the area', function() {
+	it("should get the area", function () {
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Mock out the view as if the controller put it there
@@ -79,10 +79,10 @@ describe('Arc element tests', function() {
 		expect(arc.getArea()).toBeCloseTo(0.5 * Math.PI, 6);
 	});
 
-	it ('should get the center', function() {
+	it("should get the center", function () {
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
-			_index: 1
+			_index: 1,
 		});
 
 		// Mock out the view as if the controller put it there
@@ -100,14 +100,14 @@ describe('Arc element tests', function() {
 		expect(center.y).toBeCloseTo(0.5, 6);
 	});
 
-	it ('should draw correctly with no border', function() {
+	it("should draw correctly with no border", function () {
 		var mockContext = window.createMockContext();
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
 			_index: 1,
 			_chart: {
 				ctx: mockContext,
-			}
+			},
 		});
 
 		// Mock out the view as if the controller put it there
@@ -119,50 +119,60 @@ describe('Arc element tests', function() {
 			innerRadius: 1,
 			outerRadius: 3,
 
-			backgroundColor: 'rgb(0, 0, 255)',
-			borderColor: 'rgb(255, 0, 0)',
+			backgroundColor: "rgb(0, 0, 255)",
+			borderColor: "rgb(255, 0, 0)",
 		};
 
 		arc.draw();
 
-		expect(mockContext.getCalls()).toEqual([{
-			name: 'beginPath',
-			args: []
-		}, {
-			name: 'arc',
-			args: [10, 5, 3, 0, Math.PI / 2]
-		}, {
-			name: 'arc',
-			args: [10, 5, 1, Math.PI / 2, 0, true]
-		}, {
-			name: 'closePath',
-			args: []
-		}, {
-			name: 'setStrokeStyle',
-			args: ['rgb(255, 0, 0)']
-		}, {
-			name: 'setLineWidth',
-			args: [undefined]
-		}, {
-			name: 'setFillStyle',
-			args: ['rgb(0, 0, 255)']
-		}, {
-			name: 'fill',
-			args: []
-		}, {
-			name: 'setLineJoin',
-			args: ['bevel']
-		}]);
+		expect(mockContext.getCalls()).toEqual([
+			{
+				name: "beginPath",
+				args: [],
+			},
+			{
+				name: "arc",
+				args: [10, 5, 3, 0, Math.PI / 2],
+			},
+			{
+				name: "arc",
+				args: [10, 5, 1, Math.PI / 2, 0, true],
+			},
+			{
+				name: "closePath",
+				args: [],
+			},
+			{
+				name: "setStrokeStyle",
+				args: ["rgb(255, 0, 0)"],
+			},
+			{
+				name: "setLineWidth",
+				args: [undefined],
+			},
+			{
+				name: "setFillStyle",
+				args: ["rgb(0, 0, 255)"],
+			},
+			{
+				name: "fill",
+				args: [],
+			},
+			{
+				name: "setLineJoin",
+				args: ["bevel"],
+			},
+		]);
 	});
 
-	it ('should draw correctly with a border', function() {
+	it("should draw correctly with a border", function () {
 		var mockContext = window.createMockContext();
 		var arc = new Chart.elements.Arc({
 			_datasetIndex: 2,
 			_index: 1,
 			_chart: {
 				ctx: mockContext,
-			}
+			},
 		});
 
 		// Mock out the view as if the controller put it there
@@ -174,43 +184,54 @@ describe('Arc element tests', function() {
 			innerRadius: 1,
 			outerRadius: 3,
 
-			backgroundColor: 'rgb(0, 0, 255)',
-			borderColor: 'rgb(255, 0, 0)',
-			borderWidth: 5
+			backgroundColor: "rgb(0, 0, 255)",
+			borderColor: "rgb(255, 0, 0)",
+			borderWidth: 5,
 		};
 
 		arc.draw();
 
-		expect(mockContext.getCalls()).toEqual([{
-			name: 'beginPath',
-			args: []
-		}, {
-			name: 'arc',
-			args: [10, 5, 3, 0, Math.PI / 2]
-		}, {
-			name: 'arc',
-			args: [10, 5, 1, Math.PI / 2, 0, true]
-		}, {
-			name: 'closePath',
-			args: []
-		}, {
-			name: 'setStrokeStyle',
-			args: ['rgb(255, 0, 0)']
-		}, {
-			name: 'setLineWidth',
-			args: [5]
-		}, {
-			name: 'setFillStyle',
-			args: ['rgb(0, 0, 255)']
-		}, {
-			name: 'fill',
-			args: []
-		}, {
-			name: 'setLineJoin',
-			args: ['bevel']
-		}, {
-			name: 'stroke',
-			args: []
-		}]);
+		expect(mockContext.getCalls()).toEqual([
+			{
+				name: "beginPath",
+				args: [],
+			},
+			{
+				name: "arc",
+				args: [10, 5, 3, 0, Math.PI / 2],
+			},
+			{
+				name: "arc",
+				args: [10, 5, 1, Math.PI / 2, 0, true],
+			},
+			{
+				name: "closePath",
+				args: [],
+			},
+			{
+				name: "setStrokeStyle",
+				args: ["rgb(255, 0, 0)"],
+			},
+			{
+				name: "setLineWidth",
+				args: [5],
+			},
+			{
+				name: "setFillStyle",
+				args: ["rgb(0, 0, 255)"],
+			},
+			{
+				name: "fill",
+				args: [],
+			},
+			{
+				name: "setLineJoin",
+				args: ["bevel"],
+			},
+			{
+				name: "stroke",
+				args: [],
+			},
+		]);
 	});
 });

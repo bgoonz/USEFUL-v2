@@ -1,21 +1,21 @@
 /**
  * THIS IS THE ENTRY POINT FOR THE CLIENT, JUST LIKE server.js IS THE ENTRY POINT FOR THE SERVER.
  */
-import 'babel-polyfill';
+import "babel-polyfill";
 
-import React from 'react';
-import ReactDOM from 'react-dom';
-import createLogger from 'redux-logger';
-import thunk from 'redux-thunk';
-import {Provider} from 'react-redux';
-import { Router, match, browserHistory } from 'react-router';
-import { routerMiddleware, syncHistoryWithStore} from 'react-router-redux';
-import {compose, createStore, applyMiddleware} from 'redux';
+import React from "react";
+import ReactDOM from "react-dom";
+import createLogger from "redux-logger";
+import thunk from "redux-thunk";
+import { Provider } from "react-redux";
+import { Router, match, browserHistory } from "react-router";
+import { routerMiddleware, syncHistoryWithStore } from "react-router-redux";
+import { compose, createStore, applyMiddleware } from "redux";
 
-import ApiClient from './helpers/ApiClient';
-import createMiddleware from './utils/createMiddleware';
-import reducer from './reducer';
-import routes from './routes';
+import ApiClient from "./helpers/ApiClient";
+import createMiddleware from "./utils/createMiddleware";
+import reducer from "./reducer";
+import routes from "./routes";
 
 /* ****************************************************************** */
 
@@ -23,15 +23,26 @@ import routes from './routes';
 let _finalCreateStore;
 const client = new ApiClient();
 if (__DEVELOPMENT__) {
-  const DevTools = require('./helpers/DevTools/DevTools');
+  const DevTools = require("./helpers/DevTools/DevTools");
   _finalCreateStore = compose(
-    applyMiddleware(thunk, createMiddleware(client), routerMiddleware(browserHistory), createLogger()),
+    applyMiddleware(
+      thunk,
+      createMiddleware(client),
+      routerMiddleware(browserHistory),
+      createLogger()
+    ),
     DevTools.instrument(),
-    require('redux-devtools').persistState( window.location.href.match(/[?&]debug_session=([^&]+)\b/))
+    require("redux-devtools").persistState(
+      window.location.href.match(/[?&]debug_session=([^&]+)\b/)
+    )
   )(createStore);
 } else {
   _finalCreateStore = compose(
-    applyMiddleware(thunk, createMiddleware(client), routerMiddleware(browserHistory))
+    applyMiddleware(
+      thunk,
+      createMiddleware(client),
+      routerMiddleware(browserHistory)
+    )
   )(createStore);
 }
 
@@ -42,8 +53,8 @@ const history = syncHistoryWithStore(browserHistory, store);
 
 // Enable hot reloading
 if (__DEVELOPMENT__ && module.hot) {
-  module.hot.accept('./reducer', () => {
-    store.replaceReducer(require('./reducer'));
+  module.hot.accept("./reducer", () => {
+    store.replaceReducer(require("./reducer"));
   });
 }
 // FIXME: Required for replaying actions from devtools to work
@@ -51,20 +62,24 @@ if (__DEVELOPMENT__ && module.hot) {
 
 /* ****************************************************************** */
 
-const dest = document.getElementById('content');
-match({ history, routes: routes(history) }, (error, redirectLocation, renderProps) => {
-  ReactDOM.render(
-    <Provider store={store} key="provider">
-      <Router {...renderProps} />
-    </Provider>
-    , dest);
-});
+const dest = document.getElementById("content");
+match(
+  { history, routes: routes(history) },
+  (error, redirectLocation, renderProps) => {
+    ReactDOM.render(
+      <Provider store={store} key="provider">
+        <Router {...renderProps} />
+      </Provider>,
+      dest
+    );
+  }
+);
 
 /* ****************************************************************** */
 
 // FIXME: No idea what the hell seems to be going on here.
 
-if (process.env.NODE_ENV !== 'production') {
+if (process.env.NODE_ENV !== "production") {
   window.React = React; // enable debugger
 
   // FIXME:

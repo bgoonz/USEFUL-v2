@@ -40,9 +40,9 @@ Under Permissions, click on **Add Permissions for new Role** to add a new permis
 
 ![Alt text](https://github.com/hasura/Modules-Android/blob/master/Module_3-Chat/permissions_user_details.png)
 
-``Check : {"user_id":"REQ_USER_ID"}``
+`Check : {"user_id":"REQ_USER_ID"}`
 
-The above statement says that allow access only if value of ``user_id`` equals ``REQ_USER_ID`` where "REQ_USER_ID" is a special varialbe used by the Hasura Data Service that holds the Hasura-User-Id corresponding to the Authorization Header.
+The above statement says that allow access only if value of `user_id` equals `REQ_USER_ID` where "REQ_USER_ID" is a special varialbe used by the Hasura Data Service that holds the Hasura-User-Id corresponding to the Authorization Header.
 
 #### ChatMessage table:
 
@@ -55,9 +55,11 @@ Under Permissions, click on **Add Permissions for new Role** to add a new permis
 Once you have created your android project, you will have to add Hasura-Android SDK and a few other dependencies. To do so, I am using Gradle.
 
 Add the following code to the App level build.gradle file
+
 ```
 compile 'com.github.hasura.android-sdk:sdk:v0.0.5'
 ```
+
 These are the other dependencies that will be used in this project:
 
 ```
@@ -82,6 +84,7 @@ These are the other dependencies that will be used in this project:
 ```
 
 Make the following changes to Project level build.gradle file
+
 ```
     allprojects {
         repositories {
@@ -100,6 +103,7 @@ For more information go to [Hasura Android SDK](https://github.com/hasura/androi
 To access your Hasura Project through android, you will have to first initialize it.
 
 This initialization should be before you start using the SDK(like beginning of your launcher activity), else you will get an error.
+
 ```
   Hasura.setProjectConfig(new ProjectConfig.Builder()
                 .setProjectName("Project-Name")
@@ -108,6 +112,7 @@ This initialization should be before you start using the SDK(like beginning of y
                 .initialise(this);
 
 ```
+
 ## 4: SignUp and Login:
 
 Regarding the signUp/Login part, please refer to [Hasura Android Module 1-Login](https://github.com/hasura/Modules-Android/tree/master/Module_1-Login).
@@ -130,13 +135,14 @@ We build a socket-server using `Socket.io` for sending messages from one device 
 
 Clone the [Hasura Quick-Start](https://github.com/hasura/quickstart-docker-git) repository.
 
-### Step 2: 
+### Step 2:
 
 Copy the node-express folder. This will be your base folder.
 
 Go to the folder app/src. Here you will find a package.json file, where you will have to add the dependencies for your node server.
 
 When you are in the app/src folder, open a terminal and run the following commands to populate the required dependencies in the package.json file
+
 ```
 npm install --save express@4.15.2
 
@@ -148,6 +154,7 @@ npm install --save socket.io
 Now we write our server.js file
 
 **Initializing**
+
 ```
 // Initializing
 var Express = require('express');
@@ -160,9 +167,11 @@ const server = new http.Server(app);
 const io = _io(server);
 
 ```
+
 The server will be adding the received messages to our database.
 
 **Initializing contents for data query**
+
 ```
 const data_url = 'http://data.hasura/';
 const headers = {
@@ -172,7 +181,9 @@ const headers = {
 };
 
 ```
+
 **When the user connects to the server:**
+
 ```
 const sockets = {};
 io.on('connection', (socket) => {
@@ -184,14 +195,18 @@ io.on('connection', (socket) => {
   }
 
 ```
-The `socketId` of every user should be mapped to some unique value. In this this unique value is the user's `Hasura-User-Id` 
-  ```
-  const userId = socket.handshake.headers['x-hasura-user-id'];
-  sockets[userId] = socket;
-  console.log('Socket handshake accepted from: ' + userId.toString());
+
+The `socketId` of every user should be mapped to some unique value. In this this unique value is the user's `Hasura-User-Id`
 
 ```
+const userId = socket.handshake.headers['x-hasura-user-id'];
+sockets[userId] = socket;
+console.log('Socket handshake accepted from: ' + userId.toString());
+
+```
+
 **When the user sends a new message to the server, it is handled in the following manner:**
+
 ```
   socket.on('chatMessage', (_params) => {
     try {
@@ -200,7 +215,7 @@ The `socketId` of every user should be mapped to some unique value. In this this
 			const receiver_id = params.receiver_id;
 			const message = params.content;
 			const chattimestamp = params.time;
- 
+
       //Adding to database via server
 			var httpRequestOptions = {
 			    method: 'POST',
@@ -223,7 +238,7 @@ The `socketId` of every user should be mapped to some unique value. In this this
 			};
 
       //Send message to the receiver here
-			
+
     } catch (e) {
       console.error(e);
       console.error(e.stack);
@@ -232,7 +247,9 @@ The `socketId` of every user should be mapped to some unique value. In this this
     }
   });
 ```
+
 **Sending the message from the server to the receiver:**
+
 ```
 rp(httpRequestOptions)
 	.then(function (parsedBody) {
@@ -249,7 +266,9 @@ rp(httpRequestOptions)
 });
 
 ```
+
 **If user disconnects from server**
+
 ```
 socket.on('disconnect', () => {
     if (userId) {
@@ -259,22 +278,28 @@ socket.on('disconnect', () => {
   });
 });
 ```
+
 **Making the server listen on port 8080:**
+
 ```
 server.listen(8080, function() {
 	console.log('Server app listening on port 8080!');
 });
 
 ```
+
 ### Step 4:
+
 Now go to your Console and add a new CustomService by clicking the `+` button in the left side panel.
 
 Give a name to your CustomService, enable Git Push under Image Details and then click `Create`.
 
 ### Step 5:
+
 We have to add the Hasura remote now. From the terminal go to the folder that you had copied when you cloned Hasura Quick-Start(this-folder/app/src contains your server.js file)
 
 First do
+
 ```
 git init
 ```
@@ -316,15 +341,18 @@ Everytime we use the app, we need not fetch all the messages from Hasura Data. W
 Create a new java class called DataBaseHandler and make it extend SQLiteOpenHelper.
 
 Now, within the OnCreate method, enter the following lines of code:
+
 ```
 String CREATE_TABLE_MESSAGE = "CREATE TABLE " + TABLE_MESSAGE + "(" + MESSAGE_CONTENTS + " TEXT," + MESSAGE_TIME + " TEXT," + MESSAGE_SENDER + " INTEGER," + MESSAGE_RECEIVER + " INTEGER," + USER_ID + "INTEGER" + ")";
 
 db.execSQL(CREATE_TABLE_MESSAGE);
 
 ```
+
 ### Writing Functions for using SQLite:
 
 ## Inserting a new chat message:
+
 ```
 public void insertMessage(ChatMessage chatMessage){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -340,7 +368,9 @@ public void insertMessage(ChatMessage chatMessage){
     }
 
 ```
+
 ## Fetching all the chat messages from the db:
+
 ```
 public void insertMessage(ChatMessage chatMessage){
         SQLiteDatabase db = this.getWritableDatabase();
@@ -356,7 +386,9 @@ public void insertMessage(ChatMessage chatMessage){
     }
 
 ```
+
 ## Fetching all contacts:
+
 ```
 public List<ChatMessage> getAllContacts(){
         List<ChatMessage> contacts = new ArrayList<>();
@@ -398,6 +430,7 @@ public List<ChatMessage> getAllContacts(){
     }
 
 ```
+
 ## Getting the time of the latest message:
 
 After getting the time of the latest message in the local db, we can use this time for checking if there are any new messages in Hasura Data after this time, and fetching only these new messages online.
@@ -423,22 +456,25 @@ public String getLatest(){
 
 ## 8. Displaying Conversations
 
-Create a new Java class called `MainActivity`. This activity will have 2 fragments, one for displaying all the conversations and the other for displaying all the contacts that we will fetch from the user's mobile. 
+Create a new Java class called `MainActivity`. This activity will have 2 fragments, one for displaying all the conversations and the other for displaying all the contacts that we will fetch from the user's mobile.
 
 We will use a viewPager to display these two fragments. For implementation, visit [viewPager](https://developer.android.com/training/animation/screen-slide.html).
 
 ### Loading Contacts:
 
 #### Step 1: Initializing the local db
+
 ```
 db = new DataBaseHandler(context,DATABASE_NAME,null,DATABASE_VERSION);
 
 ```
+
 #### Step 2: Getting the latest messages
 
 First, get the time of the latest message using the `getLatest()` function. Then, fire a selectMessages query to Hasura DB to get the latest messages.
 
 ##### SelectMessagesQuery
+
 ```
 public class SelectMessagesQuery {
     @SerializedName("type")
@@ -477,7 +513,9 @@ public class SelectMessagesQuery {
 }
 
 ```
+
 Now we get all the messages using this query.
+
 ```
 latestTime = db.getLatest();
 
@@ -497,11 +535,12 @@ latestTime = db.getLatest();
 
                     @Override
                     public void onFailure(HasuraException e) {
-		    
+
                     }
                 });
 
 ```
+
 Here we are using `RecyclerView` to display all contacts. `adapter` is a RecyclerViewAdapter.
 
 `adapter.setContacts(db.getAllContacts())` would get all contacts and display them.
@@ -513,11 +552,14 @@ For how to implement recyclerView, visit [RecyclerView](https://developer.androi
 If this is the currently open activity and we were to receive a new message, we must handle it properly.
 
 Connect to the socket in the `onCreateView` method of the Fragment displaying the conversations.
+
 ```
 socket.connect();
 
 ```
+
 Handling an incoming message:
+
 ```
  socket.on("sendMessage", new Emitter.Listener() {
             @Override
@@ -527,7 +569,7 @@ Handling an incoming message:
                     public void run() {
 		    	//Parse the Json response
                         ChatMessage incomingMessage = new Gson().fromJson((String) args[0], ChatMessage.class);
-			
+
 			//Insert the message into the local db
                         db.insertMessage(incomingMessage);
                     }
@@ -536,22 +578,27 @@ Handling an incoming message:
         });
 
 ```
+
 When any conversation is clicked, we have to open the `ChattingActivity`. For this, first we have to store the userId of that user and then open the `ChattingActivity` for this user.
 
 ## 9. Chatting
+
 When the chatting activity open, the main goal is to load chats corresponding to that particular user only.
 To do this, we call `getAllMessages()`.
+
 ```
 allData = db.getAllMessages();
         if (allData.size() != 0)
             adapter.setChatMessages(allData);
 
 ```
+
 Again, we are using a recyclerView to display item dynamically. `adapter` is the adapter for this recyclerView.
 
 Note: `setChatMessages(allData)` is a function that you have to define in the `RecyclerViewAdapter`.
 
 ### Sending a new Message:
+
 To send a new message, you have to press the `send` button.
 
 When the `send` button is pressed, we will send our message to the socket-server, and the server will insert the message into Hasura DB for us.
@@ -559,10 +606,13 @@ When the `send` button is pressed, we will send our message to the socket-server
 Also when we send a message, we must also add that message to our local db and reflect the same changes in our view.
 
 #### Step 1:
+
 Connect to the socket-server in the same way as mentioned in the previous section.
 
 #### Step 2:
+
 When the `send` button is pressed, we have to emit an event to the server via the socket.
+
 ```
 //Convert the message to JSON and then emit.
 socket.emit("chatMessage",new Gson().toJson(chat), Global.receiverId);
@@ -574,13 +624,17 @@ adapter.addMessage(chat);
 db.insertMessage(chat);
 
 ```
+
 #### Step 3: Listening on new messages
+
 Again, implement listening to messages in the same fashion as mentioned in the previous section.
 
 There should be only one change being that if the incoming message corresponds to the user whose `ChattingActivity` is currently open, then reflect the changes in the view.
+
 ```
 adapter.addMessage(incomingMessage);
 ```
+
 When the user presses the back button, redirect him back to the `MainActivity`.
 
 You are now done creating your own ChatApp using Hasura :)

@@ -1,14 +1,13 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var globalOpts = Chart.defaults.global;
 
 	globalOpts.elements.rectangle = {
 		backgroundColor: globalOpts.defaultColor,
 		borderWidth: 0,
 		borderColor: globalOpts.defaultColor,
-		borderSkipped: 'bottom'
+		borderSkipped: "bottom",
 	};
 
 	function isVertical(bar) {
@@ -45,12 +44,12 @@ module.exports = function(Chart) {
 			left: x1,
 			top: y1,
 			right: x2,
-			bottom: y2
+			bottom: y2,
 		};
 	}
 
 	Chart.elements.Rectangle = Chart.Element.extend({
-		draw: function() {
+		draw: function () {
 			var ctx = this._chart.ctx;
 			var vm = this._view;
 			var left, right, top, bottom, signX, signY, borderSkipped;
@@ -63,31 +62,40 @@ module.exports = function(Chart) {
 				top = vm.y;
 				bottom = vm.base;
 				signX = 1;
-				signY = bottom > top? 1: -1;
-				borderSkipped = vm.borderSkipped || 'bottom';
+				signY = bottom > top ? 1 : -1;
+				borderSkipped = vm.borderSkipped || "bottom";
 			} else {
 				// horizontal bar
 				left = vm.base;
 				right = vm.x;
 				top = vm.y - vm.height / 2;
 				bottom = vm.y + vm.height / 2;
-				signX = right > left? 1: -1;
+				signX = right > left ? 1 : -1;
 				signY = 1;
-				borderSkipped = vm.borderSkipped || 'left';
+				borderSkipped = vm.borderSkipped || "left";
 			}
 
 			// Canvas doesn't allow us to stroke inside the width so we can
 			// adjust the sizes to fit if we're setting a stroke on the line
 			if (borderWidth) {
 				// borderWidth shold be less than bar width and bar height.
-				var barSize = Math.min(Math.abs(left - right), Math.abs(top - bottom));
-				borderWidth = borderWidth > barSize? barSize: borderWidth;
+				var barSize = Math.min(
+					Math.abs(left - right),
+					Math.abs(top - bottom)
+				);
+				borderWidth = borderWidth > barSize ? barSize : borderWidth;
 				var halfStroke = borderWidth / 2;
 				// Adjust borderWidth when bar top position is near vm.base(zero).
-				var borderLeft = left + (borderSkipped !== 'left'? halfStroke * signX: 0);
-				var borderRight = right + (borderSkipped !== 'right'? -halfStroke * signX: 0);
-				var borderTop = top + (borderSkipped !== 'top'? halfStroke * signY: 0);
-				var borderBottom = bottom + (borderSkipped !== 'bottom'? -halfStroke * signY: 0);
+				var borderLeft =
+					left + (borderSkipped !== "left" ? halfStroke * signX : 0);
+				var borderRight =
+					right +
+					(borderSkipped !== "right" ? -halfStroke * signX : 0);
+				var borderTop =
+					top + (borderSkipped !== "top" ? halfStroke * signY : 0);
+				var borderBottom =
+					bottom +
+					(borderSkipped !== "bottom" ? -halfStroke * signY : 0);
 				// not become a vertical line?
 				if (borderLeft !== borderRight) {
 					top = borderTop;
@@ -112,11 +120,11 @@ module.exports = function(Chart) {
 				[left, bottom],
 				[left, top],
 				[right, top],
-				[right, bottom]
+				[right, bottom],
 			];
 
 			// Find first (starting) corner with fallback to 'bottom'
-			var borders = ['bottom', 'left', 'top', 'right'];
+			var borders = ["bottom", "left", "top", "right"];
 			var startCorner = borders.indexOf(borderSkipped, 0);
 			if (startCorner === -1) {
 				startCorner = 0;
@@ -140,21 +148,25 @@ module.exports = function(Chart) {
 				ctx.stroke();
 			}
 		},
-		height: function() {
+		height: function () {
 			var vm = this._view;
 			return vm.base - vm.y;
 		},
-		inRange: function(mouseX, mouseY) {
+		inRange: function (mouseX, mouseY) {
 			var inRange = false;
 
 			if (this._view) {
 				var bounds = getBarBounds(this);
-				inRange = mouseX >= bounds.left && mouseX <= bounds.right && mouseY >= bounds.top && mouseY <= bounds.bottom;
+				inRange =
+					mouseX >= bounds.left &&
+					mouseX <= bounds.right &&
+					mouseY >= bounds.top &&
+					mouseY <= bounds.bottom;
 			}
 
 			return inRange;
 		},
-		inLabelRange: function(mouseX, mouseY) {
+		inLabelRange: function (mouseX, mouseY) {
 			var me = this;
 			if (!me._view) {
 				return false;
@@ -171,15 +183,15 @@ module.exports = function(Chart) {
 
 			return inRange;
 		},
-		inXRange: function(mouseX) {
+		inXRange: function (mouseX) {
 			var bounds = getBarBounds(this);
 			return mouseX >= bounds.left && mouseX <= bounds.right;
 		},
-		inYRange: function(mouseY) {
+		inYRange: function (mouseY) {
 			var bounds = getBarBounds(this);
 			return mouseY >= bounds.top && mouseY <= bounds.bottom;
 		},
-		getCenterPoint: function() {
+		getCenterPoint: function () {
 			var vm = this._view;
 			var x, y;
 			if (isVertical(this)) {
@@ -190,19 +202,18 @@ module.exports = function(Chart) {
 				y = vm.y;
 			}
 
-			return {x: x, y: y};
+			return { x: x, y: y };
 		},
-		getArea: function() {
+		getArea: function () {
 			var vm = this._view;
 			return vm.width * Math.abs(vm.y - vm.base);
 		},
-		tooltipPosition: function() {
+		tooltipPosition: function () {
 			var vm = this._view;
 			return {
 				x: vm.x,
-				y: vm.y
+				y: vm.y,
 			};
-		}
+		},
 	});
-
 };

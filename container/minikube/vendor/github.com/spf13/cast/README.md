@@ -1,5 +1,4 @@
-cast
-====
+# cast
 
 Easy and safe casting from one type to another in Go
 
@@ -33,12 +32,12 @@ full types, then Cast is the library for you.
 
 ## Usage
 
-Cast provides a handful of To_____ methods. These methods will always return
+Cast provides a handful of To**\_** methods. These methods will always return
 the desired type. **If input is provided that will not convert to that type, the
 0 or nil value for that type will be returned**.
 
-Cast also provides identical methods To_____E. These return the same result as
-the To_____ methods, plus an additional error which tells you if it successfully
+Cast also provides identical methods To**\_**E. These return the same result as
+the To**\_** methods, plus an additional error which tells you if it successfully
 converted. Using these methods you can tell the difference between when the
 input matched the zero value or when the conversion failed and the zero value
 was returned.
@@ -54,9 +53,8 @@ the code for a complete set.
     cast.ToString([]byte("one time")) // "one time"
     cast.ToString(nil)                // ""
 
-	var foo interface{} = "one more time"
+    var foo interface{} = "one more time"
     cast.ToString(foo)                // "one more time"
-
 
 ### Example ‘ToInt’:
 
@@ -66,7 +64,6 @@ the code for a complete set.
     cast.ToInt(true)               // 1
     cast.ToInt(false)              // 0
 
-	var eight interface{} = 8
+    var eight interface{} = 8
     cast.ToInt(eight)              // 8
     cast.ToInt(nil)                // 0
-

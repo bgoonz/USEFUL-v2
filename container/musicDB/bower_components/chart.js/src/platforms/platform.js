@@ -1,10 +1,10 @@
-'use strict';
+"use strict";
 
 // By default, select the browser (DOM) platform.
 // @TODO Make possible to select another platform at build time.
-var implementation = require('./platform.dom.js');
+var implementation = require("./platform.dom.js");
 
-module.exports = function(Chart) {
+module.exports = function (Chart) {
 	/**
 	 * @namespace Chart.platform
 	 * @see https://chartjs.gitbooks.io/proposals/content/Platform.html
@@ -18,7 +18,7 @@ module.exports = function(Chart) {
 		 * @param {Object} options - The chart options
 		 * @returns {CanvasRenderingContext2D} context2d instance
 		 */
-		acquireContext: function() {},
+		acquireContext: function () {},
 
 		/**
 		 * Called at chart destruction time, releases any resources associated to the context
@@ -26,7 +26,7 @@ module.exports = function(Chart) {
 		 * @param {CanvasRenderingContext2D} context - The context2d instance
 		 * @returns {Boolean} true if the method succeeded, else false
 		 */
-		releaseContext: function() {},
+		releaseContext: function () {},
 
 		/**
 		 * Registers the specified listener on the given chart.
@@ -35,7 +35,7 @@ module.exports = function(Chart) {
 		 * @param {Function} listener - Receives a notification (an object that implements
 		 * the {@link IEvent} interface) when an event of the specified type occurs.
 		 */
-		addEventListener: function() {},
+		addEventListener: function () {},
 
 		/**
 		 * Removes the specified listener previously registered with addEventListener.
@@ -43,7 +43,7 @@ module.exports = function(Chart) {
 		 * @param {String} type - The ({@link IEvent}) type to remove
 		 * @param {Function} listener - The listener function to remove from the event target.
 		 */
-		removeEventListener: function() {}
+		removeEventListener: function () {},
 	};
 
 	/**

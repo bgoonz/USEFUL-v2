@@ -2,7 +2,6 @@
 
 Simple Chat App
 
-NOTE
-====
+# NOTE
 
-### This project works with Hasura Projects below 0.15. 
+### This project works with Hasura Projects below 0.15.

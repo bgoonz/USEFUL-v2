@@ -1,18 +1,12 @@
-iOS SDK
-=======
+# iOS SDK
 
 The iOS SDK for Hasura.
 
-
-NOTE: 
-=====
+# NOTE:
 
 ### This sdk works with Hasura running on version below 0.15
 
-
-
-Installation
-------------
+## Installation
 
 ### Step 1 : Download the Hasura iOS SDK
 
@@ -61,22 +55,20 @@ let config = ProjectConfig(projectName: "projectName")
 
 Other init params are :
 
-- customBaseDomain: String  - If you have a base domain other than <project-name>.hasura-app.io
-- isEnabledOverHttp: Bool   - Set this to true if you want to use Http instead of Https
-- defaultRole: String       - "user" role is used by default
-- apiVersion: Int           - 1 is used by default
+- customBaseDomain: String - If you have a base domain other than <project-name>.hasura-app.io
+- isEnabledOverHttp: Bool - Set this to true if you want to use Http instead of Https
+- defaultRole: String - "user" role is used by default
+- apiVersion: Int - 1 is used by default
 
 Use the above project config to initialise Hasura.
-
 
 ```swift
 Hasura.initialise(config: config, enableLogs: true)
 ```
 
-***Note***: Initialisation **MUST** be done before you use the SDK.The best place to initialise Hasura would be in your `AppDelegate` class.
+**_Note_**: Initialisation **MUST** be done before you use the SDK.The best place to initialise Hasura would be in your `AppDelegate` class.
 
-Hasura Client
--------------
+## Hasura Client
 
 The `HasuraClient` is the most functional feature of the SDK. It is built using the project config specified on initialisation.
 You can get an instance of the client only from Hasura, like so :
@@ -128,7 +120,7 @@ user.login { (successful: Bool, error: HasuraError?) in
         //handle error
     }
 }
-```    
+```
 
 #### LoggedIn User
 
@@ -172,9 +164,10 @@ client.useDataService(params: [String: Any])
 ```
 
 In the above method, there are a few things to be noted :
+
 - MyResponse is just a swift class/struct - a representation of the response you are expecting. Hasura uses [ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) internally to map the json response into your class/struct.
 
-***Note***: In case you are expecting an object response, use `.responseObject`. *All SELECT queries to the data service will return an array response.*
+**_Note_**: In case you are expecting an object response, use `.responseObject`. _All SELECT queries to the data service will return an array response._
 
 ```
 If the HasuraUser in the HasuraClient is loggedin/signedup then every call made by the HasuraClient will be authenticated by default with "user" as the default role (This default role can be changed when building the project config)
@@ -206,7 +199,7 @@ client.useDataService(role: "customRole", params: [String, Any])
 }
 ```
 
-***Note***: This role will be sent JUST for this query and ***will not*** become the default role.
+**_Note_**: This role will be sent JUST for this query and **_will not_** become the default role.
 
 ### Query Template Service
 
@@ -222,7 +215,6 @@ client.useQueryTemplateService(templateName: "templateName", params: [String, An
         }
 }
 ```
-
 
 ### Filestore Service
 
@@ -271,7 +263,6 @@ client.useFileservice()
 }
 ```
 
-ISSUES
-------
+## ISSUES
 
 In case of bugs, please raise an issue [here](https://github.com/hasura/support)

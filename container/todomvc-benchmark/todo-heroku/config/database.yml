@@ -24,4 +24,3 @@ test:
 production: &production
   encoding: unicode
   pool: 10
-

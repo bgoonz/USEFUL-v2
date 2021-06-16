@@ -1,7 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 
 	/**
@@ -49,26 +48,45 @@ module.exports = function(Chart) {
 			 * @param dataRange {IRange} the range of the data
 			 * @returns {Array<Number>} array of tick values
 			 */
-			linear: function(generationOptions, dataRange) {
+			linear: function (generationOptions, dataRange) {
 				var ticks = [];
 				// To get a "nice" value for the tick spacing, we will use the appropriately named
 				// "nice number" algorithm. See http://stackoverflow.com/questions/8506881/nice-label-algorithm-for-charts-with-minimum-ticks
 				// for details.
 
 				var spacing;
-				if (generationOptions.stepSize && generationOptions.stepSize > 0) {
+				if (
+					generationOptions.stepSize &&
+					generationOptions.stepSize > 0
+				) {
 					spacing = generationOptions.stepSize;
 				} else {
-					var niceRange = helpers.niceNum(dataRange.max - dataRange.min, false);
-					spacing = helpers.niceNum(niceRange / (generationOptions.maxTicks - 1), true);
+					var niceRange = helpers.niceNum(
+						dataRange.max - dataRange.min,
+						false
+					);
+					spacing = helpers.niceNum(
+						niceRange / (generationOptions.maxTicks - 1),
+						true
+					);
 				}
 				var niceMin = Math.floor(dataRange.min / spacing) * spacing;
 				var niceMax = Math.ceil(dataRange.max / spacing) * spacing;
 
 				// If min, max and stepSize is set and they make an evenly spaced scale use it.
-				if (generationOptions.min && generationOptions.max && generationOptions.stepSize) {
+				if (
+					generationOptions.min &&
+					generationOptions.max &&
+					generationOptions.stepSize
+				) {
 					// If very close to our whole number, use it.
-					if (helpers.almostWhole((generationOptions.max - generationOptions.min) / generationOptions.stepSize, spacing / 1000)) {
+					if (
+						helpers.almostWhole(
+							(generationOptions.max - generationOptions.min) /
+								generationOptions.stepSize,
+							spacing / 1000
+						)
+					) {
 						niceMin = generationOptions.min;
 						niceMax = generationOptions.max;
 					}
@@ -76,18 +94,32 @@ module.exports = function(Chart) {
 
 				var numSpaces = (niceMax - niceMin) / spacing;
 				// If very close to our rounded value, use it.
-				if (helpers.almostEquals(numSpaces, Math.round(numSpaces), spacing / 1000)) {
+				if (
+					helpers.almostEquals(
+						numSpaces,
+						Math.round(numSpaces),
+						spacing / 1000
+					)
+				) {
 					numSpaces = Math.round(numSpaces);
 				} else {
 					numSpaces = Math.ceil(numSpaces);
 				}
 
 				// Put the values into the ticks array
-				ticks.push(generationOptions.min !== undefined ? generationOptions.min : niceMin);
+				ticks.push(
+					generationOptions.min !== undefined
+						? generationOptions.min
+						: niceMin
+				);
 				for (var j = 1; j < numSpaces; ++j) {
-					ticks.push(niceMin + (j * spacing));
+					ticks.push(niceMin + j * spacing);
 				}
-				ticks.push(generationOptions.max !== undefined ? generationOptions.max : niceMax);
+				ticks.push(
+					generationOptions.max !== undefined
+						? generationOptions.max
+						: niceMax
+				);
 
 				return ticks;
 			},
@@ -99,7 +131,7 @@ module.exports = function(Chart) {
 			 * @param dataRange {IRange} the range of the data
 			 * @returns {Array<Number>} array of tick values
 			 */
-			logarithmic: function(generationOptions, dataRange) {
+			logarithmic: function (generationOptions, dataRange) {
 				var ticks = [];
 				var getValueOrDefault = helpers.getValueOrDefault;
 
@@ -107,16 +139,23 @@ module.exports = function(Chart) {
 				// the axis area. For now, we say that the minimum tick spacing in pixels must be 50
 				// We also limit the maximum number of ticks to 11 which gives a nice 10 squares on
 				// the graph
-				var tickVal = getValueOrDefault(generationOptions.min, Math.pow(10, Math.floor(helpers.log10(dataRange.min))));
+				var tickVal = getValueOrDefault(
+					generationOptions.min,
+					Math.pow(10, Math.floor(helpers.log10(dataRange.min)))
+				);
 
 				var endExp = Math.floor(helpers.log10(dataRange.max));
-				var endSignificand = Math.ceil(dataRange.max / Math.pow(10, endExp));
+				var endSignificand = Math.ceil(
+					dataRange.max / Math.pow(10, endExp)
+				);
 				var exp;
 				var significand;
 
 				if (tickVal === 0) {
 					exp = Math.floor(helpers.log10(dataRange.minNotZero));
-					significand = Math.floor(dataRange.minNotZero / Math.pow(10, exp));
+					significand = Math.floor(
+						dataRange.minNotZero / Math.pow(10, exp)
+					);
 
 					ticks.push(tickVal);
 					tickVal = significand * Math.pow(10, exp);
@@ -135,13 +174,19 @@ module.exports = function(Chart) {
 					}
 
 					tickVal = significand * Math.pow(10, exp);
-				} while (exp < endExp || (exp === endExp && significand < endSignificand));
+				} while (
+					exp < endExp ||
+					(exp === endExp && significand < endSignificand)
+				);
 
-				var lastTick = getValueOrDefault(generationOptions.max, tickVal);
+				var lastTick = getValueOrDefault(
+					generationOptions.max,
+					tickVal
+				);
 				ticks.push(lastTick);
 
 				return ticks;
-			}
+			},
 		},
 
 		/**
@@ -155,8 +200,8 @@ module.exports = function(Chart) {
 			 * @param value the value to display
 			 * @return {String|Array} the label to display
 			 */
-			values: function(value) {
-				return helpers.isArray(value) ? value : '' + value;
+			values: function (value) {
+				return helpers.isArray(value) ? value : "" + value;
 			},
 
 			/**
@@ -167,9 +212,12 @@ module.exports = function(Chart) {
 			 * @param ticks {Array<Number>} the list of ticks being converted
 			 * @return {String} string representation of the tickValue parameter
 			 */
-			linear: function(tickValue, index, ticks) {
+			linear: function (tickValue, index, ticks) {
 				// If we have lots of ticks, don't use the ones
-				var delta = ticks.length > 3 ? ticks[2] - ticks[1] : ticks[1] - ticks[0];
+				var delta =
+					ticks.length > 3
+						? ticks[2] - ticks[1]
+						: ticks[1] - ticks[0];
 
 				// If we have a number like 2.5 as the delta, figure out how many decimal places we need
 				if (Math.abs(delta) > 1) {
@@ -180,29 +228,37 @@ module.exports = function(Chart) {
 				}
 
 				var logDelta = helpers.log10(Math.abs(delta));
-				var tickString = '';
+				var tickString = "";
 
 				if (tickValue !== 0) {
 					var numDecimal = -1 * Math.floor(logDelta);
 					numDecimal = Math.max(Math.min(numDecimal, 20), 0); // toFixed has a max of 20 decimal places
 					tickString = tickValue.toFixed(numDecimal);
 				} else {
-					tickString = '0'; // never show decimal places for 0
+					tickString = "0"; // never show decimal places for 0
 				}
 
 				return tickString;
 			},
 
-			logarithmic: function(tickValue, index, ticks) {
-				var remain = tickValue / (Math.pow(10, Math.floor(helpers.log10(tickValue))));
+			logarithmic: function (tickValue, index, ticks) {
+				var remain =
+					tickValue /
+					Math.pow(10, Math.floor(helpers.log10(tickValue)));
 
 				if (tickValue === 0) {
-					return '0';
-				} else if (remain === 1 || remain === 2 || remain === 5 || index === 0 || index === ticks.length - 1) {
+					return "0";
+				} else if (
+					remain === 1 ||
+					remain === 2 ||
+					remain === 5 ||
+					index === 0 ||
+					index === ticks.length - 1
+				) {
 					return tickValue.toExponential();
 				}
-				return '';
-			}
-		}
+				return "";
+			},
+		},
 	};
 };

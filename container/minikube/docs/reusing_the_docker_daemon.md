@@ -7,7 +7,9 @@ To be able to work with the docker daemon on your mac/linux host use the [docker
 ```
 eval $(minikube docker-env)
 ```
+
 you should now be able to use docker on the command line on your host mac/linux machine talking to the docker daemon inside the minikube VM:
+
 ```
 docker ps
 ```

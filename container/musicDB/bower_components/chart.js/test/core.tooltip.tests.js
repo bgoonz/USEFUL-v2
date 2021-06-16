@@ -1,29 +1,32 @@
 // Test the rectangle element
-describe('Core.Tooltip', function() {
-	describe('index mode', function() {
-		it('Should only use x distance when intersect is false', function() {
+describe("Core.Tooltip", function () {
+	describe("index mode", function () {
+		it("Should only use x distance when intersect is false", function () {
 			var chartInstance = window.acquireChart({
-				type: 'line',
+				type: "line",
 				data: {
-					datasets: [{
-						label: 'Dataset 1',
-						data: [10, 20, 30],
-						pointHoverBorderColor: 'rgb(255, 0, 0)',
-						pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-					}, {
-						label: 'Dataset 2',
-						data: [40, 40, 40],
-						pointHoverBorderColor: 'rgb(0, 0, 255)',
-						pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-					}],
-					labels: ['Point 1', 'Point 2', 'Point 3']
+					datasets: [
+						{
+							label: "Dataset 1",
+							data: [10, 20, 30],
+							pointHoverBorderColor: "rgb(255, 0, 0)",
+							pointHoverBackgroundColor: "rgb(0, 255, 0)",
+						},
+						{
+							label: "Dataset 2",
+							data: [40, 40, 40],
+							pointHoverBorderColor: "rgb(0, 0, 255)",
+							pointHoverBackgroundColor: "rgb(0, 255, 255)",
+						},
+					],
+					labels: ["Point 1", "Point 2", "Point 3"],
 				},
 				options: {
 					tooltips: {
-						mode: 'index',
-						intersect: false
-					}
-				}
+						mode: "index",
+						intersect: false,
+					},
+				},
 			});
 
 			// Trigger an event over top of the
@@ -33,12 +36,12 @@ describe('Core.Tooltip', function() {
 			var node = chartInstance.chart.canvas;
 			var rect = node.getBoundingClientRect();
 
-			var evt = new MouseEvent('mousemove', {
+			var evt = new MouseEvent("mousemove", {
 				view: window,
 				bubbles: true,
 				cancelable: true,
 				clientX: rect.left + point._model.x,
-				clientY: 0
+				clientY: 0,
 			});
 
 			// Manually trigger rather than having an async test
@@ -48,98 +51,109 @@ describe('Core.Tooltip', function() {
 			var tooltip = chartInstance.tooltip;
 			var globalDefaults = Chart.defaults.global;
 
-			expect(tooltip._view).toEqual(jasmine.objectContaining({
-				// Positioning
-				xPadding: 6,
-				yPadding: 6,
-				xAlign: 'left',
-				yAlign: 'center',
+			expect(tooltip._view).toEqual(
+				jasmine.objectContaining({
+					// Positioning
+					xPadding: 6,
+					yPadding: 6,
+					xAlign: "left",
+					yAlign: "center",
 
-				// Body
-				bodyFontColor: '#fff',
-				_bodyFontFamily: globalDefaults.defaultFontFamily,
-				_bodyFontStyle: globalDefaults.defaultFontStyle,
-				_bodyAlign: 'left',
-				bodyFontSize: globalDefaults.defaultFontSize,
-				bodySpacing: 2,
+					// Body
+					bodyFontColor: "#fff",
+					_bodyFontFamily: globalDefaults.defaultFontFamily,
+					_bodyFontStyle: globalDefaults.defaultFontStyle,
+					_bodyAlign: "left",
+					bodyFontSize: globalDefaults.defaultFontSize,
+					bodySpacing: 2,
 
-				// Title
-				titleFontColor: '#fff',
-				_titleFontFamily: globalDefaults.defaultFontFamily,
-				_titleFontStyle: 'bold',
-				titleFontSize: globalDefaults.defaultFontSize,
-				_titleAlign: 'left',
-				titleSpacing: 2,
-				titleMarginBottom: 6,
+					// Title
+					titleFontColor: "#fff",
+					_titleFontFamily: globalDefaults.defaultFontFamily,
+					_titleFontStyle: "bold",
+					titleFontSize: globalDefaults.defaultFontSize,
+					_titleAlign: "left",
+					titleSpacing: 2,
+					titleMarginBottom: 6,
 
-				// Footer
-				footerFontColor: '#fff',
-				_footerFontFamily: globalDefaults.defaultFontFamily,
-				_footerFontStyle: 'bold',
-				footerFontSize: globalDefaults.defaultFontSize,
-				_footerAlign: 'left',
-				footerSpacing: 2,
-				footerMarginTop: 6,
+					// Footer
+					footerFontColor: "#fff",
+					_footerFontFamily: globalDefaults.defaultFontFamily,
+					_footerFontStyle: "bold",
+					footerFontSize: globalDefaults.defaultFontSize,
+					_footerAlign: "left",
+					footerSpacing: 2,
+					footerMarginTop: 6,
 
-				// Appearance
-				caretSize: 5,
-				cornerRadius: 6,
-				backgroundColor: 'rgba(0,0,0,0.8)',
-				opacity: 1,
-				legendColorBackground: '#fff',
-				displayColors: true,
+					// Appearance
+					caretSize: 5,
+					cornerRadius: 6,
+					backgroundColor: "rgba(0,0,0,0.8)",
+					opacity: 1,
+					legendColorBackground: "#fff",
+					displayColors: true,
 
-				// Text
-				title: ['Point 2'],
-				beforeBody: [],
-				body: [{
-					before: [],
-					lines: ['Dataset 1: 20'],
-					after: []
-				}, {
-					before: [],
-					lines: ['Dataset 2: 40'],
-					after: []
-				}],
-				afterBody: [],
-				footer: [],
-				caretPadding: 2,
-				labelColors: [{
-					borderColor: 'rgb(255, 0, 0)',
-					backgroundColor: 'rgb(0, 255, 0)'
-				}, {
-					borderColor: 'rgb(0, 0, 255)',
-					backgroundColor: 'rgb(0, 255, 255)'
-				}]
-			}));
+					// Text
+					title: ["Point 2"],
+					beforeBody: [],
+					body: [
+						{
+							before: [],
+							lines: ["Dataset 1: 20"],
+							after: [],
+						},
+						{
+							before: [],
+							lines: ["Dataset 2: 40"],
+							after: [],
+						},
+					],
+					afterBody: [],
+					footer: [],
+					caretPadding: 2,
+					labelColors: [
+						{
+							borderColor: "rgb(255, 0, 0)",
+							backgroundColor: "rgb(0, 255, 0)",
+						},
+						{
+							borderColor: "rgb(0, 0, 255)",
+							backgroundColor: "rgb(0, 255, 255)",
+						},
+					],
+				})
+			);
 
 			expect(tooltip._view.x).toBeCloseToPixel(263);
 			expect(tooltip._view.y).toBeCloseToPixel(155);
 		});
 
-		it('Should only display if intersecting if intersect is set', function() {
+		it("Should only display if intersecting if intersect is set", function () {
 			var chartInstance = window.acquireChart({
-				type: 'line',
+				type: "line",
 				data: {
-					datasets: [{
-						label: 'Dataset 1',
-						data: [10, 20, 30],
-						pointHoverBorderColor: 'rgb(255, 0, 0)',
-						pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-					}, {
-						label: 'Dataset 2',
-						data: [40, 40, 40],
-						pointHoverBorderColor: 'rgb(0, 0, 255)',
-						pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-					}],
-					labels: ['Point 1', 'Point 2', 'Point 3']
+					datasets: [
+						{
+							label: "Dataset 1",
+							data: [10, 20, 30],
+							pointHoverBorderColor: "rgb(255, 0, 0)",
+							pointHoverBackgroundColor: "rgb(0, 255, 0)",
+						},
+						{
+							label: "Dataset 2",
+							data: [40, 40, 40],
+							pointHoverBorderColor: "rgb(0, 0, 255)",
+							pointHoverBackgroundColor: "rgb(0, 255, 255)",
+						},
+					],
+					labels: ["Point 1", "Point 2", "Point 3"],
 				},
 				options: {
 					tooltips: {
-						mode: 'index',
-						intersect: true
-					}
-				}
+						mode: "index",
+						intersect: true,
+					},
+				},
 			});
 
 			// Trigger an event over top of the
@@ -149,12 +163,12 @@ describe('Core.Tooltip', function() {
 			var node = chartInstance.chart.canvas;
 			var rect = node.getBoundingClientRect();
 
-			var evt = new MouseEvent('mousemove', {
+			var evt = new MouseEvent("mousemove", {
 				view: window,
 				bubbles: true,
 				cancelable: true,
 				clientX: rect.left + point._model.x,
-				clientY: 0
+				clientY: 0,
 			});
 
 			// Manually trigger rather than having an async test
@@ -164,213 +178,227 @@ describe('Core.Tooltip', function() {
 			var tooltip = chartInstance.tooltip;
 			var globalDefaults = Chart.defaults.global;
 
-			expect(tooltip._view).toEqual(jasmine.objectContaining({
+			expect(tooltip._view).toEqual(
+				jasmine.objectContaining({
+					// Positioning
+					xPadding: 6,
+					yPadding: 6,
+
+					// Body
+					bodyFontColor: "#fff",
+					_bodyFontFamily: globalDefaults.defaultFontFamily,
+					_bodyFontStyle: globalDefaults.defaultFontStyle,
+					_bodyAlign: "left",
+					bodyFontSize: globalDefaults.defaultFontSize,
+					bodySpacing: 2,
+
+					// Title
+					titleFontColor: "#fff",
+					_titleFontFamily: globalDefaults.defaultFontFamily,
+					_titleFontStyle: "bold",
+					titleFontSize: globalDefaults.defaultFontSize,
+					_titleAlign: "left",
+					titleSpacing: 2,
+					titleMarginBottom: 6,
+
+					// Footer
+					footerFontColor: "#fff",
+					_footerFontFamily: globalDefaults.defaultFontFamily,
+					_footerFontStyle: "bold",
+					footerFontSize: globalDefaults.defaultFontSize,
+					_footerAlign: "left",
+					footerSpacing: 2,
+					footerMarginTop: 6,
+
+					// Appearance
+					caretSize: 5,
+					cornerRadius: 6,
+					backgroundColor: "rgba(0,0,0,0.8)",
+					opacity: 0,
+					legendColorBackground: "#fff",
+					displayColors: true,
+				})
+			);
+		});
+	});
+
+	it("Should display in single mode", function () {
+		var chartInstance = window.acquireChart({
+			type: "line",
+			data: {
+				datasets: [
+					{
+						label: "Dataset 1",
+						data: [10, 20, 30],
+						pointHoverBorderColor: "rgb(255, 0, 0)",
+						pointHoverBackgroundColor: "rgb(0, 255, 0)",
+					},
+					{
+						label: "Dataset 2",
+						data: [40, 40, 40],
+						pointHoverBorderColor: "rgb(0, 0, 255)",
+						pointHoverBackgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+				labels: ["Point 1", "Point 2", "Point 3"],
+			},
+			options: {
+				tooltips: {
+					mode: "single",
+				},
+			},
+		});
+
+		// Trigger an event over top of the
+		var meta = chartInstance.getDatasetMeta(0);
+		var point = meta.data[1];
+
+		var node = chartInstance.chart.canvas;
+		var rect = node.getBoundingClientRect();
+
+		var evt = new MouseEvent("mousemove", {
+			view: window,
+			bubbles: true,
+			cancelable: true,
+			clientX: rect.left + point._model.x,
+			clientY: rect.top + point._model.y,
+		});
+
+		// Manually trigger rather than having an async test
+		node.dispatchEvent(evt);
+
+		// Check and see if tooltip was displayed
+		var tooltip = chartInstance.tooltip;
+		var globalDefaults = Chart.defaults.global;
+
+		expect(tooltip._view).toEqual(
+			jasmine.objectContaining({
 				// Positioning
 				xPadding: 6,
 				yPadding: 6,
+				xAlign: "left",
+				yAlign: "center",
 
 				// Body
-				bodyFontColor: '#fff',
+				bodyFontColor: "#fff",
 				_bodyFontFamily: globalDefaults.defaultFontFamily,
 				_bodyFontStyle: globalDefaults.defaultFontStyle,
-				_bodyAlign: 'left',
+				_bodyAlign: "left",
 				bodyFontSize: globalDefaults.defaultFontSize,
 				bodySpacing: 2,
 
 				// Title
-				titleFontColor: '#fff',
+				titleFontColor: "#fff",
 				_titleFontFamily: globalDefaults.defaultFontFamily,
-				_titleFontStyle: 'bold',
+				_titleFontStyle: "bold",
 				titleFontSize: globalDefaults.defaultFontSize,
-				_titleAlign: 'left',
+				_titleAlign: "left",
 				titleSpacing: 2,
 				titleMarginBottom: 6,
 
 				// Footer
-				footerFontColor: '#fff',
+				footerFontColor: "#fff",
 				_footerFontFamily: globalDefaults.defaultFontFamily,
-				_footerFontStyle: 'bold',
+				_footerFontStyle: "bold",
 				footerFontSize: globalDefaults.defaultFontSize,
-				_footerAlign: 'left',
+				_footerAlign: "left",
 				footerSpacing: 2,
 				footerMarginTop: 6,
 
 				// Appearance
 				caretSize: 5,
 				cornerRadius: 6,
-				backgroundColor: 'rgba(0,0,0,0.8)',
-				opacity: 0,
-				legendColorBackground: '#fff',
+				backgroundColor: "rgba(0,0,0,0.8)",
+				opacity: 1,
+				legendColorBackground: "#fff",
 				displayColors: true,
-			}));
-		});
-	});
 
-	it('Should display in single mode', function() {
-		var chartInstance = window.acquireChart({
-			type: 'line',
-			data: {
-				datasets: [{
-					label: 'Dataset 1',
-					data: [10, 20, 30],
-					pointHoverBorderColor: 'rgb(255, 0, 0)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-				}, {
-					label: 'Dataset 2',
-					data: [40, 40, 40],
-					pointHoverBorderColor: 'rgb(0, 0, 255)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-				}],
-				labels: ['Point 1', 'Point 2', 'Point 3']
-			},
-			options: {
-				tooltips: {
-					mode: 'single'
-				}
-			}
-		});
-
-		// Trigger an event over top of the
-		var meta = chartInstance.getDatasetMeta(0);
-		var point = meta.data[1];
-
-		var node = chartInstance.chart.canvas;
-		var rect = node.getBoundingClientRect();
-
-		var evt = new MouseEvent('mousemove', {
-			view: window,
-			bubbles: true,
-			cancelable: true,
-			clientX: rect.left + point._model.x,
-			clientY: rect.top + point._model.y
-		});
-
-		// Manually trigger rather than having an async test
-		node.dispatchEvent(evt);
-
-		// Check and see if tooltip was displayed
-		var tooltip = chartInstance.tooltip;
-		var globalDefaults = Chart.defaults.global;
-
-		expect(tooltip._view).toEqual(jasmine.objectContaining({
-			// Positioning
-			xPadding: 6,
-			yPadding: 6,
-			xAlign: 'left',
-			yAlign: 'center',
-
-			// Body
-			bodyFontColor: '#fff',
-			_bodyFontFamily: globalDefaults.defaultFontFamily,
-			_bodyFontStyle: globalDefaults.defaultFontStyle,
-			_bodyAlign: 'left',
-			bodyFontSize: globalDefaults.defaultFontSize,
-			bodySpacing: 2,
-
-			// Title
-			titleFontColor: '#fff',
-			_titleFontFamily: globalDefaults.defaultFontFamily,
-			_titleFontStyle: 'bold',
-			titleFontSize: globalDefaults.defaultFontSize,
-			_titleAlign: 'left',
-			titleSpacing: 2,
-			titleMarginBottom: 6,
-
-			// Footer
-			footerFontColor: '#fff',
-			_footerFontFamily: globalDefaults.defaultFontFamily,
-			_footerFontStyle: 'bold',
-			footerFontSize: globalDefaults.defaultFontSize,
-			_footerAlign: 'left',
-			footerSpacing: 2,
-			footerMarginTop: 6,
-
-			// Appearance
-			caretSize: 5,
-			cornerRadius: 6,
-			backgroundColor: 'rgba(0,0,0,0.8)',
-			opacity: 1,
-			legendColorBackground: '#fff',
-			displayColors: true,
-
-			// Text
-			title: ['Point 2'],
-			beforeBody: [],
-			body: [{
-				before: [],
-				lines: ['Dataset 1: 20'],
-				after: []
-			}],
-			afterBody: [],
-			footer: [],
-			caretPadding: 2,
-			labelColors: [{
-				borderColor: 'rgb(255, 0, 0)',
-				backgroundColor: 'rgb(0, 255, 0)'
-			}]
-		}));
+				// Text
+				title: ["Point 2"],
+				beforeBody: [],
+				body: [
+					{
+						before: [],
+						lines: ["Dataset 1: 20"],
+						after: [],
+					},
+				],
+				afterBody: [],
+				footer: [],
+				caretPadding: 2,
+				labelColors: [
+					{
+						borderColor: "rgb(255, 0, 0)",
+						backgroundColor: "rgb(0, 255, 0)",
+					},
+				],
+			})
+		);
 
 		expect(tooltip._view.x).toBeCloseToPixel(263);
 		expect(tooltip._view.y).toBeCloseToPixel(312);
 	});
 
-	it('Should display information from user callbacks', function() {
+	it("Should display information from user callbacks", function () {
 		var chartInstance = window.acquireChart({
-			type: 'line',
+			type: "line",
 			data: {
-				datasets: [{
-					label: 'Dataset 1',
-					data: [10, 20, 30],
-					pointHoverBorderColor: 'rgb(255, 0, 0)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-				}, {
-					label: 'Dataset 2',
-					data: [40, 40, 40],
-					pointHoverBorderColor: 'rgb(0, 0, 255)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-				}],
-				labels: ['Point 1', 'Point 2', 'Point 3']
+				datasets: [
+					{
+						label: "Dataset 1",
+						data: [10, 20, 30],
+						pointHoverBorderColor: "rgb(255, 0, 0)",
+						pointHoverBackgroundColor: "rgb(0, 255, 0)",
+					},
+					{
+						label: "Dataset 2",
+						data: [40, 40, 40],
+						pointHoverBorderColor: "rgb(0, 0, 255)",
+						pointHoverBackgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+				labels: ["Point 1", "Point 2", "Point 3"],
 			},
 			options: {
 				tooltips: {
-					mode: 'label',
+					mode: "label",
 					callbacks: {
-						beforeTitle: function() {
-							return 'beforeTitle';
+						beforeTitle: function () {
+							return "beforeTitle";
 						},
-						title: function() {
-							return 'title';
+						title: function () {
+							return "title";
 						},
-						afterTitle: function() {
-							return 'afterTitle';
+						afterTitle: function () {
+							return "afterTitle";
 						},
-						beforeBody: function() {
-							return 'beforeBody';
+						beforeBody: function () {
+							return "beforeBody";
 						},
-						beforeLabel: function() {
-							return 'beforeLabel';
+						beforeLabel: function () {
+							return "beforeLabel";
 						},
-						label: function() {
-							return 'label';
+						label: function () {
+							return "label";
 						},
-						afterLabel: function() {
-							return 'afterLabel';
+						afterLabel: function () {
+							return "afterLabel";
 						},
-						afterBody: function() {
-							return 'afterBody';
+						afterBody: function () {
+							return "afterBody";
 						},
-						beforeFooter: function() {
-							return 'beforeFooter';
+						beforeFooter: function () {
+							return "beforeFooter";
 						},
-						footer: function() {
-							return 'footer';
+						footer: function () {
+							return "footer";
 						},
-						afterFooter: function() {
-							return 'afterFooter';
-						}
-					}
-				}
-			}
+						afterFooter: function () {
+							return "afterFooter";
+						},
+					},
+				},
+			},
 		});
 
 		// Trigger an event over top of the
@@ -380,12 +408,12 @@ describe('Core.Tooltip', function() {
 		var node = chartInstance.chart.canvas;
 		var rect = node.getBoundingClientRect();
 
-		var evt = new MouseEvent('mousemove', {
+		var evt = new MouseEvent("mousemove", {
 			view: window,
 			bubbles: true,
 			cancelable: true,
 			clientX: rect.left + point._model.x,
-			clientY: rect.top + point._model.y
+			clientY: rect.top + point._model.y,
 		});
 
 		// Manually trigger rather than having an async test
@@ -395,99 +423,110 @@ describe('Core.Tooltip', function() {
 		var tooltip = chartInstance.tooltip;
 		var globalDefaults = Chart.defaults.global;
 
-		expect(tooltip._view).toEqual(jasmine.objectContaining({
-			// Positioning
-			xPadding: 6,
-			yPadding: 6,
-			xAlign: 'center',
-			yAlign: 'top',
+		expect(tooltip._view).toEqual(
+			jasmine.objectContaining({
+				// Positioning
+				xPadding: 6,
+				yPadding: 6,
+				xAlign: "center",
+				yAlign: "top",
 
-			// Body
-			bodyFontColor: '#fff',
-			_bodyFontFamily: globalDefaults.defaultFontFamily,
-			_bodyFontStyle: globalDefaults.defaultFontStyle,
-			_bodyAlign: 'left',
-			bodyFontSize: globalDefaults.defaultFontSize,
-			bodySpacing: 2,
+				// Body
+				bodyFontColor: "#fff",
+				_bodyFontFamily: globalDefaults.defaultFontFamily,
+				_bodyFontStyle: globalDefaults.defaultFontStyle,
+				_bodyAlign: "left",
+				bodyFontSize: globalDefaults.defaultFontSize,
+				bodySpacing: 2,
 
-			// Title
-			titleFontColor: '#fff',
-			_titleFontFamily: globalDefaults.defaultFontFamily,
-			_titleFontStyle: 'bold',
-			titleFontSize: globalDefaults.defaultFontSize,
-			_titleAlign: 'left',
-			titleSpacing: 2,
-			titleMarginBottom: 6,
+				// Title
+				titleFontColor: "#fff",
+				_titleFontFamily: globalDefaults.defaultFontFamily,
+				_titleFontStyle: "bold",
+				titleFontSize: globalDefaults.defaultFontSize,
+				_titleAlign: "left",
+				titleSpacing: 2,
+				titleMarginBottom: 6,
 
-			// Footer
-			footerFontColor: '#fff',
-			_footerFontFamily: globalDefaults.defaultFontFamily,
-			_footerFontStyle: 'bold',
-			footerFontSize: globalDefaults.defaultFontSize,
-			_footerAlign: 'left',
-			footerSpacing: 2,
-			footerMarginTop: 6,
+				// Footer
+				footerFontColor: "#fff",
+				_footerFontFamily: globalDefaults.defaultFontFamily,
+				_footerFontStyle: "bold",
+				footerFontSize: globalDefaults.defaultFontSize,
+				_footerAlign: "left",
+				footerSpacing: 2,
+				footerMarginTop: 6,
 
-			// Appearance
-			caretSize: 5,
-			cornerRadius: 6,
-			backgroundColor: 'rgba(0,0,0,0.8)',
-			opacity: 1,
-			legendColorBackground: '#fff',
+				// Appearance
+				caretSize: 5,
+				cornerRadius: 6,
+				backgroundColor: "rgba(0,0,0,0.8)",
+				opacity: 1,
+				legendColorBackground: "#fff",
 
-			// Text
-			title: ['beforeTitle', 'title', 'afterTitle'],
-			beforeBody: ['beforeBody'],
-			body: [{
-				before: ['beforeLabel'],
-				lines: ['label'],
-				after: ['afterLabel']
-			}, {
-				before: ['beforeLabel'],
-				lines: ['label'],
-				after: ['afterLabel']
-			}],
-			afterBody: ['afterBody'],
-			footer: ['beforeFooter', 'footer', 'afterFooter'],
-			caretPadding: 2,
-			labelColors: [{
-				borderColor: 'rgb(255, 0, 0)',
-				backgroundColor: 'rgb(0, 255, 0)'
-			}, {
-				borderColor: 'rgb(0, 0, 255)',
-				backgroundColor: 'rgb(0, 255, 255)'
-			}]
-		}));
+				// Text
+				title: ["beforeTitle", "title", "afterTitle"],
+				beforeBody: ["beforeBody"],
+				body: [
+					{
+						before: ["beforeLabel"],
+						lines: ["label"],
+						after: ["afterLabel"],
+					},
+					{
+						before: ["beforeLabel"],
+						lines: ["label"],
+						after: ["afterLabel"],
+					},
+				],
+				afterBody: ["afterBody"],
+				footer: ["beforeFooter", "footer", "afterFooter"],
+				caretPadding: 2,
+				labelColors: [
+					{
+						borderColor: "rgb(255, 0, 0)",
+						backgroundColor: "rgb(0, 255, 0)",
+					},
+					{
+						borderColor: "rgb(0, 0, 255)",
+						backgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+			})
+		);
 
 		expect(tooltip._view.x).toBeCloseToPixel(211);
 		expect(tooltip._view.y).toBeCloseToPixel(190);
 	});
 
-	it('Should display information from user callbacks', function() {
+	it("Should display information from user callbacks", function () {
 		var chartInstance = window.acquireChart({
-			type: 'line',
+			type: "line",
 			data: {
-				datasets: [{
-					label: 'Dataset 1',
-					data: [10, 20, 30],
-					pointHoverBorderColor: 'rgb(255, 0, 0)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-				}, {
-					label: 'Dataset 2',
-					data: [40, 40, 40],
-					pointHoverBorderColor: 'rgb(0, 0, 255)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-				}],
-				labels: ['Point 1', 'Point 2', 'Point 3']
+				datasets: [
+					{
+						label: "Dataset 1",
+						data: [10, 20, 30],
+						pointHoverBorderColor: "rgb(255, 0, 0)",
+						pointHoverBackgroundColor: "rgb(0, 255, 0)",
+					},
+					{
+						label: "Dataset 2",
+						data: [40, 40, 40],
+						pointHoverBorderColor: "rgb(0, 0, 255)",
+						pointHoverBackgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+				labels: ["Point 1", "Point 2", "Point 3"],
 			},
 			options: {
 				tooltips: {
-					mode: 'label',
-					itemSort: function(a, b) {
+					mode: "label",
+					itemSort: function (a, b) {
 						return a.datasetIndex > b.datasetIndex ? -1 : 1;
-					}
-				}
-			}
+					},
+				},
+			},
 		});
 
 		// Trigger an event over top of the
@@ -497,12 +536,12 @@ describe('Core.Tooltip', function() {
 		var node = chartInstance.chart.canvas;
 		var rect = node.getBoundingClientRect();
 
-		var evt = new MouseEvent('mousemove', {
+		var evt = new MouseEvent("mousemove", {
 			view: window,
 			bubbles: true,
 			cancelable: true,
 			clientX: rect.left + point0._model.x,
-			clientY: rect.top + point0._model.y
+			clientY: rect.top + point0._model.y,
 		});
 
 		// Manually trigger rather than having an async test
@@ -511,65 +550,77 @@ describe('Core.Tooltip', function() {
 		// Check and see if tooltip was displayed
 		var tooltip = chartInstance.tooltip;
 
-		expect(tooltip._view).toEqual(jasmine.objectContaining({
-			// Positioning
-			xAlign: 'left',
-			yAlign: 'center',
+		expect(tooltip._view).toEqual(
+			jasmine.objectContaining({
+				// Positioning
+				xAlign: "left",
+				yAlign: "center",
 
-			// Text
-			title: ['Point 2'],
-			beforeBody: [],
-			body: [{
-				before: [],
-				lines: ['Dataset 2: 40'],
-				after: []
-			}, {
-				before: [],
-				lines: ['Dataset 1: 20'],
-				after: []
-			}],
-			afterBody: [],
-			footer: [],
-			labelColors: [{
-				borderColor: 'rgb(0, 0, 255)',
-				backgroundColor: 'rgb(0, 255, 255)'
-			}, {
-				borderColor: 'rgb(255, 0, 0)',
-				backgroundColor: 'rgb(0, 255, 0)'
-			}]
-		}));
+				// Text
+				title: ["Point 2"],
+				beforeBody: [],
+				body: [
+					{
+						before: [],
+						lines: ["Dataset 2: 40"],
+						after: [],
+					},
+					{
+						before: [],
+						lines: ["Dataset 1: 20"],
+						after: [],
+					},
+				],
+				afterBody: [],
+				footer: [],
+				labelColors: [
+					{
+						borderColor: "rgb(0, 0, 255)",
+						backgroundColor: "rgb(0, 255, 255)",
+					},
+					{
+						borderColor: "rgb(255, 0, 0)",
+						backgroundColor: "rgb(0, 255, 0)",
+					},
+				],
+			})
+		);
 
 		expect(tooltip._view.x).toBeCloseToPixel(263);
 		expect(tooltip._view.y).toBeCloseToPixel(155);
 	});
 
-	it('should filter items from the tooltip using the callback', function() {
+	it("should filter items from the tooltip using the callback", function () {
 		var chartInstance = window.acquireChart({
-			type: 'line',
+			type: "line",
 			data: {
-				datasets: [{
-					label: 'Dataset 1',
-					data: [10, 20, 30],
-					pointHoverBorderColor: 'rgb(255, 0, 0)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 0)',
-					tooltipHidden: true
-				}, {
-					label: 'Dataset 2',
-					data: [40, 40, 40],
-					pointHoverBorderColor: 'rgb(0, 0, 255)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-				}],
-				labels: ['Point 1', 'Point 2', 'Point 3']
+				datasets: [
+					{
+						label: "Dataset 1",
+						data: [10, 20, 30],
+						pointHoverBorderColor: "rgb(255, 0, 0)",
+						pointHoverBackgroundColor: "rgb(0, 255, 0)",
+						tooltipHidden: true,
+					},
+					{
+						label: "Dataset 2",
+						data: [40, 40, 40],
+						pointHoverBorderColor: "rgb(0, 0, 255)",
+						pointHoverBackgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+				labels: ["Point 1", "Point 2", "Point 3"],
 			},
 			options: {
 				tooltips: {
-					mode: 'label',
-					filter: function(tooltipItem, data) {
+					mode: "label",
+					filter: function (tooltipItem, data) {
 						// For testing purposes remove the first dataset that has a tooltipHidden property
-						return !data.datasets[tooltipItem.datasetIndex].tooltipHidden;
-					}
-				}
-			}
+						return !data.datasets[tooltipItem.datasetIndex]
+							.tooltipHidden;
+					},
+				},
+			},
 		});
 
 		// Trigger an event over top of the
@@ -579,12 +630,12 @@ describe('Core.Tooltip', function() {
 		var node = chartInstance.chart.canvas;
 		var rect = node.getBoundingClientRect();
 
-		var evt = new MouseEvent('mousemove', {
+		var evt = new MouseEvent("mousemove", {
 			view: window,
 			bubbles: true,
 			cancelable: true,
 			clientX: rect.left + point0._model.x,
-			clientY: rect.top + point0._model.y
+			clientY: rect.top + point0._model.y,
 		});
 
 		// Manually trigger rather than having an async test
@@ -593,50 +644,59 @@ describe('Core.Tooltip', function() {
 		// Check and see if tooltip was displayed
 		var tooltip = chartInstance.tooltip;
 
-		expect(tooltip._view).toEqual(jasmine.objectContaining({
-			// Positioning
-			xAlign: 'left',
-			yAlign: 'center',
+		expect(tooltip._view).toEqual(
+			jasmine.objectContaining({
+				// Positioning
+				xAlign: "left",
+				yAlign: "center",
 
-			// Text
-			title: ['Point 2'],
-			beforeBody: [],
-			body: [{
-				before: [],
-				lines: ['Dataset 2: 40'],
-				after: []
-			}],
-			afterBody: [],
-			footer: [],
-			labelColors: [{
-				borderColor: 'rgb(0, 0, 255)',
-				backgroundColor: 'rgb(0, 255, 255)'
-			}]
-		}));
+				// Text
+				title: ["Point 2"],
+				beforeBody: [],
+				body: [
+					{
+						before: [],
+						lines: ["Dataset 2: 40"],
+						after: [],
+					},
+				],
+				afterBody: [],
+				footer: [],
+				labelColors: [
+					{
+						borderColor: "rgb(0, 0, 255)",
+						backgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+			})
+		);
 	});
 
-	it('Should have dataPoints', function() {
+	it("Should have dataPoints", function () {
 		var chartInstance = window.acquireChart({
-			type: 'line',
+			type: "line",
 			data: {
-				datasets: [{
-					label: 'Dataset 1',
-					data: [10, 20, 30],
-					pointHoverBorderColor: 'rgb(255, 0, 0)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 0)'
-				}, {
-					label: 'Dataset 2',
-					data: [40, 40, 40],
-					pointHoverBorderColor: 'rgb(0, 0, 255)',
-					pointHoverBackgroundColor: 'rgb(0, 255, 255)'
-				}],
-				labels: ['Point 1', 'Point 2', 'Point 3']
+				datasets: [
+					{
+						label: "Dataset 1",
+						data: [10, 20, 30],
+						pointHoverBorderColor: "rgb(255, 0, 0)",
+						pointHoverBackgroundColor: "rgb(0, 255, 0)",
+					},
+					{
+						label: "Dataset 2",
+						data: [40, 40, 40],
+						pointHoverBorderColor: "rgb(0, 0, 255)",
+						pointHoverBackgroundColor: "rgb(0, 255, 255)",
+					},
+				],
+				labels: ["Point 1", "Point 2", "Point 3"],
 			},
 			options: {
 				tooltips: {
-					mode: 'single'
-				}
-			}
+					mode: "single",
+				},
+			},
 		});
 
 		// Trigger an event over top of the
@@ -646,12 +706,12 @@ describe('Core.Tooltip', function() {
 		var point = meta.data[pointIndex];
 		var node = chartInstance.chart.canvas;
 		var rect = node.getBoundingClientRect();
-		var evt = new MouseEvent('mousemove', {
+		var evt = new MouseEvent("mousemove", {
 			view: window,
 			bubbles: true,
 			cancelable: true,
 			clientX: rect.left + point._model.x,
-			clientY: rect.top + point._model.y
+			clientY: rect.top + point._model.y,
 		});
 
 		// Manually trigger rather than having an async test

@@ -4,10 +4,10 @@ metadata:
   name: busybox
 spec:
   containers:
-  - image: busybox:glibc
-    command:
-      - sleep
-      - "3600"
-    imagePullPolicy: IfNotPresent
-    name: busybox
+    - image: busybox:glibc
+      command:
+        - sleep
+        - "3600"
+      imagePullPolicy: IfNotPresent
+      name: busybox
   restartPolicy: Always

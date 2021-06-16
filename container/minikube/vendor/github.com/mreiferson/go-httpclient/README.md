@@ -9,8 +9,8 @@ Status](https://secure.travis-ci.org/mreiferson/go-httpclient.png?branch=master)
 Provides an HTTP Transport that implements the `RoundTripper` interface and
 can be used as a built in replacement for the standard library's, providing:
 
- * connection timeouts
- * request timeouts
+- connection timeouts
+- request timeouts
 
 This is a thin wrapper around `http.Transport` that sets dial timeouts and uses
 Go's internal timer scheduler to call the Go 1.1+ `CancelRequest()` API.
@@ -34,7 +34,7 @@ if err != nil {
 defer resp.Body.Close()
 ```
 
-*Note:* you will want to re-use a single client object rather than creating one for each request, otherwise you will end up [leaking connections](https://code.google.com/p/go/issues/detail?id=4049#c3).
+_Note:_ you will want to re-use a single client object rather than creating one for each request, otherwise you will end up [leaking connections](https://code.google.com/p/go/issues/detail?id=4049#c3).
 
 ### Reference Docs
 

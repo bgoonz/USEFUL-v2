@@ -1,10 +1,9 @@
-import logError from './logError';
+import logError from "./logError";
 
-const defaultExceptionHandler = () => (0);
+const defaultExceptionHandler = () => 0;
 
 class Auth {
-
-  constructor (hasura) {
+  constructor(hasura) {
     this.hasura = hasura;
   }
 
@@ -13,10 +12,12 @@ class Auth {
    * }
    *
    */
-  signup (password, onSuccess, onError = defaultExceptionHandler) {
+  signup(password, onSuccess, onError = defaultExceptionHandler) {
     if (this.hasura.user.token) {
-      logError('A user session already exists. Use this.hasura.logout() first?');
-      onError({'code': 'already-logged-in'});
+      logError(
+        "A user session already exists. Use this.hasura.logout() first?"
+      );
+      onError({ code: "already-logged-in" });
       return;
     }
 
@@ -29,12 +30,12 @@ class Auth {
     }
 
     this.hasura.fetch(
-      {service: 'auth', path: '/signup', json: body},
+      { service: "auth", path: "/signup", json: body },
       (user) => {
         this.hasura.user = {
           ...this.hasura.user,
           id: user.hasura_id,
-          roles: user.hasura_roles
+          roles: user.hasura_roles,
         };
         if (user.auth_token) {
           this.hasura.user.token = user.auth_token;
@@ -45,24 +46,31 @@ class Auth {
       (r) => {
         console.log(r);
         onError(r);
-      });
+      }
+    );
   }
 
-  login (password, onSuccess, onError = defaultExceptionHandler) {
+  login(password, onSuccess, onError = defaultExceptionHandler) {
     if (this.hasura.user.token) {
-      logError('A user session already exists. Use this.hasura.logout() first?');
-      onError({'code': 'already-logged-in'});
+      logError(
+        "A user session already exists. Use this.hasura.logout() first?"
+      );
+      onError({ code: "already-logged-in" });
       return;
     }
 
     this.hasura.fetch(
-      {service: 'auth', path: '/login', json: {username: this.hasura.user.username, password}},
+      {
+        service: "auth",
+        path: "/login",
+        json: { username: this.hasura.user.username, password },
+      },
       (user) => {
         this.hasura.user = {
           ...this.hasura.user,
           id: user.hasura_id,
           roles: user.hasura_roles,
-          token: user.auth_token
+          token: user.auth_token,
         };
         this.hasura.saveUser();
         onSuccess(user);
@@ -70,12 +78,13 @@ class Auth {
       (r) => {
         console.log(r);
         onError(r);
-      });
+      }
+    );
   }
 
-  logout (onSuccess, onError = defaultExceptionHandler) {
+  logout(onSuccess, onError = defaultExceptionHandler) {
     this.hasura.fetch(
-      {service: 'auth', path: '/user/logout'},
+      { service: "auth", path: "/user/logout" },
       () => {
         this.hasura.clearUser();
         onSuccess();
@@ -83,46 +92,59 @@ class Auth {
       (r) => {
         console.log(r);
         onError(r);
-      });
+      }
+    );
   }
 
   signUpPromise(password) {
     var self = this;
-      return new Promise(function(resolve, reject) {
-          self.signup(password, function(response) {
-              resolve(response);
-          }, function(error) {
-              reject(error);
-          }, function(exception) {
-              reject(exception);
-          });
-      });
+    return new Promise(function (resolve, reject) {
+      self.signup(
+        password,
+        function (response) {
+          resolve(response);
+        },
+        function (error) {
+          reject(error);
+        },
+        function (exception) {
+          reject(exception);
+        }
+      );
+    });
   }
 
   loginPromise(password) {
     var self = this;
-      return new Promise(function(resolve, reject) {
-          self.login(password, function(response) {
-              resolve(response);
-          }, function(error) {
-              reject(error);
-          }, function(exception) {
-              reject(exception);
-          })
-      })
+    return new Promise(function (resolve, reject) {
+      self.login(
+        password,
+        function (response) {
+          resolve(response);
+        },
+        function (error) {
+          reject(error);
+        },
+        function (exception) {
+          reject(exception);
+        }
+      );
+    });
   }
 
   logoutPromise() {
     var self = this;
-      return new Promise(function(resolve, reject) {
-          self.logout(function(response) {
-              resolve(response);
-          }, function(error) {
-              reject(error);
-          });
-      })
+    return new Promise(function (resolve, reject) {
+      self.logout(
+        function (response) {
+          resolve(response);
+        },
+        function (error) {
+          reject(error);
+        }
+      );
+    });
   }
-
 }
 
 export default Auth;

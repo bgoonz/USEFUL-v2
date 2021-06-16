@@ -23,16 +23,18 @@ The code in the `govmomi` package is a wrapper for the code that is generated fr
 It primarily provides convenience functions for working with the vSphere API.
 See [godoc.org][godoc] for documentation.
 
-[apiref]:http://pubs.vmware.com/vsphere-60/index.jsp#com.vmware.wssdk.apiref.doc/right-pane.html
-[godoc]:http://godoc.org/github.com/vmware/govmomi
-[drone]:https://drone.io
-[dronesrc]:https://github.com/drone/drone
-[dronecli]:http://readme.drone.io/devs/cli/
+[apiref]: http://pubs.vmware.com/vsphere-60/index.jsp#com.vmware.wssdk.apiref.doc/right-pane.html
+[godoc]: http://godoc.org/github.com/vmware/govmomi
+[drone]: https://drone.io
+[dronesrc]: https://github.com/drone/drone
+[dronecli]: http://readme.drone.io/devs/cli/
 
 #### Building with CI
+
 Merges to this repository will trigger builds in both Travis and [Drone][drone].
 
 To build locally with Drone:
+
 - Ensure that you have Docker 1.6 or higher installed.
 - Install the [Drone command line tools][dronecli].
 - Run `drone exec` from within the root directory of the govmomi repository.
@@ -51,17 +53,17 @@ Refer to the [CHANGELOG](CHANGELOG.md) for version to version changes.
 
 ## Projects using govmomi
 
-* [Docker Machine](https://github.com/docker/machine/tree/master/drivers/vmwarevsphere)
+- [Docker Machine](https://github.com/docker/machine/tree/master/drivers/vmwarevsphere)
 
-* [Kubernetes](https://github.com/kubernetes/kubernetes/tree/master/pkg/cloudprovider/providers/vsphere)
+- [Kubernetes](https://github.com/kubernetes/kubernetes/tree/master/pkg/cloudprovider/providers/vsphere)
 
-* [Terraform](https://github.com/hashicorp/terraform/tree/master/builtin/providers/vsphere)
+- [Terraform](https://github.com/hashicorp/terraform/tree/master/builtin/providers/vsphere)
 
-* [VMware VIC Engine](https://github.com/vmware/vic)
+- [VMware VIC Engine](https://github.com/vmware/vic)
 
-* [Travis CI](https://github.com/travis-ci/jupiter-brain)
+- [Travis CI](https://github.com/travis-ci/jupiter-brain)
 
-* [Gru](https://github.com/dnaeon/gru)
+- [Gru](https://github.com/dnaeon/gru)
 
 ## License
 

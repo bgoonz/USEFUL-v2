@@ -31,20 +31,20 @@ metadata:
       name: filestore-pv
   gateway:
     externalIPs:
-    - 111.222.33.44
+      - 111.222.33.44
     ports:
-    - name: http
-      port: 80
-      protocol: TCP
-      targetPort: 80
-    - name: https
-      port: 443
-      protocol: TCP
-      targetPort: 443
-    - name: ssh
-      port: 22
-      protocol: TCP
-      targetPort: 22
+      - name: http
+        port: 80
+        protocol: TCP
+        targetPort: 80
+      - name: https
+        port: 443
+        protocol: TCP
+        targetPort: 443
+      - name: ssh
+        port: 22
+        protocol: TCP
+        targetPort: 22
   namespaces:
     hasura: hasura
     user: default

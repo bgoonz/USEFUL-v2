@@ -1,9 +1,11 @@
 # Steps to Release Localkube
 
 ## Configure The Correct Kubernetes Version to Build for Localkube
-When building localkube for a specific Kubernetes version, follow the steps at [Updating Kubernetes](https://github.com/kubernetes/minikube/blob/master/docs/contributors/updating_kubernetes.md).  After you have setup a new folder and GOPATH with the desired version of Kubernetes (from the directions above), you go on to build localkube.
+
+When building localkube for a specific Kubernetes version, follow the steps at [Updating Kubernetes](https://github.com/kubernetes/minikube/blob/master/docs/contributors/updating_kubernetes.md). After you have setup a new folder and GOPATH with the desired version of Kubernetes (from the directions above), you go on to build localkube.
 
 ## Build the Localkube Release
+
 ```shell
 make out/localkube
 ```

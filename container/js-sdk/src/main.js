@@ -1,13 +1,13 @@
-import {hasuraFetch, hasuraGenUrl} from './hasuraFetch';
-import Auth from './Auth';
-import Data from './Data';
-import File from './File';
+import { hasuraFetch, hasuraGenUrl } from "./hasuraFetch";
+import Auth from "./Auth";
+import Data from "./Data";
+import File from "./File";
 
 const anonUser = {
-  username: 'anonymous',
+  username: "anonymous",
   id: 0,
-  roles: ['anonymous'],
-  token: null
+  roles: ["anonymous"],
+  token: null,
 };
 
 const localStorage = window.localStorage;
@@ -19,9 +19,9 @@ class hasura {
    * hasura.data.query({}, onSuccess, onError)
    * hasura.fetch(options, onSuccess, onError)
    */
-  constructor () {
+  constructor() {
     // Load user-data from localStorage
-    const u = localStorage.getItem('hasura.user');
+    const u = localStorage.getItem("hasura.user");
     if (u) {
       this.user = JSON.parse(u);
     } else {
@@ -29,8 +29,8 @@ class hasura {
     }
 
     this.projectConfig = {
-      scheme: 'https',
-      baseDomain: null
+      scheme: "https",
+      baseDomain: null,
     };
     this.resetFetch();
     this.auth = new Auth(this);
@@ -42,20 +42,24 @@ class hasura {
     this.fetch = hasuraFetch(this.user, this.projectConfig);
     var self = this;
     this.fetchPromise = (query) => {
-      return new Promise(function(resolve, reject) {
-        self.fetch(query, function(response) {
-          resolve(response);
-        }, function(error) {
-          reject(error);
-        })
+      return new Promise(function (resolve, reject) {
+        self.fetch(
+          query,
+          function (response) {
+            resolve(response);
+          },
+          function (error) {
+            reject(error);
+          }
+        );
       });
     };
     this.genUrl = hasuraGenUrl(this.projectConfig);
     return this;
   }
 
-  setProject (name) {
-    this.projectConfig.baseDomain = name + '.hasura-app.io';
+  setProject(name) {
+    this.projectConfig.baseDomain = name + ".hasura-app.io";
     this.resetFetch();
     return this;
   }
@@ -67,7 +71,7 @@ class hasura {
   }
 
   disableHttps() {
-    this.projectConfig.scheme = 'http';
+    this.projectConfig.scheme = "http";
     this.resetFetch();
   }
 
@@ -84,7 +88,7 @@ class hasura {
       token: userInfo.auth_token,
     };
 
-    ['username', 'email', 'mobile'].map(x => {
+    ["username", "email", "mobile"].map((x) => {
       this.user[x] = userInfo[x] ? userInfo[x] : this.user[x];
     });
 
@@ -92,7 +96,7 @@ class hasura {
   }
 
   saveUser() {
-    localStorage.setItem('hasura.user', JSON.stringify(this.user));
+    localStorage.setItem("hasura.user", JSON.stringify(this.user));
     this.resetFetch();
   }
 
@@ -101,8 +105,9 @@ class hasura {
     this.saveUser();
   }
 
-  clearSession() { this.clearUser(); }
-
+  clearSession() {
+    this.clearUser();
+  }
 }
 
-export default (new hasura());
+export default new hasura();

@@ -1,5 +1,4 @@
-clockwork
-=========
+# clockwork
 
 a simple fake clock for golang
 
@@ -47,6 +46,7 @@ func TestMyFunc(t *testing.T) {
 ```
 
 and in production builds, simply inject the real clock instead:
+
 ```
 my_func(clockwork.NewRealClock())
 ```

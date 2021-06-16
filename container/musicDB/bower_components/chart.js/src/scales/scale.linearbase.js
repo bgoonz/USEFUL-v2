@@ -1,12 +1,11 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers,
 		noop = helpers.noop;
 
 	Chart.LinearScaleBase = Chart.Scale.extend({
-		handleTickRangeOptions: function() {
+		handleTickRangeOptions: function () {
 			var me = this;
 			var opts = me.options;
 			var tickOpts = opts.ticks;
@@ -50,7 +49,7 @@ module.exports = function(Chart) {
 		getTickLimit: noop,
 		handleDirectionalChanges: noop,
 
-		buildTicks: function() {
+		buildTicks: function () {
 			var me = this;
 			var opts = me.options;
 			var tickOpts = opts.ticks;
@@ -66,9 +65,15 @@ module.exports = function(Chart) {
 				maxTicks: maxTicks,
 				min: tickOpts.min,
 				max: tickOpts.max,
-				stepSize: helpers.getValueOrDefault(tickOpts.fixedStepSize, tickOpts.stepSize)
+				stepSize: helpers.getValueOrDefault(
+					tickOpts.fixedStepSize,
+					tickOpts.stepSize
+				),
 			};
-			var ticks = me.ticks = Chart.Ticks.generators.linear(numericGeneratorOptions, me);
+			var ticks = (me.ticks = Chart.Ticks.generators.linear(
+				numericGeneratorOptions,
+				me
+			));
 
 			me.handleDirectionalChanges();
 
@@ -87,12 +92,12 @@ module.exports = function(Chart) {
 				me.end = me.max;
 			}
 		},
-		convertTicksToLabels: function() {
+		convertTicksToLabels: function () {
 			var me = this;
 			me.ticksAsNumbers = me.ticks.slice();
 			me.zeroLineIndex = me.ticks.indexOf(0);
 
 			Chart.Scale.prototype.convertTicksToLabels.call(me);
-		}
+		},
 	});
 };

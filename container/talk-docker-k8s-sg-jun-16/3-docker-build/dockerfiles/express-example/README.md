@@ -1,4 +1,5 @@
 Oasdfasdf
+
 # express-example
 
 This repository demonstrates the usage of sequelize within an express application.
@@ -68,25 +69,31 @@ you have to adjust the `bin/www` file to this:
 ```js
 #!/usr/bin/env node
 
-var app = require('../app');
-var debug = require('debug')('init:server');
-var http = require('http');
+var app = require("../app");
+var debug = require("debug")("init:server");
+var http = require("http");
 var models = require("../models");
 
-var port = normalizePort(process.env.PORT || '3000');
-app.set('port', port);
+var port = normalizePort(process.env.PORT || "3000");
+app.set("port", port);
 
 var server = http.createServer(app);
 
 models.sequelize.sync().then(function () {
   server.listen(port);
-  server.on('error', onError);
-  server.on('listening', onListening);
+  server.on("error", onError);
+  server.on("listening", onListening);
 });
 
-function normalizePort(val) { /* ... */ }
-function onError(error) { /* ... */ }
-function onListening() { /* ... */ }
+function normalizePort(val) {
+  /* ... */
+}
+function onError(error) {
+  /* ... */
+}
+function onListening() {
+  /* ... */
+}
 ```
 
 And finally you have to adjust the `config/config.json` to fit your environment.

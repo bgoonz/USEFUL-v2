@@ -1,38 +1,38 @@
 // Test the rectangle element
 
-describe('Title block tests', function() {
-	it('Should be constructed', function() {
+describe("Title block tests", function () {
+	it("Should be constructed", function () {
 		var title = new Chart.Title({});
 		expect(title).not.toBe(undefined);
 	});
 
-	it('Should have the correct default config', function() {
+	it("Should have the correct default config", function () {
 		expect(Chart.defaults.global.title).toEqual({
 			display: false,
-			position: 'top',
+			position: "top",
 			fullWidth: true,
-			fontStyle: 'bold',
+			fontStyle: "bold",
 			padding: 10,
-			text: ''
+			text: "",
 		});
 	});
 
-	it('should update correctly', function() {
+	it("should update correctly", function () {
 		var chart = {};
 
 		var options = Chart.helpers.clone(Chart.defaults.global.title);
-		options.text = 'My title';
+		options.text = "My title";
 
 		var title = new Chart.Title({
 			chart: chart,
-			options: options
+			options: options,
 		});
 
 		var minSize = title.update(400, 200);
 
 		expect(minSize).toEqual({
 			width: 400,
-			height: 0
+			height: 0,
 		});
 
 		// Now we have a height since we display
@@ -42,27 +42,27 @@ describe('Title block tests', function() {
 
 		expect(minSize).toEqual({
 			width: 400,
-			height: 32
+			height: 32,
 		});
 	});
 
-	it('should update correctly when vertical', function() {
+	it("should update correctly when vertical", function () {
 		var chart = {};
 
 		var options = Chart.helpers.clone(Chart.defaults.global.title);
-		options.text = 'My title';
-		options.position = 'left';
+		options.text = "My title";
+		options.position = "left";
 
 		var title = new Chart.Title({
 			chart: chart,
-			options: options
+			options: options,
 		});
 
 		var minSize = title.update(200, 400);
 
 		expect(minSize).toEqual({
 			width: 0,
-			height: 400
+			height: 400,
 		});
 
 		// Now we have a height since we display
@@ -72,21 +72,21 @@ describe('Title block tests', function() {
 
 		expect(minSize).toEqual({
 			width: 32,
-			height: 400
+			height: 400,
 		});
 	});
 
-	it('should draw correctly horizontally', function() {
+	it("should draw correctly horizontally", function () {
 		var chart = {};
 		var context = window.createMockContext();
 
 		var options = Chart.helpers.clone(Chart.defaults.global.title);
-		options.text = 'My title';
+		options.text = "My title";
 
 		var title = new Chart.Title({
 			chart: chart,
 			options: options,
-			ctx: context
+			ctx: context,
 		});
 
 		title.update(400, 200);
@@ -104,39 +104,46 @@ describe('Title block tests', function() {
 		title.right = title.left + minSize.width;
 		title.draw();
 
-		expect(context.getCalls()).toEqual([{
-			name: 'setFillStyle',
-			args: ['#666']
-		}, {
-			name: 'save',
-			args: []
-		}, {
-			name: 'translate',
-			args: [300, 66]
-		}, {
-			name: 'rotate',
-			args: [0]
-		}, {
-			name: 'fillText',
-			args: ['My title', 0, 0, 400]
-		}, {
-			name: 'restore',
-			args: []
-		}]);
+		expect(context.getCalls()).toEqual([
+			{
+				name: "setFillStyle",
+				args: ["#666"],
+			},
+			{
+				name: "save",
+				args: [],
+			},
+			{
+				name: "translate",
+				args: [300, 66],
+			},
+			{
+				name: "rotate",
+				args: [0],
+			},
+			{
+				name: "fillText",
+				args: ["My title", 0, 0, 400],
+			},
+			{
+				name: "restore",
+				args: [],
+			},
+		]);
 	});
 
-	it ('should draw correctly vertically', function() {
+	it("should draw correctly vertically", function () {
 		var chart = {};
 		var context = window.createMockContext();
 
 		var options = Chart.helpers.clone(Chart.defaults.global.title);
-		options.text = 'My title';
-		options.position = 'left';
+		options.text = "My title";
+		options.position = "left";
 
 		var title = new Chart.Title({
 			chart: chart,
 			options: options,
-			ctx: context
+			ctx: context,
 		});
 
 		title.update(200, 400);
@@ -154,28 +161,35 @@ describe('Title block tests', function() {
 		title.right = title.left + minSize.width;
 		title.draw();
 
-		expect(context.getCalls()).toEqual([{
-			name: 'setFillStyle',
-			args: ['#666']
-		}, {
-			name: 'save',
-			args: []
-		}, {
-			name: 'translate',
-			args: [106, 250]
-		}, {
-			name: 'rotate',
-			args: [-0.5 * Math.PI]
-		}, {
-			name: 'fillText',
-			args: ['My title', 0, 0, 400]
-		}, {
-			name: 'restore',
-			args: []
-		}]);
+		expect(context.getCalls()).toEqual([
+			{
+				name: "setFillStyle",
+				args: ["#666"],
+			},
+			{
+				name: "save",
+				args: [],
+			},
+			{
+				name: "translate",
+				args: [106, 250],
+			},
+			{
+				name: "rotate",
+				args: [-0.5 * Math.PI],
+			},
+			{
+				name: "fillText",
+				args: ["My title", 0, 0, 400],
+			},
+			{
+				name: "restore",
+				args: [],
+			},
+		]);
 
 		// Rotation is other way on right side
-		title.options.position = 'right';
+		title.options.position = "right";
 
 		// Reset call tracker
 		context.resetCalls();
@@ -187,42 +201,51 @@ describe('Title block tests', function() {
 		title.right = title.left + minSize.width;
 		title.draw();
 
-		expect(context.getCalls()).toEqual([{
-			name: 'setFillStyle',
-			args: ['#666']
-		}, {
-			name: 'save',
-			args: []
-		}, {
-			name: 'translate',
-			args: [126, 250]
-		}, {
-			name: 'rotate',
-			args: [0.5 * Math.PI]
-		}, {
-			name: 'fillText',
-			args: ['My title', 0, 0, 400]
-		}, {
-			name: 'restore',
-			args: []
-		}]);
+		expect(context.getCalls()).toEqual([
+			{
+				name: "setFillStyle",
+				args: ["#666"],
+			},
+			{
+				name: "save",
+				args: [],
+			},
+			{
+				name: "translate",
+				args: [126, 250],
+			},
+			{
+				name: "rotate",
+				args: [0.5 * Math.PI],
+			},
+			{
+				name: "fillText",
+				args: ["My title", 0, 0, 400],
+			},
+			{
+				name: "restore",
+				args: [],
+			},
+		]);
 	});
 
-	describe('config update', function() {
-		it ('should update the options', function() {
+	describe("config update", function () {
+		it("should update the options", function () {
 			var chart = acquireChart({
-				type: 'line',
+				type: "line",
 				data: {
-					labels: ['A', 'B', 'C', 'D'],
-					datasets: [{
-						data: [10, 20, 30, 100]
-					}]
+					labels: ["A", "B", "C", "D"],
+					datasets: [
+						{
+							data: [10, 20, 30, 100],
+						},
+					],
 				},
 				options: {
 					title: {
-						display: true
-					}
-				}
+						display: true,
+					},
+				},
 			});
 			expect(chart.titleBlock.options.display).toBe(true);
 
@@ -231,15 +254,17 @@ describe('Title block tests', function() {
 			expect(chart.titleBlock.options.display).toBe(false);
 		});
 
-		it ('should remove the title if the new options are false', function() {
+		it("should remove the title if the new options are false", function () {
 			var chart = acquireChart({
-				type: 'line',
+				type: "line",
 				data: {
-					labels: ['A', 'B', 'C', 'D'],
-					datasets: [{
-						data: [10, 20, 30, 100]
-					}]
-				}
+					labels: ["A", "B", "C", "D"],
+					datasets: [
+						{
+							data: [10, 20, 30, 100],
+						},
+					],
+				},
 			});
 			expect(chart.titleBlock).not.toBe(undefined);
 
@@ -248,25 +273,29 @@ describe('Title block tests', function() {
 			expect(chart.titleBlock).toBe(undefined);
 		});
 
-		it ('should create the title if the title options are changed to exist', function() {
+		it("should create the title if the title options are changed to exist", function () {
 			var chart = acquireChart({
-				type: 'line',
+				type: "line",
 				data: {
-					labels: ['A', 'B', 'C', 'D'],
-					datasets: [{
-						data: [10, 20, 30, 100]
-					}]
+					labels: ["A", "B", "C", "D"],
+					datasets: [
+						{
+							data: [10, 20, 30, 100],
+						},
+					],
 				},
 				options: {
-					title: false
-				}
+					title: false,
+				},
 			});
 			expect(chart.titleBlock).toBe(undefined);
 
 			chart.options.title = {};
 			chart.update();
 			expect(chart.titleBlock).not.toBe(undefined);
-			expect(chart.titleBlock.options).toEqual(jasmine.objectContaining(Chart.defaults.global.title));
+			expect(chart.titleBlock.options).toEqual(
+				jasmine.objectContaining(Chart.defaults.global.title)
+			);
 		});
 	});
 });

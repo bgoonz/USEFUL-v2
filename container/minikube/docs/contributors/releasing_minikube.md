@@ -10,10 +10,13 @@ See [this PR](https://github.com/kubernetes/minikube/pull/164) for an example.
 This step isn't always required. Check if there were changes in the deploy directory.
 If you do this, bump the ISO URL to point to the new ISO, and send a PR.
 To do this, build the new iso by running:
+
 ```shell
 deploy/iso/build.sh
 ```
-This will generate a new iso at 'deploy/iso/minikube.iso'.  Then upload the iso and shasum using the following command:
+
+This will generate a new iso at 'deploy/iso/minikube.iso'. Then upload the iso and shasum using the following command:
+
 ```shell
 gsutil cp deploy/iso/minikube.iso gs://minikube/minikube-<increment.version>.iso
 gsutil cp deploy/iso/minikube.iso.sha256 gs://minikube/minikube-<increment.version>.iso.sha256
@@ -22,9 +25,11 @@ gsutil cp deploy/iso/minikube.iso.sha256 gs://minikube/minikube-<increment.versi
 ## Run integration tests
 
 Run this command:
+
 ```shell
 make integration
 ```
+
 Investigate and fix any failures.
 
 ## Bump the version in the Makefile and Update Docs to reflect this
@@ -33,7 +38,7 @@ See [this PR](https://github.com/kubernetes/minikube/pull/165) for an example.
 
 ##Send an initial commit with the Makefile change:
 
-Send a PR for the Makefile change and wait until it is merged.  Once the commit is merged, continue.
+Send a PR for the Makefile change and wait until it is merged. Once the commit is merged, continue.
 
 ## Build the Release
 
@@ -97,22 +102,24 @@ gsutil cp -r gs://minikube/releases/$RELEASE/* gs://minikube/releases/latest/
 
 These are downstream packages that are being maintained by others and how to upgrade them to make sure they have the latest versions
 
-| Package Manager | URL | TODO |
-| --- | --- | --- |
-| Arch Linux AUR | https://aur.archlinux.org/packages/minikube/ | "Flag as package out-of-date"
-| Brew Cask | https://github.com/caskroom/homebrew-cask/blob/master/Casks/minikube.rb | Create a new PR in [caskroom/homebrew-cask](https://github.com/caskroom/homebrew-cask) with an updated version and appcast checkpoint
+| Package Manager | URL                                                                     | TODO                                                                                                                                  |
+| --------------- | ----------------------------------------------------------------------- | ------------------------------------------------------------------------------------------------------------------------------------- |
+| Arch Linux AUR  | https://aur.archlinux.org/packages/minikube/                            | "Flag as package out-of-date"                                                                                                         |
+| Brew Cask       | https://github.com/caskroom/homebrew-cask/blob/master/Casks/minikube.rb | Create a new PR in [caskroom/homebrew-cask](https://github.com/caskroom/homebrew-cask) with an updated version and appcast checkpoint |
 
 #### [How to Generate an Appcast Checkpoint for Homebrew](https://github.com/caskroom/homebrew-cask/blob/master/doc/cask_language_reference/stanzas/appcast.md)
+
 `curl --compressed --location --user-agent 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_9_2) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.152 Safari/537.36' "https://github.com/kubernetes/minikube/releases.atom" | sed 's|<pubDate>[^<]*</pubDate>||g' | shasum --algorithm 256`
 
 #### Updating the arch linux package
-The Arch Linux AUR is maintained at https://aur.archlinux.org/packages/minikube/.  The installer PKGBUILD is hosted in its own repository.  The public read-only repository is hosted here `https://aur.archlinux.org/minikube.git` and the private read-write repository is hosted here `ssh://aur@aur.archlinux.org/minikube.git`
 
-The repository is tracked in this repo under a submodule `installers/linux/arch_linux`.  Currently, its configured to point at the public readonly repository so if you want to push you should run this command to overwrite
+The Arch Linux AUR is maintained at https://aur.archlinux.org/packages/minikube/. The installer PKGBUILD is hosted in its own repository. The public read-only repository is hosted here `https://aur.archlinux.org/minikube.git` and the private read-write repository is hosted here `ssh://aur@aur.archlinux.org/minikube.git`
+
+The repository is tracked in this repo under a submodule `installers/linux/arch_linux`. Currently, its configured to point at the public readonly repository so if you want to push you should run this command to overwrite
 
 `git config submodule.archlinux.url ssh://aur@aur.archlinux.org/minikube.git `
 
-To actually update the package, you should bump the version and update the sha512 checksum.  You should also run `makepkg --printsrcinfo > .SRCINFO` to update the srcinfo file.  You can edit this manually if you don't have `makepkg` on your machine.
+To actually update the package, you should bump the version and update the sha512 checksum. You should also run `makepkg --printsrcinfo > .SRCINFO` to update the srcinfo file. You can edit this manually if you don't have `makepkg` on your machine.
 
 ## Release Verification
 

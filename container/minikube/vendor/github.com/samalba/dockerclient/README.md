@@ -1,5 +1,5 @@
-Docker client library in Go
-===========================
+# Docker client library in Go
+
 [![GoDoc](http://godoc.org/github.com/samalba/dockerclient?status.png)](http://godoc.org/github.com/samalba/dockerclient)
 
 Well maintained docker client library.

@@ -9,15 +9,16 @@ extra binary to be present in the host PATH.
 The following drivers currently require driver plugin binaries to be present in
 the host PATH:
 
-* [KVM](#kvm-driver)
-* [xhyve](#xhyve-driver)
-* [HyperV](#HyperV-driver)
+- [KVM](#kvm-driver)
+- [xhyve](#xhyve-driver)
+- [HyperV](#HyperV-driver)
 
 #### KVM driver
 
 Minikube is currently tested against [`docker-machine-driver-kvm` v0.10.0](https://github.com/dhiltgen/docker-machine-kvm/releases).
 
 After following the instructions on the KVM driver releases page, you need to make sure that have the necessary packages and permissions by following these instructions:
+
 ```
 
 # Install libvirt and qemu-kvm on your system, e.g.

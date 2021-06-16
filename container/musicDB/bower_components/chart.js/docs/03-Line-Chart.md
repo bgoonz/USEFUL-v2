@@ -2,7 +2,9 @@
 title: Line Chart
 anchor: line-chart
 ---
+
 ### Introduction
+
 A line chart is a way of plotting data points on a line. Often, it is used to show trend data, and the comparison of two data sets.
 
 <div class="canvas-holder">
@@ -10,19 +12,21 @@ A line chart is a way of plotting data points on a line. Often, it is used to sh
 </div>
 
 ### Example Usage
+
 ```javascript
 var myLineChart = new Chart(ctx, {
-	type: 'line',
+	type: "line",
 	data: data,
-	options: options
+	options: options,
 });
 ```
 
 Alternatively a line chart can be created using syntax similar to the v1.0 syntax
+
 ```javascript
 var myLineChart = Chart.Line(ctx, {
 	data: data,
-	options: options
+	options: options,
 });
 ```
 
@@ -30,39 +34,40 @@ var myLineChart = Chart.Line(ctx, {
 
 The following options can be included in a line chart dataset to configure options for that specific dataset.
 
-All point* properties can be specified as an array. If these are set to an array value, the first value applies to the first point, the second value to the second point, and so on.
+All point\* properties can be specified as an array. If these are set to an array value, the first value applies to the first point, the second value to the second point, and so on.
 
-Property | Type | Usage
---- | --- | ---
-data | See [data point](#line-chart-data-points) section | The data to plot in a line
-label | `String` | The label for the dataset which appears in the legend and tooltips
-xAxisID | `String` | The ID of the x axis to plot this dataset on
-yAxisID | `String` | The ID of the y axis to plot this dataset on
-fill | `Boolean` | If true, fill the area under the line
-cubicInterpolationMode | `String` | Algorithm used to interpolate a smooth curve from the discrete data points. Options are 'default' and 'monotone'. The 'default' algorithm uses a custom weighted cubic interpolation, which produces pleasant curves for all types of datasets. The 'monotone' algorithm is more suited to `y = f(x)` datasets : it preserves monotonicity (or piecewise monotonicity) of the dataset being interpolated, and ensures local extremums (if any) stay at input data points. If left untouched (`undefined`), the global `options.elements.line.cubicInterpolationMode` property is used.
-lineTension | `Number` | Bezier curve tension of the line. Set to 0 to draw straightlines. This option is ignored if monotone cubic interpolation is used. *Note* This was renamed from 'tension' but the old name still works.
-backgroundColor | `Color` | The fill color under the line. See [Colors](#chart-configuration-colors)
-borderWidth | `Number` | The width of the line in pixels
-borderColor | `Color` | The color of the line.
-borderCapStyle | `String` | Cap style of the line. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap)
-borderDash | `Array<Number>` | Length and spacing of dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash)
-borderDashOffset | `Number` | Offset for line dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset)
-borderJoinStyle | `String` | Line joint style. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin)
-pointBorderColor | `Color or Array<Color>` | The border color for points.
-pointBackgroundColor | `Color or Array<Color>` | The fill color for points
-pointBorderWidth | `Number or Array<Number>` | The width of the point border in pixels
-pointRadius | `Number or Array<Number>` | The radius of the point shape. If set to 0, nothing is rendered. 
-pointHoverRadius | `Number or Array<Number>` | The radius of the point when hovered
-pointHitRadius | `Number or Array<Number>` | The pixel size of the non-displayed point that reacts to mouse events
-pointHoverBackgroundColor | `Color or Array<Color>` | Point background color when hovered
-pointHoverBorderColor | `Color or Array<Color>` | Point border color when hovered
-pointHoverBorderWidth | `Number or Array<Number>` | Border width of point when hovered
-pointStyle | `String, Array<String>, Image, Array<Image>` | The style of point. Options are 'circle', 'triangle', 'rect', 'rectRounded', 'rectRot', 'cross', 'crossRot', 'star', 'line', and 'dash'. If the option is an image, that image is drawn on the canvas using `drawImage`.
-showLine | `Boolean` | If false, the line is not drawn for this dataset
-spanGaps | `Boolean` | If true, lines will be drawn between points with no or null data
-steppedLine | `Boolean` | If true, the line is shown as a stepped line and 'lineTension' will be ignored
+| Property                  | Type                                              | Usage                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| ------------------------- | ------------------------------------------------- | -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| data                      | See [data point](#line-chart-data-points) section | The data to plot in a line                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                             |
+| label                     | `String`                                          | The label for the dataset which appears in the legend and tooltips                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| xAxisID                   | `String`                                          | The ID of the x axis to plot this dataset on                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| yAxisID                   | `String`                                          | The ID of the y axis to plot this dataset on                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| fill                      | `Boolean`                                         | If true, fill the area under the line                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| cubicInterpolationMode    | `String`                                          | Algorithm used to interpolate a smooth curve from the discrete data points. Options are 'default' and 'monotone'. The 'default' algorithm uses a custom weighted cubic interpolation, which produces pleasant curves for all types of datasets. The 'monotone' algorithm is more suited to `y = f(x)` datasets : it preserves monotonicity (or piecewise monotonicity) of the dataset being interpolated, and ensures local extremums (if any) stay at input data points. If left untouched (`undefined`), the global `options.elements.line.cubicInterpolationMode` property is used. |
+| lineTension               | `Number`                                          | Bezier curve tension of the line. Set to 0 to draw straightlines. This option is ignored if monotone cubic interpolation is used. _Note_ This was renamed from 'tension' but the old name still works.                                                                                                                                                                                                                                                                                                                                                                                 |
+| backgroundColor           | `Color`                                           | The fill color under the line. See [Colors](#chart-configuration-colors)                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               |
+| borderWidth               | `Number`                                          | The width of the line in pixels                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| borderColor               | `Color`                                           | The color of the line.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                 |
+| borderCapStyle            | `String`                                          | Cap style of the line. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineCap)                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| borderDash                | `Array<Number>`                                   | Length and spacing of dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/setLineDash)                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
+| borderDashOffset          | `Number`                                          | Offset for line dashes. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineDashOffset)                                                                                                                                                                                                                                                                                                                                                                                                                                                            |
+| borderJoinStyle           | `String`                                          | Line joint style. See [MDN](https://developer.mozilla.org/en-US/docs/Web/API/CanvasRenderingContext2D/lineJoin)                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| pointBorderColor          | `Color or Array<Color>`                           | The border color for points.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                           |
+| pointBackgroundColor      | `Color or Array<Color>`                           | The fill color for points                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                              |
+| pointBorderWidth          | `Number or Array<Number>`                         | The width of the point border in pixels                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| pointRadius               | `Number or Array<Number>`                         | The radius of the point shape. If set to 0, nothing is rendered.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| pointHoverRadius          | `Number or Array<Number>`                         | The radius of the point when hovered                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| pointHitRadius            | `Number or Array<Number>`                         | The pixel size of the non-displayed point that reacts to mouse events                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| pointHoverBackgroundColor | `Color or Array<Color>`                           | Point background color when hovered                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                    |
+| pointHoverBorderColor     | `Color or Array<Color>`                           | Point border color when hovered                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                        |
+| pointHoverBorderWidth     | `Number or Array<Number>`                         | Border width of point when hovered                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                     |
+| pointStyle                | `String, Array<String>, Image, Array<Image>`      | The style of point. Options are 'circle', 'triangle', 'rect', 'rectRounded', 'rectRot', 'cross', 'crossRot', 'star', 'line', and 'dash'. If the option is an image, that image is drawn on the canvas using `drawImage`.                                                                                                                                                                                                                                                                                                                                                               |
+| showLine                  | `Boolean`                                         | If false, the line is not drawn for this dataset                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| spanGaps                  | `Boolean`                                         | If true, lines will be drawn between points with no or null data                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| steppedLine               | `Boolean`                                         | If true, the line is shown as a stepped line and 'lineTension' will be ignored                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
 
 An example data object using these attributes is shown below.
+
 ```javascript
 var data = {
 	labels: ["January", "February", "March", "April", "May", "June", "July"],
@@ -73,10 +78,10 @@ var data = {
 			lineTension: 0.1,
 			backgroundColor: "rgba(75,192,192,0.4)",
 			borderColor: "rgba(75,192,192,1)",
-			borderCapStyle: 'butt',
+			borderCapStyle: "butt",
 			borderDash: [],
 			borderDashOffset: 0.0,
-			borderJoinStyle: 'miter',
+			borderJoinStyle: "miter",
 			pointBorderColor: "rgba(75,192,192,1)",
 			pointBackgroundColor: "#fff",
 			pointBorderWidth: 1,
@@ -88,8 +93,8 @@ var data = {
 			pointHitRadius: 10,
 			data: [65, 59, 80, 81, 56, 55, 40],
 			spanGaps: false,
-		}
-	]
+		},
+	],
 };
 ```
 
@@ -112,30 +117,38 @@ Scatter line charts can be created by changing the X axis to a linear axis. To u
 
 ```javascript
 var scatterChart = new Chart(ctx, {
-	type: 'line',
+	type: "line",
 	data: {
-		datasets: [{
-			label: 'Scatter Dataset',
-			data: [{
-				x: -10,
-				y: 0
-			}, {
-				x: 0,
-				y: 10
-			}, {
-				x: 10,
-				y: 5
-			}]
-		}]
+		datasets: [
+			{
+				label: "Scatter Dataset",
+				data: [
+					{
+						x: -10,
+						y: 0,
+					},
+					{
+						x: 0,
+						y: 10,
+					},
+					{
+						x: 10,
+						y: 5,
+					},
+				],
+			},
+		],
 	},
 	options: {
 		scales: {
-			xAxes: [{
-				type: 'linear',
-				position: 'bottom'
-			}]
-		}
-	}
+			xAxes: [
+				{
+					type: "linear",
+					position: "bottom",
+				},
+			],
+		},
+	},
 });
 ```
 
@@ -143,10 +156,10 @@ var scatterChart = new Chart(ctx, {
 
 These are the customisation options specific to Line charts. These options are merged with the [global chart configuration options](#chart-configuration-global-configuration), and form the options of the chart.
 
-Name | Type | Default | Description
---- | --- | --- | ---
-showLines | Boolean | true | If false, the lines between points are not drawn
-spanGaps | Boolean | false | If true, NaN data does not break the line 
+| Name      | Type    | Default | Description                                      |
+| --------- | ------- | ------- | ------------------------------------------------ |
+| showLines | Boolean | true    | If false, the lines between points are not drawn |
+| spanGaps  | Boolean | false   | If true, NaN data does not break the line        |
 
 You can override these for your `Chart` instance by passing a member `options` into the `Line` method.
 
@@ -154,15 +167,17 @@ For example, we could have a line chart display without an X axis by doing the f
 
 ```javascript
 new Chart(ctx, {
-	type: 'line',
+	type: "line",
 	data: data,
 	options: {
 		scales: {
-			xAxes: [{
-				display: false
-			}]
-		}
-	}
+			xAxes: [
+				{
+					display: false,
+				},
+			],
+		},
+	},
 });
 ```
 
@@ -174,14 +189,16 @@ Stacked area charts can be created by setting the Y axis to a stacked configurat
 
 ```javascript
 var stackedLine = new Chart(ctx, {
-	type: 'line',
+	type: "line",
 	data: data,
 	options: {
 		scales: {
-			yAxes: [{
-				stacked: true
-			}]
-		}
-	}
+			yAxes: [
+				{
+					stacked: true,
+				},
+			],
+		},
+	},
 });
 ```

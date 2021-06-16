@@ -12,14 +12,12 @@ A Go client library written and maintained by the **InfluxDB** team.
 This package provides convenience functions to read and write time series data.
 It uses the HTTP protocol to communicate with your **InfluxDB** cluster.
 
-
 ## Getting Started
 
 ### Connecting To Your Database
 
 Connecting to an **InfluxDB** database is straightforward. You will need a host
-name, a port and the cluster user credentials if applicable. The default port is
-8086. You can customize these settings to your specific installation via the
+name, a port and the cluster user credentials if applicable. The default port is 8086. You can customize these settings to your specific installation via the
 **InfluxDB** configuration file.
 
 Though not necessary for experimentation, you may want to create a new user
@@ -106,9 +104,9 @@ func main() {
 
 ### Inserting Data
 
-Time series data aka *points* are written to the database using batch inserts.
+Time series data aka _points_ are written to the database using batch inserts.
 The mechanism is to create one or more points and then create a batch aka
-*batch points* and write these to a given database and series. A series is a
+_batch points_ and write these to a given database and series. A series is a
 combination of a measurement (time/values) and a set of tags.
 
 In this sample we will create a batch of a 1,000 points. Each point has a time and
@@ -156,7 +154,6 @@ func writePoints(clnt client.Client) {
 	}
 }
 ```
-
 
 ### Querying Data
 

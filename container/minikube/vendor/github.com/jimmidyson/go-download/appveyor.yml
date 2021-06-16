@@ -4,7 +4,7 @@ pull_requests:
 platform: x64
 branches:
   only:
-  - master
+    - master
 
 clone_folder: c:\gopath\src\github.com\jimmidyson\go-download
 

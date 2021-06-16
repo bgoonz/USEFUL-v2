@@ -1,8 +1,8 @@
 const state = {
   loaded: false,
   data: {
-    results: []
-  }
+    results: [],
+  },
 };
 
 export default state;

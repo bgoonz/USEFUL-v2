@@ -3,6 +3,7 @@
 This includes the configuration for an alternative bootable ISO image meant to be used in conjection with minikube.
 
 It includes:
+
 - systemd as the init system
 - rkt
 - docker
@@ -11,7 +12,8 @@ It includes:
 
 ### Requirements
 
-* Linux
+- Linux
+
 ```
 sudo apt-get install build-essential gnupg2 p7zip-full git wget cpio python \
 	unzip bc gcc-multilib automake libtool locales

@@ -2,7 +2,5 @@
   "name": "js-ionic-v1",
   "app_id": "",
   "type": "ionic1",
-  "watchPatterns": [
-    "scss/**/*"
-  ]
+  "watchPatterns": ["scss/**/*"]
 }

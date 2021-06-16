@@ -1,12 +1,12 @@
-import {combineReducers} from 'redux';
-import {routerReducer} from 'react-router-redux';
+import { combineReducers } from "redux";
+import { routerReducer } from "react-router-redux";
 
 // Load component reducers
-import enternameReducer from './components/EnterName/Actions';
-import sosearchReducer from './components/SOSearch/Actions';
-import sohotReducer from './components/SOHot/Actions';
-import sohqReducer from './components/SOQHighlightable/Actions';
-import progressBarReducer from 'components/Layout/Actions';
+import enternameReducer from "./components/EnterName/Actions";
+import sosearchReducer from "./components/SOSearch/Actions";
+import sohotReducer from "./components/SOHot/Actions";
+import sohqReducer from "./components/SOQHighlightable/Actions";
+import progressBarReducer from "components/Layout/Actions";
 
 const reducer = combineReducers({
   entername: enternameReducer,
@@ -14,7 +14,7 @@ const reducer = combineReducers({
   sohot: sohotReducer,
   soqh: sohqReducer,
   progressBar: progressBarReducer,
-  routing: routerReducer
+  routing: routerReducer,
 });
 
 export default reducer;

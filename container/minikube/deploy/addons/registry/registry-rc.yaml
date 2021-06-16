@@ -17,9 +17,9 @@ spec:
         addonmanager.kubernetes.io/mode: Reconcile
     spec:
       containers:
-      - image: registry:2.6.1
-        imagePullPolicy: IfNotPresent
-        name: registry
-        ports:
-        - containerPort: 5000
-          protocol: TCP
+        - image: registry:2.6.1
+          imagePullPolicy: IfNotPresent
+          name: registry
+          ports:
+            - containerPort: 5000
+              protocol: TCP

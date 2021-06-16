@@ -1,24 +1,24 @@
-import React from 'react';
-import { connect } from 'react-redux';
-import Helmet from 'react-helmet';
+import React from "react";
+import { connect } from "react-redux";
+import Helmet from "react-helmet";
 
-import EnterName from '../EnterName/EnterName';
-import SOSearch from '../SOSearch/SOSearch';
+import EnterName from "../EnterName/EnterName";
+import SOSearch from "../SOSearch/SOSearch";
 
 class Example extends React.Component {
   static propTypes = {
-    name: React.PropTypes.string.isRequired
+    name: React.PropTypes.string.isRequired,
   };
 
   render() {
     const { name } = this.props;
 
     // Load local styles from component stylesheet
-    const styles = require('./Example.scss');
+    const styles = require("./Example.scss");
 
     let nameFlash;
-    if (name === '') {
-      nameFlash = 'there';
+    if (name === "") {
+      nameFlash = "there";
     } else {
       nameFlash = name;
     }
@@ -28,22 +28,22 @@ class Example extends React.Component {
       <div className="container-fluid">
         {/* You can comment like this */}
         {/* Setting title here */}
-        <Helmet title="Example App"/>
-        <div className={styles.flash + ' row'}>
+        <Helmet title="Example App" />
+        <div className={styles.flash + " row"}>
           {/* Use CSS Modules to use the local styles */}
-          <h2 className={styles.red} >Hi { nameFlash }!</h2>
+          <h2 className={styles.red}>Hi {nameFlash}!</h2>
           <p>You have successfully set up your Hasura app.</p>
         </div>
-        <EnterName/>
-        <hr/>
-        <SOSearch/>
+        <EnterName />
+        <hr />
+        <SOSearch />
       </div>
     );
   }
 }
 
 const mapStateToProps = (state) => {
-  return {...state.entername};
+  return { ...state.entername };
 };
 
 export default connect(mapStateToProps)(Example);

@@ -1,7 +1,8 @@
 # ObjectMapper-CN-Guide
-> 文档由Swift老司机活动中心负责翻译，欢迎关注[@SwiftOldDriver](http://weibo.com/6062089411)。翻译有问题可以到 [ObjectMapper-CN-Guide](https://github.com/SwiftOldDriver/ObjectMapper-CN-Guide) 提 PR。
 
-[ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) 是一个使用 Swift 编写的用于 model 对象（类和结构体）和 JSON  之间转换的框架。
+> 文档由 Swift 老司机活动中心负责翻译，欢迎关注[@SwiftOldDriver](http://weibo.com/6062089411)。翻译有问题可以到 [ObjectMapper-CN-Guide](https://github.com/SwiftOldDriver/ObjectMapper-CN-Guide) 提 PR。
+
+[ObjectMapper](https://github.com/Hearst-DD/ObjectMapper) 是一个使用 Swift 编写的用于 model 对象（类和结构体）和 JSON 之间转换的框架。
 
 - [特性](#特性)
 - [基础使用方法](#基础使用方法)
@@ -10,13 +11,14 @@
 - [继承](#继承)
 - [泛型对象](#泛型对象)
 - [映射时的上下文对象](#映射时的上下文对象)
-- [ObjectMapper + Alamofire](#objectmapper--alamofire) 
+- [ObjectMapper + Alamofire](#objectmapper--alamofire)
 - [ObjectMapper + Realm](#objectmapper--realm)
 - [待完成](#待完成)
 - [安装](#安装)
 
 # 特性:
-- 把 JSON 映射成对象 
+
+- 把 JSON 映射成对象
 - 把对象映射 JSON
 - 支持嵌套对象 (单独的成员变量、在数组或字典中都可以)
 - 在转换过程支持自定义规则
@@ -24,12 +26,16 @@
 - [Immutable support](#immutablemappable-protocol-beta) (目前还在 beta )
 
 # 基础使用方法
-为了支持映射，类或者结构体只需要实现```Mappable```协议。这个协议包含以下方法：
+
+为了支持映射，类或者结构体只需要实现`Mappable`协议。这个协议包含以下方法：
+
 ```swift
 init?(map: Map)
 mutating func mapping(map: Map)
 ```
-ObjectMapper使用自定义的```<-``` 运算符来声明成员变量和 JSON 的映射关系。
+
+ObjectMapper 使用自定义的`<-` 运算符来声明成员变量和 JSON 的映射关系。
+
 ```swift
 class User: Mappable {
     var username: String?
@@ -73,7 +79,7 @@ struct Temperature: Mappable {
 }
 ```
 
-一旦你的对象实现了 `Mappable`, ObjectMapper就可以让你轻松的实现和 JSON 之间的转换。
+一旦你的对象实现了 `Mappable`, ObjectMapper 就可以让你轻松的实现和 JSON 之间的转换。
 
 把 JSON 字符串转成 model 对象：
 
@@ -96,7 +102,7 @@ let user = Mapper<User>().map(JSONString: JSONString)
 let JSONString = Mapper().toJSONString(user, prettyPrint: true)
 ```
 
-ObjectMapper支持以下的类型映射到对象中：
+ObjectMapper 支持以下的类型映射到对象中：
 
 - `Int`
 - `Bool`
@@ -109,7 +115,7 @@ ObjectMapper支持以下的类型映射到对象中：
 - `Object<T: Mappable>`
 - `Array<T: Mappable>`
 - `Array<Array<T: Mappable>>`
-- `Set<T: Mappable>` 
+- `Set<T: Mappable>`
 - `Dictionary<String, T: Mappable>`
 - `Dictionary<String, Array<T: Mappable>>`
 - 以上所有的 Optional 类型
@@ -117,11 +123,13 @@ ObjectMapper支持以下的类型映射到对象中：
 
 ## `Mappable` 协议
 
-#### `mutating func mapping(map: Map)` 
+#### `mutating func mapping(map: Map)`
+
 所有的映射最后都会调用到这个函数。当解析 JSON 时，这个函数会在对象创建成功后被执行。当生成 JSON 时就只有这个函数会被对象调用。
 
-#### `init?(map: Map)` 
-这个可失败的初始化函数是 ObjectMapper 创建对象的时候使用的。开发者可以通过这个函数在映射前校验 JSON 。如果在这个方法里返回 nil 就不会执行 `mapping` 函数。可以通过传入的保存着 JSON 的  `Map` 对象进行校验：
+#### `init?(map: Map)`
+
+这个可失败的初始化函数是 ObjectMapper 创建对象的时候使用的。开发者可以通过这个函数在映射前校验 JSON 。如果在这个方法里返回 nil 就不会执行 `mapping` 函数。可以通过传入的保存着 JSON 的 `Map` 对象进行校验：
 
 ```swift
 required init?(map: Map){
@@ -133,14 +141,16 @@ required init?(map: Map){
 ```
 
 ## `StaticMappable` 协议
+
 `StaticMappable` 是 `Mappable` 之外的另一种选择。 这个协议可以让开发者通过一个静态函数初始化对象而不是通过 `init?(map: Map)`。
 
 注意: `StaticMappable` 和 `Mappable` 都继承了 `BaseMappable` 协议。 `BaseMappable` 协议声明了 `mapping(map: Map)` 函数。
 
-#### `static func objectForMapping(map: Map) -> BaseMappable?` 
+#### `static func objectForMapping(map: Map) -> BaseMappable?`
+
 ObjectMapper 使用这个函数获取对象后进行映射。开发者需要在这个函数里返回一个实现 `BaseMappable` 对象的实例。这个函数也可以用于：
 
-- 在对象进行映射前校验 JSON 
+- 在对象进行映射前校验 JSON
 - 提供一个缓存过的对象用于映射
 - 返回另外一种类型的对象（当然是必须实现了 BaseMappable）用于映射。比如你可能通过检查 JSON 推断出用于映射的对象 ([看这个例子](https://github.com/Hearst-DD/ObjectMapper/blob/master/ObjectMapperTests/ClassClusterTests.swift#L62))。
 
@@ -240,9 +250,9 @@ User(JSONString: JSONString)
 当发生下列情况时初始化函数会抛出一个错误：
 
 - `Map` 根据提供的键名获取不到对应值
-- `Map` 使用 `Transform` 后没有得到值 
+- `Map` 使用 `Transform` 后没有得到值
 
-`ImmutableMappable` 使用 `Map.value(_:using:)` 方法从  `Map` 中获取值。因为可能抛出异常，这个方法在使用时需要使用  `try` 关键字。 `Optional` 的属性可以简单的用  `try?` 处理。
+`ImmutableMappable` 使用 `Map.value(_:using:)` 方法从 `Map` 中获取值。因为可能抛出异常，这个方法在使用时需要使用 `try` 关键字。 `Optional` 的属性可以简单的用 `try?` 处理。
 
 ```swift
 init(map: Map) throws {
@@ -265,6 +275,7 @@ mutating func mapping(map: Map) {
     posts     >>> map["posts"]
 }
 ```
+
 # 轻松映射嵌套对象
 
 ObjectMapper 支持使用点语法来轻松实现嵌套对象的映射。比如有如下的 JSON 字符串：
@@ -275,6 +286,7 @@ ObjectMapper 支持使用点语法来轻松实现嵌套对象的映射。比如�
      "value" : 31
 }
 ```
+
 你可以通过这种写法直接访问到嵌套对象：
 
 ```swift
@@ -282,11 +294,13 @@ func mapping(map: Map) {
     distance <- map["distance.value"]
 }
 ```
+
 嵌套的键名也支持访问数组中的值。如果有一个返回的 JSON 是一个包含 distance 的数组，可以通过这种写法访问：
 
 ```
 distance <- map["distances.0.value"]
 ```
+
 如果你的键名刚好含有 `.` 符号，你需要特别声明关闭上面提到的获取嵌套对象功能：
 
 ```swift
@@ -294,12 +308,15 @@ func mapping(map: Map) {
     identifier <- map["app.identifier", nested: false]
 }
 ```
+
 如果刚好有嵌套的对象的键名还有 `.` ,可以在中间加入一个自定义的分割符（[#629](https://github.com/Hearst-DD/ObjectMapper/pull/629)）:
+
 ```swift
 func mapping(map: Map) {
     appName <- map["com.myapp.info->com.myapp.name", delimiter: "->"]
 }
 ```
+
 这种情况的 JSON 是这样的：
 
 ```json
@@ -309,14 +326,16 @@ func mapping(map: Map) {
 ```
 
 # 自定义转换规则
-ObjectMapper 也支持在映射时自定义转换规则。如果要使用自定义转换，创建一个 tuple（元祖）包含 ```map["field_name"]``` 和你要使用的变换放在 ```<-``` 的右边：
+
+ObjectMapper 也支持在映射时自定义转换规则。如果要使用自定义转换，创建一个 tuple（元祖）包含 `map["field_name"]` 和你要使用的变换放在 `<-` 的右边：
 
 ```swift
 birthday <- (map["birthday"], DateTransform())
 ```
+
 当解析 JSON 时上面的转换会把 JSON 里面的 Int 值转成一个 NSDate ，如果是对象转为 JSON 时，则会把 NSDate 对象转成 Int 值。
 
-只要实现```TransformType``` 协议就可以轻松的创建自定义的转换规则：
+只要实现`TransformType` 协议就可以轻松的创建自定义的转换规则：
 
 ```swift
 public protocol TransformType {
@@ -329,12 +348,13 @@ public protocol TransformType {
 ```
 
 ### TransformOf
-大多数情况下你都可以使用框架提供的转换类 ```TransformOf``` 来快速的实现一个期望的转换。 ```TransformOf``` 的初始化需要两个类型和两个闭包。两个类型声明了转换的目标类型和源类型，闭包则实现具体转换逻辑。
 
-举个例子，如果你想要把一个 JSON 字符串转成 Int ，你可以像这样使用 ```TransformOf``` ：
+大多数情况下你都可以使用框架提供的转换类 `TransformOf` 来快速的实现一个期望的转换。 `TransformOf` 的初始化需要两个类型和两个闭包。两个类型声明了转换的目标类型和源类型，闭包则实现具体转换逻辑。
+
+举个例子，如果你想要把一个 JSON 字符串转成 Int ，你可以像这样使用 `TransformOf` ：
 
 ```swift
-let transform = TransformOf<Int, String>(fromJSON: { (value: String?) -> Int? in 
+let transform = TransformOf<Int, String>(fromJSON: { (value: String?) -> Int? in
     // 把值从 String? 转成 Int?
     return Int(value!)
 }, toJSON: { (value: Int?) -> String? in
@@ -347,19 +367,21 @@ let transform = TransformOf<Int, String>(fromJSON: { (value: String?) -> Int? in
 
 id <- (map["id"], transform)
 ```
+
 这是一种更省略的写法：
 
 ```swift
 id <- (map["id"], TransformOf<Int, String>(fromJSON: { Int($0!) }, toJSON: { $0.map { String($0) } }))
 ```
+
 # 继承
 
-实现了  ```Mappable``` 协议的类可以容易的被继承。当继承一个 mappable 的类时，使用这样的结构：
+实现了 `Mappable` 协议的类可以容易的被继承。当继承一个 mappable 的类时，使用这样的结构：
 
 ```swift
 class Base: Mappable {
 	var base: String?
-	
+
 	required init?(map: Map) {
 
 	}
@@ -378,7 +400,7 @@ class Subclass: Base {
 
 	override func mapping(map: Map) {
 		super.mapping(map)
-		
+
 		sub <- map["sub"]
 	}
 }
@@ -405,9 +427,10 @@ class Result<T: Mappable>: Mappable {
 
 let result = Mapper<Result<User>>().map(JSON)
 ```
+
 # 映射时的上下文对象
 
-`Map` 是在映射时传入的对象，带有一个 optional  `MapContext` 对象，开发者可以通过使用这个对象在映射时传入一些信息。
+`Map` 是在映射时传入的对象，带有一个 optional `MapContext` 对象，开发者可以通过使用这个对象在映射时传入一些信息。
 
 为了使用这个特性，需要先创建一个对象实现了 `MapContext` 协议（这个协议是空的），然后在初始化时传入 `Mapper` 中。
 
@@ -418,11 +441,11 @@ struct Context: MapContext {
 
 class User: Mappable {
 	var name: String?
-	
+
 	required init?(map: Map){
-	
+
 	}
-	
+
 	func mapping(map: Map){
 		if let context = map.context as? Context {
 			// 获取到额外的信息
@@ -436,8 +459,7 @@ let user = Mapper<User>(context: context).map(JSONString)
 
 # ObjectMapper + Alamofire
 
-如果网络层你使用的是  [Alamofire](https://github.com/Alamofire/Alamofire) ，并且你希望把返回的结果转换成 Swift 对象，你可以使用 [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper) 。这是一个使用 ObjectMapper 实现的把返回的 JSON 自动转成 Swift 对象的 Alamofire 的扩展。 
-
+如果网络层你使用的是 [Alamofire](https://github.com/Alamofire/Alamofire) ，并且你希望把返回的结果转换成 Swift 对象，你可以使用 [AlamofireObjectMapper](https://github.com/tristanhimmelman/AlamofireObjectMapper) 。这是一个使用 ObjectMapper 实现的把返回的 JSON 自动转成 Swift 对象的 Alamofire 的扩展。
 
 # ObjectMapper + Realm
 
@@ -459,14 +481,17 @@ class Model: Object, Mappable {
 
 如果你想要序列化相关联的 RealmObject，你可以使用 [ObjectMapper+Realm](https://github.com/jakenberg/ObjectMapper-Realm)。这是一个简单的 Realm 扩展，用于把任意的 JSON 序列化成 Realm 的类（ealm's List class。）
 
-注意：使用 ObjectMappers 的 `toJSON` 函数来生成 JSON 字符串只在 Realm 的写事务中有效（write transaction）。这是因为 ObjectMapper 在解析和生成时在映射函数（ `<-` ）中使用  `inout` 作为标记（ flag ）。Realm 会检测到标记并且强制要求 `toJSON` 函数只能在一个写的事务中调用，即使这个对象并没有被修改。
+注意：使用 ObjectMappers 的 `toJSON` 函数来生成 JSON 字符串只在 Realm 的写事务中有效（write transaction）。这是因为 ObjectMapper 在解析和生成时在映射函数（ `<-` ）中使用 `inout` 作为标记（ flag ）。Realm 会检测到标记并且强制要求 `toJSON` 函数只能在一个写的事务中调用，即使这个对象并没有被修改。
 
 # 待完成
+
 - 改善错误的处理。可能使用 `throws` 来处理。
 - 相关类的文档完善
 
 # 安装
+
 ### Cocoapods
+
 如果你的项目使用 [CocoaPods 0.36 及以上](http://blog.cocoapods.org/Pod-Authors-Guide-to-CocoaPods-Frameworks/) 的版本，你可以把下面内容添加到在 `Podfile` 中，将 ObjectMapper 添加到你的项目中:
 
 ```ruby
@@ -474,29 +499,29 @@ pod 'ObjectMapper', '~> 2.2'
 ```
 
 ### Carthage
-如果你的项目使用  [Carthage](https://github.com/Carthage/Carthage) ，你可以把下面的内容添加到 `Cartfile` 中，将 ObjectMapper 的依赖到你的项目中：
+
+如果你的项目使用 [Carthage](https://github.com/Carthage/Carthage) ，你可以把下面的内容添加到 `Cartfile` 中，将 ObjectMapper 的依赖到你的项目中：
 
 ```
 github "Hearst-DD/ObjectMapper" ~> 2.2
 ```
 
 ### Swift Package Manager
-如果你的项目使用  [Swift Package Manager](https://swift.org/package-manager/) ，那么你可以把下面内容添加到 `Package.swift` 中的 `dependencies` 数组中，将 ObjectMapper 的依赖到你的项目中：
+
+如果你的项目使用 [Swift Package Manager](https://swift.org/package-manager/) ，那么你可以把下面内容添加到 `Package.swift` 中的 `dependencies` 数组中，将 ObjectMapper 的依赖到你的项目中：
 
 ```swift
 .Package(url: "https://github.com/Hearst-DD/ObjectMapper.git", majorVersion: 2, minor: 2),
 ```
 
-
 ### Submodule
+
 此外，ObjectMapper 也可以作为一个 submodule 添加到项目中：
 
 1. 打开终端，使用 `cd` 命令进入项目文件的根目录下，然后在终端中输入 `git submodule add https://github.com/Hearst-DD/ObjectMapper.git` ，把 ObjectMapper 作为项目的一个 [submodule](http://git-scm.com/docs/git-submodule) 添加进来。
 2. 打开 `ObjectMapper` 文件，并将 `ObjectMapper.xcodeproj` 拖进你 app 项目的文件导航中。
-3. 在 Xcode 中，文件导航中点击蓝色项目图标进入到 target 配置界面，在侧边栏的 "TARGETS" 下选择主工程对应的target。
+3. 在 Xcode 中，文件导航中点击蓝色项目图标进入到 target 配置界面，在侧边栏的 "TARGETS" 下选择主工程对应的 target。
 4. 确保 `ObjectMapper.framework` 的部署版本( deployment target )和主工程的部署版本保持一致。
 5. 在配置界面的顶部选项栏中，打开 "Build Phases" 面板。
 6. 展开 "Target Dependencies" 组，并添加 `ObjectMapper.framework` 。
-7. 点击面板左上角的 `+` 按钮,选择 "New Copy Files Phase"。将这个阶段重命名为 "Copy Frameworks"，设置  "Destination" 为 "Frameworks"，最后添加 `ObjectMapper.framework` 。  
-
-
+7. 点击面板左上角的 `+` 按钮,选择 "New Copy Files Phase"。将这个阶段重命名为 "Copy Frameworks"，设置 "Destination" 为 "Frameworks"，最后添加 `ObjectMapper.framework` 。

@@ -11,7 +11,7 @@ var QUERY_SEPARATOR = /\?.*/;
 //
 // Helper function to turn flatten an array.
 //
-function _flatten (arr) {
+function _flatten(arr) {
   var flat = [];
 
   for (var i = 0, n = arr.length; i < n; i++) {
@@ -25,7 +25,7 @@ function _flatten (arr) {
 // Helper function for wrapping Array.every
 // in the browser.
 //
-function _every (arr, iterator) {
+function _every(arr, iterator) {
   for (var i = 0; i < arr.length; i += 1) {
     if (iterator(arr[i], i, arr) === false) {
       return;
@@ -37,7 +37,7 @@ function _every (arr, iterator) {
 // Helper function for performing an asynchronous every
 // in series in the browser and the server.
 //
-function _asyncEverySeries (arr, iterator, callback) {
+function _asyncEverySeries(arr, iterator, callback) {
   if (!arr.length) {
     return callback();
   }
@@ -48,13 +48,11 @@ function _asyncEverySeries (arr, iterator, callback) {
       if (err || err === false) {
         callback(err);
         callback = function () {};
-      }
-      else {
+      } else {
         completed += 1;
         if (completed === arr.length) {
           callback();
-        }
-        else {
+        } else {
           iterate();
         }
       }
@@ -79,13 +77,13 @@ function paramifyString(str, params, mod) {
   for (var param in params) {
     if (params.hasOwnProperty(param)) {
       mod = params[param](str);
-      if (mod !== str) { break; }
+      if (mod !== str) {
+        break;
+      }
     }
   }
 
-  return mod === str
-    ? '([._a-zA-Z0-9-%()]+)'
-    : mod;
+  return mod === str ? "([._a-zA-Z0-9-%()]+)" : mod;
 }
 
 //
@@ -94,34 +92,34 @@ function paramifyString(str, params, mod) {
 //
 function regifyString(str, params) {
   var matches,
-      last = 0,
-      out = '';
+    last = 0,
+    out = "";
 
-  while (matches = str.substr(last).match(/[^\w\d\- %@&]*\*[^\w\d\- %@&]*/)) {
+  while ((matches = str.substr(last).match(/[^\w\d\- %@&]*\*[^\w\d\- %@&]*/))) {
     last = matches.index + matches[0].length;
-    matches[0] = matches[0].replace(/^\*/, '([_\.\(\)!\\ %@&a-zA-Z0-9-]+)');
+    matches[0] = matches[0].replace(/^\*/, "([_.()!\\ %@&a-zA-Z0-9-]+)");
     out += str.substr(0, matches.index) + matches[0];
   }
 
   str = out += str.substr(last);
 
-   var captures = str.match(/:([^\/]+)/ig),
-       capture,
-       length;
+  var captures = str.match(/:([^\/]+)/gi),
+    capture,
+    length;
 
-   if (captures) {
-     length = captures.length;
-     for (var i = 0; i < length; i++) {
-       capture = captures[i];
-       if ( capture.slice(0, 2) === "::" ) {
-           // This parameter was escaped and should be left in the url as a literal
-           // Remove the escaping : from the beginning
-           str = capture.slice( 1 );
-       } else {
-           str = str.replace(capture, paramifyString(capture, params));
+  if (captures) {
+    length = captures.length;
+    for (var i = 0; i < length; i++) {
+      capture = captures[i];
+      if (capture.slice(0, 2) === "::") {
+        // This parameter was escaped and should be left in the url as a literal
+        // Remove the escaping : from the beginning
+        str = capture.slice(1);
+      } else {
+        str = str.replace(capture, paramifyString(capture, params));
+      }
+    }
   }
-     }
-   }
 
   return str;
 }
@@ -131,19 +129,20 @@ function regifyString(str, params) {
 //
 function terminator(routes, delimiter, start, stop) {
   var last = 0,
-      left = 0,
-      right = 0,
-      start = (start || '(').toString(),
-      stop = (stop || ')').toString(),
-      i;
+    left = 0,
+    right = 0,
+    start = (start || "(").toString(),
+    stop = (stop || ")").toString(),
+    i;
 
   for (i = 0; i < routes.length; i++) {
     var chunk = routes[i];
 
-    if ((chunk.indexOf(start, last) > chunk.indexOf(stop, last)) ||
-        (~chunk.indexOf(start, last) && !~chunk.indexOf(stop, last)) ||
-        (!~chunk.indexOf(start, last) && ~chunk.indexOf(stop, last))) {
-
+    if (
+      chunk.indexOf(start, last) > chunk.indexOf(stop, last) ||
+      (~chunk.indexOf(start, last) && !~chunk.indexOf(stop, last)) ||
+      (!~chunk.indexOf(start, last) && ~chunk.indexOf(stop, last))
+    ) {
       left = chunk.indexOf(start, last);
       right = chunk.indexOf(stop, last);
 
@@ -154,8 +153,7 @@ function terminator(routes, delimiter, start, stop) {
 
       last = (right > left ? right : left) + 1;
       i = 0;
-    }
-    else {
+    } else {
       last = 0;
     }
   }
@@ -163,24 +161,22 @@ function terminator(routes, delimiter, start, stop) {
   return routes;
 }
 
-
-
 //
 // ### function Router (routes)
 // #### @routes {Object} **Optional** Routing table for this instance.
 // Constuctor function for the Router object responsible for building
 // and dispatching from a given routing table.
 //
-var Router = exports.Router = function (routes) {
-  this.params   = {};
-  this.routes   = {};
-  this.methods  = ['on', 'after', 'before'];
-  this.scope    = [];
+var Router = (exports.Router = function (routes) {
+  this.params = {};
+  this.routes = {};
+  this.methods = ["on", "after", "before"];
+  this.scope = [];
   this._methods = {};
 
   this.configure();
   this.mount(routes || {});
-};
+});
 
 //
 // ### function configure (options)
@@ -194,17 +190,22 @@ Router.prototype.configure = function (options) {
     this._methods[this.methods[i]] = true;
   }
 
-  this.recurse   = typeof options.recurse === 'undefined' ? this.recurse || false : options.recurse;
-  this.async     = options.async     || false;
-  this.delimiter = options.delimiter || '\/';
-  this.strict    = typeof options.strict === 'undefined' ? true : options.strict;
-  this.notfound  = options.notfound;
-  this.resource  = options.resource;
+  this.recurse =
+    typeof options.recurse === "undefined"
+      ? this.recurse || false
+      : options.recurse;
+  this.async = options.async || false;
+  this.delimiter = options.delimiter || "/";
+  this.strict = typeof options.strict === "undefined" ? true : options.strict;
+  this.notfound = options.notfound;
+  this.resource = options.resource;
 
   // Client only, but browser.js does not include a super implementation
-  this.history     = (options.html5history && this.historySupport) || false;
-  this.run_in_init = (this.history === true && options.run_handler_in_init !== false);
-  this.convert_hash_in_init = (this.history === true && options.convert_hash_in_init !== false);
+  this.history = (options.html5history && this.historySupport) || false;
+  this.run_in_init =
+    this.history === true && options.run_handler_in_init !== false;
+  this.convert_hash_in_init =
+    this.history === true && options.convert_hash_in_init !== false;
 
   //
   // TODO: Global once
@@ -212,7 +213,7 @@ Router.prototype.configure = function (options) {
   this.every = {
     after: options.after || null,
     before: options.before || null,
-    on: options.on || null
+    on: options.on || null,
   };
 
   return this;
@@ -228,11 +229,11 @@ Router.prototype.configure = function (options) {
 // you wish to be more DRY.
 //
 Router.prototype.param = function (token, matcher) {
-  if (token[0] !== ':') {
-    token = ':' + token;
+  if (token[0] !== ":") {
+    token = ":" + token;
   }
 
-  var compiled = new RegExp(token, 'g');
+  var compiled = new RegExp(token, "g");
   this.params[token] = function (str) {
     return str.replace(compiled, matcher.source || matcher);
   };
@@ -250,24 +251,24 @@ Router.prototype.param = function (token, matcher) {
 Router.prototype.on = Router.prototype.route = function (method, path, route) {
   var self = this;
 
-  if (!route && typeof path == 'function') {
+  if (!route && typeof path == "function") {
     //
     // If only two arguments are supplied then assume this
     // `route` was meant to be a generic `on`.
     //
     route = path;
     path = method;
-    method = 'on';
+    method = "on";
   }
 
   if (Array.isArray(path)) {
-    return path.forEach(function(p) {
+    return path.forEach(function (p) {
       self.on(method, p, route);
     });
   }
 
   if (path.source) {
-    path = path.source.replace(/\\\//ig, '/');
+    path = path.source.replace(/\\\//gi, "/");
   }
 
   if (Array.isArray(method)) {
@@ -297,10 +298,10 @@ Router.prototype.on = Router.prototype.route = function (method, path, route) {
 //
 Router.prototype.path = function (path, routesFn) {
   var self = this,
-      length = this.scope.length;
+    length = this.scope.length;
 
   if (path.source) {
-    path = path.source.replace(/\\\//ig, '/');
+    path = path.source.replace(/\\\//gi, "/");
   }
 
   //
@@ -329,21 +330,26 @@ Router.prototype.path = function (path, routesFn) {
 //
 Router.prototype.dispatch = function (method, path, callback) {
   var self = this,
-      fns = this.traverse(method, path.replace(QUERY_SEPARATOR, ''), this.routes, ''),
-      invoked = this._invoked,
-      after;
+    fns = this.traverse(
+      method,
+      path.replace(QUERY_SEPARATOR, ""),
+      this.routes,
+      ""
+    ),
+    invoked = this._invoked,
+    after;
 
   this._invoked = true;
   if (!fns || fns.length === 0) {
     this.last = [];
-    if (typeof this.notfound === 'function') {
+    if (typeof this.notfound === "function") {
       this.invoke([this.notfound], { method: method, path: path }, callback);
     }
 
     return false;
   }
 
-  if (this.recurse === 'forward') {
+  if (this.recurse === "forward") {
     fns = fns.reverse();
   }
 
@@ -362,15 +368,15 @@ Router.prototype.dispatch = function (method, path, callback) {
   // 4. Global on (if any)
   // 5. Matched functions from routing table (`['before', 'on'], ['before', 'on`], ...]`)
   //
-  after = this.every && this.every.after
-    ? [this.every.after].concat(this.last)
-    : [this.last];
+  after =
+    this.every && this.every.after
+      ? [this.every.after].concat(this.last)
+      : [this.last];
 
   if (after && after.length > 0 && invoked) {
     if (this.async) {
       this.invoke(after, this, updateAndInvoke);
-    }
-    else {
+    } else {
       this.invoke(after, this);
       updateAndInvoke();
     }
@@ -393,9 +399,10 @@ Router.prototype.dispatch = function (method, path, callback) {
 // 3. Matched functions from routing table (`['before', 'on'], ['before', 'on`], ...]`)
 //
 Router.prototype.runlist = function (fns) {
-  var runlist = this.every && this.every.before
-    ? [this.every.before].concat(_flatten(fns))
-    : _flatten(fns);
+  var runlist =
+    this.every && this.every.before
+      ? [this.every.before].concat(_flatten(fns))
+      : _flatten(fns);
 
   if (this.every && this.every.on) {
     runlist.push(this.every.on);
@@ -420,11 +427,10 @@ Router.prototype.invoke = function (fns, thisArg, callback) {
 
   var apply;
   if (this.async) {
-    apply = function(fn, next){
+    apply = function (fn, next) {
       if (Array.isArray(fn)) {
         return _asyncEverySeries(fn, apply, next);
-      }
-      else if (typeof fn == 'function') {
+      } else if (typeof fn == "function") {
         fn.apply(thisArg, (fns.captures || []).concat(next));
       }
     };
@@ -438,19 +444,16 @@ Router.prototype.invoke = function (fns, thisArg, callback) {
         callback.apply(thisArg, arguments);
       }
     });
-  }
-  else {
-    apply = function(fn){
+  } else {
+    apply = function (fn) {
       if (Array.isArray(fn)) {
         return _every(fn, apply);
-      }
-      else if (typeof fn === 'function') {
+      } else if (typeof fn === "function") {
         return fn.apply(thisArg, fns.captures || []);
-      }
-      else if (typeof fn === 'string' && self.resource) {
+      } else if (typeof fn === "string" && self.resource) {
         self.resource[fn].apply(thisArg, fns.captures || []);
       }
-    }
+    };
     _every(fns, apply);
   }
 };
@@ -468,11 +471,11 @@ Router.prototype.invoke = function (fns, thisArg, callback) {
 //
 Router.prototype.traverse = function (method, path, routes, regexp, filter) {
   var fns = [],
-      current,
-      exact,
-      match,
-      next,
-      that;
+    current,
+    exact,
+    match,
+    next,
+    that;
 
   function filterRoutes(routes) {
     if (!filter) {
@@ -494,8 +497,7 @@ Router.prototype.traverse = function (method, path, routes, regexp, filter) {
           if (fns[i].length === 0) {
             fns.splice(i, 1);
           }
-        }
-        else {
+        } else {
           if (!filter(fns[i])) {
             fns.splice(i, 1);
           }
@@ -538,8 +540,13 @@ Router.prototype.traverse = function (method, path, routes, regexp, filter) {
     // are actual methods (e.g. `on`, `before`, etc), but
     // which are not actual nested route (i.e. JSON literals).
     //
-    if (routes.hasOwnProperty(r) && (!this._methods[r] ||
-      this._methods[r] && typeof routes[r] === 'object' && !Array.isArray(routes[r]))) {
+    if (
+      routes.hasOwnProperty(r) &&
+      (!this._methods[r] ||
+        (this._methods[r] &&
+          typeof routes[r] === "object" &&
+          !Array.isArray(routes[r])))
+    ) {
       //
       // Attempt to make an exact match for the current route
       // which is built from the `regexp` that has been built
@@ -548,10 +555,10 @@ Router.prototype.traverse = function (method, path, routes, regexp, filter) {
       current = exact = regexp + this.delimiter + r;
 
       if (!this.strict) {
-        exact += '[' + this.delimiter + ']?';
+        exact += "[" + this.delimiter + "]?";
       }
 
-      match = path.match(new RegExp('^' + exact));
+      match = path.match(new RegExp("^" + exact));
 
       if (!match) {
         //
@@ -609,8 +616,8 @@ Router.prototype.traverse = function (method, path, routes, regexp, filter) {
           next.after = next.after.concat([routes[r].after].filter(Boolean));
 
           if (routes === this.routes) {
-            fns.push([routes['before'], routes['on']].filter(Boolean));
-            next.after = next.after.concat([routes['after']].filter(Boolean));
+            fns.push([routes["before"], routes["on"]].filter(Boolean));
+            next.after = next.after.concat([routes["after"]].filter(Boolean));
           }
         }
 
@@ -642,11 +649,7 @@ Router.prototype.traverse = function (method, path, routes, regexp, filter) {
 // If no context is provided then `this.routes` will be used.
 //
 Router.prototype.insert = function (method, path, route, parent) {
-  var methodType,
-      parentType,
-      isArray,
-      nested,
-      part;
+  var methodType, parentType, isArray, nested, part;
 
   path = path.filter(function (p) {
     return p && p.length > 0;
@@ -678,13 +681,13 @@ Router.prototype.insert = function (method, path, route, parent) {
     methodType = typeof parent[method];
 
     switch (methodType) {
-      case 'function':
+      case "function":
         parent[method] = [parent[method], route];
         return;
-      case 'object':
+      case "object":
         parent[method].push(route);
         return;
-      case 'undefined':
+      case "undefined":
         parent[method] = route;
         return;
     }
@@ -700,31 +703,29 @@ Router.prototype.insert = function (method, path, route, parent) {
   parentType = typeof parent[part];
   isArray = Array.isArray(parent[part]);
 
-  if (parent[part] && !isArray && parentType == 'object') {
+  if (parent[part] && !isArray && parentType == "object") {
     methodType = typeof parent[part][method];
 
     switch (methodType) {
-      case 'function':
+      case "function":
         parent[part][method] = [parent[part][method], route];
         return;
-      case 'object':
+      case "object":
         parent[part][method].push(route);
         return;
-      case 'undefined':
+      case "undefined":
         parent[part][method] = route;
         return;
     }
-  }
-  else if (parentType == 'undefined') {
+  } else if (parentType == "undefined") {
     nested = {};
     nested[method] = route;
     parent[part] = nested;
     return;
   }
 
-  throw new Error('Invalid route context: ' + parentType);
+  throw new Error("Invalid route context: " + parentType);
 };
-
 
 //
 // ### function extend (methods)
@@ -732,17 +733,15 @@ Router.prototype.insert = function (method, path, route, parent) {
 // Extends this instance with simple helper methods to `this.on`
 // for each of the specified `methods`
 //
-Router.prototype.extend = function(methods) {
+Router.prototype.extend = function (methods) {
   var self = this,
-      len = methods.length,
-      i;
+    len = methods.length,
+    i;
 
   function extend(method) {
     self._methods[method] = true;
     self[method] = function () {
-      var extra = arguments.length === 1
-        ? [method, '']
-        : [method];
+      var extra = arguments.length === 1 ? [method, ""] : [method];
 
       self.on.apply(self, extra.concat(Array.prototype.slice.call(arguments)));
     };
@@ -766,7 +765,7 @@ Router.prototype.extend = function(methods) {
 //
 //    { 'foo': 'bar': function foobar() {} } }
 //
-Router.prototype.mount = function(routes, path) {
+Router.prototype.mount = function (routes, path) {
   if (!routes || typeof routes !== "object" || Array.isArray(routes)) {
     return;
   }
@@ -779,17 +778,19 @@ Router.prototype.mount = function(routes, path) {
 
   function insertOrMount(route, local) {
     var rename = route,
-        parts = route.split(self.delimiter),
-        routeType = typeof routes[route],
-        isRoute = parts[0] === "" || !self._methods[parts[0]],
-        event = isRoute ? "on" : rename;
+      parts = route.split(self.delimiter),
+      routeType = typeof routes[route],
+      isRoute = parts[0] === "" || !self._methods[parts[0]],
+      event = isRoute ? "on" : rename;
 
     if (isRoute) {
-      rename = rename.slice((rename.match(new RegExp('^' + self.delimiter)) || [''])[0].length);
+      rename = rename.slice(
+        (rename.match(new RegExp("^" + self.delimiter)) || [""])[0].length
+      );
       parts.shift();
     }
 
-    if (isRoute && routeType === 'object' && !Array.isArray(routes[route])) {
+    if (isRoute && routeType === "object" && !Array.isArray(routes[route])) {
       local = local.concat(parts);
       self.mount(routes[route], local);
       return;
@@ -809,4 +810,3 @@ Router.prototype.mount = function(routes, path) {
     }
   }
 };
-

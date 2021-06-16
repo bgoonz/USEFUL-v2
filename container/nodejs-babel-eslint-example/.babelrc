@@ -9,9 +9,7 @@
 
   "env": {
     "development": {
-      "plugins": [
-        "typecheck"
-      ]
+      "plugins": ["typecheck"]
     }
   }
 }

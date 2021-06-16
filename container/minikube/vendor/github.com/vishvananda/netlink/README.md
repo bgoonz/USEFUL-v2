@@ -1,4 +1,4 @@
-# netlink - netlink library for go #
+# netlink - netlink library for go
 
 [![Build Status](https://travis-ci.org/vishvananda/netlink.png?branch=master)](https://travis-ci.org/vishvananda/netlink) [![GoDoc](https://godoc.org/github.com/vishvananda/netlink?status.svg)](https://godoc.org/github.com/vishvananda/netlink)
 
@@ -16,7 +16,7 @@ netlink functionality in
 heavily rewritten to improve testability, performance, and to add new
 functionality like ipsec xfrm handling.
 
-## Local Build and Test ##
+## Local Build and Test
 
 You can use go get command:
 
@@ -30,7 +30,7 @@ Testing (requires root):
 
     sudo -E go test github.com/vishvananda/netlink
 
-## Examples ##
+## Examples
 
 Add a new bridge and add eth1 into it:
 
@@ -52,6 +52,7 @@ func main() {
 }
 
 ```
+
 Note `NewLinkAttrs` constructor, it sets default values in structure. For now
 it sets only `TxQLen` to `-1`, so kernel will set default by itself. If you're
 using simple initialization(`LinkAttrs{Name: "foo"}`) `TxQLen` will be set to
@@ -75,7 +76,7 @@ func main() {
 
 ```
 
-## Future Work ##
+## Future Work
 
 Many pieces of netlink are not yet fully supported in the high-level
 interface. Aspects of virtually all of the high-level objects don't exist.

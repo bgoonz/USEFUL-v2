@@ -6,10 +6,11 @@
 This package extends the [json.Decoder](https://golang.org/pkg/encoding/json/#Decoder) to support navigating a stream of JSON tokens. You should be able to use this extended Decoder places where a json.Decoder would have been used.
 
 This Decoder has the following enhancements...
- * The [Scan](https://godoc.org/github.com/exponent-io/jsonpath/#Decoder.Scan) method supports scanning a JSON stream while extracting particular values along the way using [PathActions](https://godoc.org/github.com/exponent-io/jsonpath#PathActions).
- * The [SeekTo](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.SeekTo) method supports seeking forward in a JSON token stream to a particular path.
- * The [Path](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.Path) method returns the path of the most recently parsed token.
- * The [Token](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.Token) method has been modified to distinguish between strings that are object keys and strings that are values. Object key strings are returned as the [KeyString](https://godoc.org/github.com/exponent-io/jsonpath#KeyString) type rather than a native string.
+
+- The [Scan](https://godoc.org/github.com/exponent-io/jsonpath/#Decoder.Scan) method supports scanning a JSON stream while extracting particular values along the way using [PathActions](https://godoc.org/github.com/exponent-io/jsonpath#PathActions).
+- The [SeekTo](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.SeekTo) method supports seeking forward in a JSON token stream to a particular path.
+- The [Path](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.Path) method returns the path of the most recently parsed token.
+- The [Token](https://godoc.org/github.com/exponent-io/jsonpath#Decoder.Token) method has been modified to distinguish between strings that are object keys and strings that are values. Object key strings are returned as the [KeyString](https://godoc.org/github.com/exponent-io/jsonpath#KeyString) type rather than a native string.
 
 ## Installation
 

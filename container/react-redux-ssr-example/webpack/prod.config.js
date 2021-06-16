@@ -1,71 +1,104 @@
-require('babel-polyfill');
+require("babel-polyfill");
 
 // Webpack config for creating the production bundle.
-var path = require('path');
-var webpack = require('webpack');
-var CleanPlugin = require('clean-webpack-plugin');
-var ExtractTextPlugin = require('extract-text-webpack-plugin');
-var strip = require('strip-loader');
-var autoprefixer = require('autoprefixer');
-var hasuraConfig = require('../hasuraconfig');
+var path = require("path");
+var webpack = require("webpack");
+var CleanPlugin = require("clean-webpack-plugin");
+var ExtractTextPlugin = require("extract-text-webpack-plugin");
+var strip = require("strip-loader");
+var autoprefixer = require("autoprefixer");
+var hasuraConfig = require("../hasuraconfig");
 
-var relativeAssetsPath = '../static/dist';
+var relativeAssetsPath = "../static/dist";
 var assetsPath = path.join(__dirname, relativeAssetsPath);
 
 // https://github.com/halt-hammerzeit/webpack-isomorphic-tools
-var WebpackIsomorphicToolsPlugin = require('webpack-isomorphic-tools/plugin');
-var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(require('./webpack-isomorphic-tools'));
+var WebpackIsomorphicToolsPlugin = require("webpack-isomorphic-tools/plugin");
+var webpackIsomorphicToolsPlugin = new WebpackIsomorphicToolsPlugin(
+  require("./webpack-isomorphic-tools")
+);
 
 module.exports = {
-  devtool: 'source-map',
-  context: path.resolve(__dirname, '..'),
+  devtool: "source-map",
+  context: path.resolve(__dirname, ".."),
   entry: {
-    'main': [
-      'bootstrap-loader',
-      'font-awesome-webpack!./src/theme/font-awesome.config.prod.js',
-      './src/client.js'
-    ]
+    main: [
+      "bootstrap-loader",
+      "font-awesome-webpack!./src/theme/font-awesome.config.prod.js",
+      "./src/client.js",
+    ],
   },
   output: {
     path: assetsPath,
-    filename: '[name]-[chunkhash].js',
-    chunkFilename: '[name]-[chunkhash].js',
-    publicPath: hasuraConfig.webpackPrefix
+    filename: "[name]-[chunkhash].js",
+    chunkFilename: "[name]-[chunkhash].js",
+    publicPath: hasuraConfig.webpackPrefix,
   },
   module: {
     loaders: [
-      { test: /\.jsx?$/, exclude: /node_modules/, loaders: [strip.loader('debug'), 'babel']},
-      { test: /\.json$/, loader: 'json-loader' },
-      { test: /\.less$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!postcss-loader!less?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
-      { test: /\.scss$/, loader: ExtractTextPlugin.extract('style', 'css?modules&importLoaders=2&sourceMap!postcss-loader!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true') },
-      { test: /\.woff(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/font-woff" },
-      { test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream" },
+      {
+        test: /\.jsx?$/,
+        exclude: /node_modules/,
+        loaders: [strip.loader("debug"), "babel"],
+      },
+      { test: /\.json$/, loader: "json-loader" },
+      {
+        test: /\.less$/,
+        loader: ExtractTextPlugin.extract(
+          "style",
+          "css?modules&importLoaders=2&sourceMap!postcss-loader!less?outputStyle=expanded&sourceMap=true&sourceMapContents=true"
+        ),
+      },
+      {
+        test: /\.scss$/,
+        loader: ExtractTextPlugin.extract(
+          "style",
+          "css?modules&importLoaders=2&sourceMap!postcss-loader!sass?outputStyle=expanded&sourceMap=true&sourceMapContents=true"
+        ),
+      },
+      {
+        test: /\.woff(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/font-woff",
+      },
+      {
+        test: /\.woff2(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/font-woff",
+      },
+      {
+        test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=application/octet-stream",
+      },
       { test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file" },
-      { test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml" },
-      { test: webpackIsomorphicToolsPlugin.regular_expression('images'), loader: 'url-loader?limit=10240' },
-      { test:/bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/, loader: 'imports?jQuery=jquery' }
-    ]
+      {
+        test: /\.svg(\?v=\d+\.\d+\.\d+)?$/,
+        loader: "url?limit=10000&mimetype=image/svg+xml",
+      },
+      {
+        test: webpackIsomorphicToolsPlugin.regular_expression("images"),
+        loader: "url-loader?limit=10240",
+      },
+      {
+        test: /bootstrap-sass[\/\\]assets[\/\\]javascripts[\/\\]/,
+        loader: "imports?jQuery=jquery",
+      },
+    ],
   },
-  postcss: [ autoprefixer({ browsers: ['last 2 versions'] }) ],
+  postcss: [autoprefixer({ browsers: ["last 2 versions"] })],
   progress: true,
   resolve: {
-    modulesDirectories: [
-      'src',
-      'node_modules'
-    ],
-    extensions: ['', '.json', '.js', '.jsx']
+    modulesDirectories: ["src", "node_modules"],
+    extensions: ["", ".json", ".js", ".jsx"],
   },
   plugins: [
     new CleanPlugin([relativeAssetsPath]),
 
     // css files from the extract-text-plugin loader
-    new ExtractTextPlugin('[name]-[chunkhash].css', {allChunks: true}),
+    new ExtractTextPlugin("[name]-[chunkhash].css", { allChunks: true }),
     new webpack.DefinePlugin({
       __CLIENT__: true,
       __SERVER__: false,
       __DEVELOPMENT__: false,
-      __DEVTOOLS__: false
+      __DEVTOOLS__: false,
     }),
 
     // ignore dev config
@@ -73,10 +106,10 @@ module.exports = {
 
     // set global vars
     new webpack.DefinePlugin({
-      'process.env': {
+      "process.env": {
         // Useful to reduce the size of client-side libraries, e.g. react
-        NODE_ENV: JSON.stringify('production')
-      }
+        NODE_ENV: JSON.stringify("production"),
+      },
     }),
 
     // optimizations
@@ -84,10 +117,10 @@ module.exports = {
     new webpack.optimize.OccurenceOrderPlugin(),
     new webpack.optimize.UglifyJsPlugin({
       compress: {
-        warnings: false
-      }
+        warnings: false,
+      },
     }),
 
-    webpackIsomorphicToolsPlugin
-  ]
+    webpackIsomorphicToolsPlugin,
+  ],
 };

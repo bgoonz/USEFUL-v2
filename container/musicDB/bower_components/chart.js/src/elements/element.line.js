@@ -1,7 +1,6 @@
-'use strict';
+"use strict";
 
-module.exports = function(Chart) {
-
+module.exports = function (Chart) {
 	var helpers = Chart.helpers;
 	var globalDefaults = Chart.defaults.global;
 
@@ -10,16 +9,16 @@ module.exports = function(Chart) {
 		backgroundColor: globalDefaults.defaultColor,
 		borderWidth: 3,
 		borderColor: globalDefaults.defaultColor,
-		borderCapStyle: 'butt',
+		borderCapStyle: "butt",
 		borderDash: [],
 		borderDashOffset: 0.0,
-		borderJoinStyle: 'miter',
+		borderJoinStyle: "miter",
 		capBezierPoints: true,
 		fill: true, // do we fill in the area between the line and its base axis
 	};
 
 	Chart.elements.Line = Chart.Element.extend({
-		draw: function() {
+		draw: function () {
 			var me = this;
 			var vm = me._view;
 			var spanGaps = vm.spanGaps;
@@ -28,9 +27,9 @@ module.exports = function(Chart) {
 
 			// Handle different fill modes for cartesian lines
 			if (!loop) {
-				if (vm.fill === 'top') {
+				if (vm.fill === "top") {
 					fillPoint = vm.scaleTop;
-				} else if (vm.fill === 'bottom') {
+				} else if (vm.fill === "bottom") {
 					fillPoint = vm.scaleBottom;
 				}
 			}
@@ -90,11 +89,14 @@ module.exports = function(Chart) {
 							ctx.lineTo(currentVM.x, currentVM.y);
 						}
 					} else {
-						previous = lastDrawnIndex === -1 ? previous : points[lastDrawnIndex];
+						previous =
+							lastDrawnIndex === -1
+								? previous
+								: points[lastDrawnIndex];
 
 						if (currentVM.skip) {
 							// Only do this if this is the first point that is skipped
-							if (!spanGaps && lastDrawnIndex === (index - 1)) {
+							if (!spanGaps && lastDrawnIndex === index - 1) {
 								if (loop) {
 									ctx.lineTo(fillPoint.x, fillPoint.y);
 								} else {
@@ -102,7 +104,7 @@ module.exports = function(Chart) {
 								}
 							}
 						} else {
-							if (lastDrawnIndex !== (index - 1)) {
+							if (lastDrawnIndex !== index - 1) {
 								// There was a gap and this is the first point after the gap. If we've never drawn a point, this is a special case.
 								// If the first data point is NaN, then there is no real gap to skip
 								if (spanGaps && lastDrawnIndex !== -1) {
@@ -127,23 +129,31 @@ module.exports = function(Chart) {
 					ctx.lineTo(points[lastDrawnIndex]._view.x, fillPoint);
 				}
 
-				ctx.fillStyle = vm.backgroundColor || globalDefaults.defaultColor;
+				ctx.fillStyle =
+					vm.backgroundColor || globalDefaults.defaultColor;
 				ctx.closePath();
 				ctx.fill();
 			}
 
 			// Stroke Line Options
 			var globalOptionLineElements = globalDefaults.elements.line;
-			ctx.lineCap = vm.borderCapStyle || globalOptionLineElements.borderCapStyle;
+			ctx.lineCap =
+				vm.borderCapStyle || globalOptionLineElements.borderCapStyle;
 
 			// IE 9 and 10 do not support line dash
 			if (ctx.setLineDash) {
-				ctx.setLineDash(vm.borderDash || globalOptionLineElements.borderDash);
+				ctx.setLineDash(
+					vm.borderDash || globalOptionLineElements.borderDash
+				);
 			}
 
-			ctx.lineDashOffset = vm.borderDashOffset || globalOptionLineElements.borderDashOffset;
-			ctx.lineJoin = vm.borderJoinStyle || globalOptionLineElements.borderJoinStyle;
-			ctx.lineWidth = vm.borderWidth || globalOptionLineElements.borderWidth;
+			ctx.lineDashOffset =
+				vm.borderDashOffset ||
+				globalOptionLineElements.borderDashOffset;
+			ctx.lineJoin =
+				vm.borderJoinStyle || globalOptionLineElements.borderJoinStyle;
+			ctx.lineWidth =
+				vm.borderWidth || globalOptionLineElements.borderWidth;
 			ctx.strokeStyle = vm.borderColor || globalDefaults.defaultColor;
 
 			// Stroke Line
@@ -162,10 +172,16 @@ module.exports = function(Chart) {
 						lastDrawnIndex = index;
 					}
 				} else {
-					previous = lastDrawnIndex === -1 ? previous : points[lastDrawnIndex];
+					previous =
+						lastDrawnIndex === -1
+							? previous
+							: points[lastDrawnIndex];
 
 					if (!currentVM.skip) {
-						if ((lastDrawnIndex !== (index - 1) && !spanGaps) || lastDrawnIndex === -1) {
+						if (
+							(lastDrawnIndex !== index - 1 && !spanGaps) ||
+							lastDrawnIndex === -1
+						) {
 							// There was a gap and this is the first point after the gap
 							ctx.moveTo(currentVM.x, currentVM.y);
 						} else {
@@ -179,6 +195,6 @@ module.exports = function(Chart) {
 
 			ctx.stroke();
 			ctx.restore();
-		}
+		},
 	});
 };
