@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "725092060509",
+    "project_id": "signuphasura"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:725092060509:android:67b83a2d72eea291",
+        "android_client_info": {
+          "package_name": "com.example.android.signuphasura"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "725092060509-fbj3ph3pvmkgcda7i14o12ccci08p2vn.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.example.android.signuphasura",
+            "certificate_hash": "a5011039ca0b25c1eb3c0c68b3af393d3793fc2a"
+          }
+        },
+        {
+          "client_id": "725092060509-dsv3ebikrlfeme3f2jitp4f5cns90n8b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyA5xMMoWq5YIvtpELkptPMP9JshgvI3Cyc"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 1,
+          "other_platform_oauth_client": []
+        },
+        "ads_service": {
+          "status": 1
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

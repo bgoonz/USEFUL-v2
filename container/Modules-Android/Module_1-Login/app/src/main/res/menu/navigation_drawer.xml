@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:title="Home"
+        android:id="@+id/home" />
+
+    <item android:title="Login Methods">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:id="@+id/username"
+                    android:title="Username + Password"
+                    android:icon="@drawable/ic_action_user"/>
+
+                <item
+                    android:id="@+id/email"
+                    android:title="Email + Password"
+                    android:icon="@drawable/ic_action_email"/>
+
+                <item
+                    android:id="@+id/mobile"
+                    android:title="Mobile + Otp"
+                    android:icon="@drawable/ic_action_otp"/>
+
+            </group>
+        </menu>
+
+    </item>
+
+    <item android:title="Social Login">
+
+        <menu>
+            <group android:checkableBehavior="single">
+
+                <item
+                    android:icon="@drawable/ic_action_facebook"
+                    android:title="Facebook"
+                    android:id="@+id/facebook"/>
+
+                <item
+                    android:icon="@drawable/ic_action_gplus"
+                    android:title="Google"
+                    android:id="@+id/google"/>
+
+                <item
+                    android:icon="@drawable/ic_action_linkedin"
+                    android:title="LinkedIn"
+                    android:id="@+id/linkedin"/>
+
+                <item
+                    android:icon="@drawable/ic_action_github"
+                    android:title="Github"
+                    android:id="@+id/github"/>
+            </group>
+        </menu>
+    </item>
+</menu>

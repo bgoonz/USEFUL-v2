@@ -1,0 +1,479 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		C0709F95B9B7D01191AAB17D /* Pods_Hasura_Todo_iOS.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 9FE7B5112BF0BFB464A988EC /* Pods_Hasura_Todo_iOS.framework */; };
+		DA09D1FB1E2DC8F900A8DEC4 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D1FA1E2DC8F900A8DEC4 /* AppDelegate.swift */; };
+		DA09D2001E2DC8F900A8DEC4 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA09D1FE1E2DC8F900A8DEC4 /* Main.storyboard */; };
+		DA09D2021E2DC8F900A8DEC4 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = DA09D2011E2DC8F900A8DEC4 /* Assets.xcassets */; };
+		DA09D2051E2DC8F900A8DEC4 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = DA09D2031E2DC8F900A8DEC4 /* LaunchScreen.storyboard */; };
+		DA09D20D1E2DC9F000A8DEC4 /* AuthenticationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D20C1E2DC9F000A8DEC4 /* AuthenticationViewController.swift */; };
+		DA09D20F1E2DCA8300A8DEC4 /* Extensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D20E1E2DCA8300A8DEC4 /* Extensions.swift */; };
+		DA09D2111E2DD88900A8DEC4 /* Endpoint.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D2101E2DD88900A8DEC4 /* Endpoint.swift */; };
+		DA09D2131E2DD90100A8DEC4 /* Hasura.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D2121E2DD90100A8DEC4 /* Hasura.swift */; };
+		DA09D2151E2DD91700A8DEC4 /* HasuraApi.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D2141E2DD91700A8DEC4 /* HasuraApi.swift */; };
+		DA09D2171E2DDAD200A8DEC4 /* AuthRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = DA09D2161E2DDAD200A8DEC4 /* AuthRequest.swift */; };
+		DAC216161E2DE85300E29143 /* TodoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC216151E2DE85300E29143 /* TodoViewController.swift */; };
+		DAC216181E2DEA3600E29143 /* MessageResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC216171E2DEA3600E29143 /* MessageResponse.swift */; };
+		DAC2161A1E2DEC1F00E29143 /* TodoRecord.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAC216191E2DEC1F00E29143 /* TodoRecord.swift */; };
+		DAEA61F31E2DDE7E00F573BE /* AuthResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEA61F21E2DDE7E00F573BE /* AuthResponse.swift */; };
+		DAEB49351E30BD4800BBADE9 /* TodoReturningResponse.swift in Sources */ = {isa = PBXBuildFile; fileRef = DAEB49341E30BD4800BBADE9 /* TodoReturningResponse.swift */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXFileReference section */
+		641B8F7458BB9343FB2B2AC5 /* Pods-Hasura-Todo-iOS.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hasura-Todo-iOS.debug.xcconfig"; path = "Pods/Target Support Files/Pods-Hasura-Todo-iOS/Pods-Hasura-Todo-iOS.debug.xcconfig"; sourceTree = "<group>"; };
+		9FE7B5112BF0BFB464A988EC /* Pods_Hasura_Todo_iOS.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Hasura_Todo_iOS.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA09D1F71E2DC8F900A8DEC4 /* Hasura-Todo-iOS.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "Hasura-Todo-iOS.app"; sourceTree = BUILT_PRODUCTS_DIR; };
+		DA09D1FA1E2DC8F900A8DEC4 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		DA09D1FF1E2DC8F900A8DEC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		DA09D2011E2DC8F900A8DEC4 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		DA09D2041E2DC8F900A8DEC4 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		DA09D2061E2DC8F900A8DEC4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		DA09D20C1E2DC9F000A8DEC4 /* AuthenticationViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthenticationViewController.swift; sourceTree = "<group>"; };
+		DA09D20E1E2DCA8300A8DEC4 /* Extensions.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extensions.swift; sourceTree = "<group>"; };
+		DA09D2101E2DD88900A8DEC4 /* Endpoint.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Endpoint.swift; sourceTree = "<group>"; };
+		DA09D2121E2DD90100A8DEC4 /* Hasura.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Hasura.swift; sourceTree = "<group>"; };
+		DA09D2141E2DD91700A8DEC4 /* HasuraApi.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HasuraApi.swift; sourceTree = "<group>"; };
+		DA09D2161E2DDAD200A8DEC4 /* AuthRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthRequest.swift; sourceTree = "<group>"; };
+		DAC216151E2DE85300E29143 /* TodoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoViewController.swift; sourceTree = "<group>"; };
+		DAC216171E2DEA3600E29143 /* MessageResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageResponse.swift; sourceTree = "<group>"; };
+		DAC216191E2DEC1F00E29143 /* TodoRecord.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoRecord.swift; sourceTree = "<group>"; };
+		DAEA61F21E2DDE7E00F573BE /* AuthResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AuthResponse.swift; sourceTree = "<group>"; };
+		DAEB49341E30BD4800BBADE9 /* TodoReturningResponse.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TodoReturningResponse.swift; sourceTree = "<group>"; };
+		FD5A99FE769419D3F153F661 /* Pods-Hasura-Todo-iOS.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Hasura-Todo-iOS.release.xcconfig"; path = "Pods/Target Support Files/Pods-Hasura-Todo-iOS/Pods-Hasura-Todo-iOS.release.xcconfig"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		DA09D1F41E2DC8F900A8DEC4 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				C0709F95B9B7D01191AAB17D /* Pods_Hasura_Todo_iOS.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		C4FF2AA33CFE8F941623DF4C /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				9FE7B5112BF0BFB464A988EC /* Pods_Hasura_Todo_iOS.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		D8C07456531C165453A1E904 /* Pods */ = {
+			isa = PBXGroup;
+			children = (
+				641B8F7458BB9343FB2B2AC5 /* Pods-Hasura-Todo-iOS.debug.xcconfig */,
+				FD5A99FE769419D3F153F661 /* Pods-Hasura-Todo-iOS.release.xcconfig */,
+			);
+			name = Pods;
+			sourceTree = "<group>";
+		};
+		DA09D1EE1E2DC8F900A8DEC4 = {
+			isa = PBXGroup;
+			children = (
+				DA09D1F91E2DC8F900A8DEC4 /* Hasura-Todo-iOS */,
+				DA09D1F81E2DC8F900A8DEC4 /* Products */,
+				D8C07456531C165453A1E904 /* Pods */,
+				C4FF2AA33CFE8F941623DF4C /* Frameworks */,
+			);
+			sourceTree = "<group>";
+		};
+		DA09D1F81E2DC8F900A8DEC4 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D1F71E2DC8F900A8DEC4 /* Hasura-Todo-iOS.app */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		DA09D1F91E2DC8F900A8DEC4 /* Hasura-Todo-iOS */ = {
+			isa = PBXGroup;
+			children = (
+				DAC2161B1E2DF29800E29143 /* SupportingFiles */,
+				DAC2161C1E2DF2AB00E29143 /* Model */,
+				DAC2161D1E2DF2B500E29143 /* Storyboard */,
+				DAC2161E1E2DF2C900E29143 /* ViewController */,
+				DAC216201E2DF2DC00E29143 /* Utilities */,
+				DAC2161F1E2DF2D200E29143 /* Hasura */,
+			);
+			path = "Hasura-Todo-iOS";
+			sourceTree = "<group>";
+		};
+		DAC2161B1E2DF29800E29143 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D1FA1E2DC8F900A8DEC4 /* AppDelegate.swift */,
+				DA09D2011E2DC8F900A8DEC4 /* Assets.xcassets */,
+				DA09D2031E2DC8F900A8DEC4 /* LaunchScreen.storyboard */,
+				DA09D2061E2DC8F900A8DEC4 /* Info.plist */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		DAC2161C1E2DF2AB00E29143 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D2161E2DDAD200A8DEC4 /* AuthRequest.swift */,
+				DAEA61F21E2DDE7E00F573BE /* AuthResponse.swift */,
+				DAC216171E2DEA3600E29143 /* MessageResponse.swift */,
+				DAC216191E2DEC1F00E29143 /* TodoRecord.swift */,
+				DAEB49341E30BD4800BBADE9 /* TodoReturningResponse.swift */,
+			);
+			name = Model;
+			sourceTree = "<group>";
+		};
+		DAC2161D1E2DF2B500E29143 /* Storyboard */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D1FE1E2DC8F900A8DEC4 /* Main.storyboard */,
+			);
+			name = Storyboard;
+			sourceTree = "<group>";
+		};
+		DAC2161E1E2DF2C900E29143 /* ViewController */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D20C1E2DC9F000A8DEC4 /* AuthenticationViewController.swift */,
+				DAC216151E2DE85300E29143 /* TodoViewController.swift */,
+			);
+			name = ViewController;
+			sourceTree = "<group>";
+		};
+		DAC2161F1E2DF2D200E29143 /* Hasura */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D2101E2DD88900A8DEC4 /* Endpoint.swift */,
+				DA09D2121E2DD90100A8DEC4 /* Hasura.swift */,
+				DA09D2141E2DD91700A8DEC4 /* HasuraApi.swift */,
+			);
+			name = Hasura;
+			sourceTree = "<group>";
+		};
+		DAC216201E2DF2DC00E29143 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				DA09D20E1E2DCA8300A8DEC4 /* Extensions.swift */,
+			);
+			name = Utilities;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		DA09D1F61E2DC8F900A8DEC4 /* Hasura-Todo-iOS */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = DA09D2091E2DC8F900A8DEC4 /* Build configuration list for PBXNativeTarget "Hasura-Todo-iOS" */;
+			buildPhases = (
+				57FB11B5D10BDEB599FDDB2B /* [CP] Check Pods Manifest.lock */,
+				DA09D1F31E2DC8F900A8DEC4 /* Sources */,
+				DA09D1F41E2DC8F900A8DEC4 /* Frameworks */,
+				DA09D1F51E2DC8F900A8DEC4 /* Resources */,
+				9C91AE66A2C0043F82EEEEBE /* [CP] Embed Pods Frameworks */,
+				FB0CCC1B712D2050C15CA704 /* [CP] Copy Pods Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = "Hasura-Todo-iOS";
+			productName = "Hasura-Todo-iOS";
+			productReference = DA09D1F71E2DC8F900A8DEC4 /* Hasura-Todo-iOS.app */;
+			productType = "com.apple.product-type.application";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		DA09D1EF1E2DC8F900A8DEC4 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0820;
+				LastUpgradeCheck = 0820;
+				ORGANIZATIONNAME = Hasura;
+				TargetAttributes = {
+					DA09D1F61E2DC8F900A8DEC4 = {
+						CreatedOnToolsVersion = 8.2.1;
+						DevelopmentTeam = M4AFCNBNED;
+						ProvisioningStyle = Automatic;
+					};
+				};
+			};
+			buildConfigurationList = DA09D1F21E2DC8F900A8DEC4 /* Build configuration list for PBXProject "Hasura-Todo-iOS" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = DA09D1EE1E2DC8F900A8DEC4;
+			productRefGroup = DA09D1F81E2DC8F900A8DEC4 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				DA09D1F61E2DC8F900A8DEC4 /* Hasura-Todo-iOS */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		DA09D1F51E2DC8F900A8DEC4 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DA09D2051E2DC8F900A8DEC4 /* LaunchScreen.storyboard in Resources */,
+				DA09D2021E2DC8F900A8DEC4 /* Assets.xcassets in Resources */,
+				DA09D2001E2DC8F900A8DEC4 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXShellScriptBuildPhase section */
+		57FB11B5D10BDEB599FDDB2B /* [CP] Check Pods Manifest.lock */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Check Pods Manifest.lock";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			showEnvVarsInLog = 0;
+		};
+		9C91AE66A2C0043F82EEEEBE /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hasura-Todo-iOS/Pods-Hasura-Todo-iOS-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		FB0CCC1B712D2050C15CA704 /* [CP] Copy Pods Resources */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = "[CP] Copy Pods Resources";
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-Hasura-Todo-iOS/Pods-Hasura-Todo-iOS-resources.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+/* End PBXShellScriptBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		DA09D1F31E2DC8F900A8DEC4 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				DAC2161A1E2DEC1F00E29143 /* TodoRecord.swift in Sources */,
+				DAC216181E2DEA3600E29143 /* MessageResponse.swift in Sources */,
+				DAEB49351E30BD4800BBADE9 /* TodoReturningResponse.swift in Sources */,
+				DA09D2151E2DD91700A8DEC4 /* HasuraApi.swift in Sources */,
+				DAC216161E2DE85300E29143 /* TodoViewController.swift in Sources */,
+				DA09D20D1E2DC9F000A8DEC4 /* AuthenticationViewController.swift in Sources */,
+				DA09D1FB1E2DC8F900A8DEC4 /* AppDelegate.swift in Sources */,
+				DA09D2111E2DD88900A8DEC4 /* Endpoint.swift in Sources */,
+				DA09D2131E2DD90100A8DEC4 /* Hasura.swift in Sources */,
+				DA09D2171E2DDAD200A8DEC4 /* AuthRequest.swift in Sources */,
+				DAEA61F31E2DDE7E00F573BE /* AuthResponse.swift in Sources */,
+				DA09D20F1E2DCA8300A8DEC4 /* Extensions.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXVariantGroup section */
+		DA09D1FE1E2DC8F900A8DEC4 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA09D1FF1E2DC8F900A8DEC4 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		DA09D2031E2DC8F900A8DEC4 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				DA09D2041E2DC8F900A8DEC4 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		DA09D2071E2DC8F900A8DEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		DA09D2081E2DC8F900A8DEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_NONNULL = YES;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_DOCUMENTATION_COMMENTS = YES;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INFINITE_RECURSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_SUSPICIOUS_MOVE = YES;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 10.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		DA09D20A1E2DC8F900A8DEC4 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = 641B8F7458BB9343FB2B2AC5 /* Pods-Hasura-Todo-iOS.debug.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M4AFCNBNED;
+				INFOPLIST_FILE = "Hasura-Todo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.Hasura-Todo-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Debug;
+		};
+		DA09D20B1E2DC8F900A8DEC4 /* Release */ = {
+			isa = XCBuildConfiguration;
+			baseConfigurationReference = FD5A99FE769419D3F153F661 /* Pods-Hasura-Todo-iOS.release.xcconfig */;
+			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				DEVELOPMENT_TEAM = M4AFCNBNED;
+				INFOPLIST_FILE = "Hasura-Todo-iOS/Info.plist";
+				IPHONEOS_DEPLOYMENT_TARGET = 9.0;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = "com.app.Hasura-Todo-iOS";
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_VERSION = 3.0;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		DA09D1F21E2DC8F900A8DEC4 /* Build configuration list for PBXProject "Hasura-Todo-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA09D2071E2DC8F900A8DEC4 /* Debug */,
+				DA09D2081E2DC8F900A8DEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		DA09D2091E2DC8F900A8DEC4 /* Build configuration list for PBXNativeTarget "Hasura-Todo-iOS" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				DA09D20A1E2DC8F900A8DEC4 /* Debug */,
+				DA09D20B1E2DC8F900A8DEC4 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+/* End XCConfigurationList section */
+	};
+	rootObject = DA09D1EF1E2DC8F900A8DEC4 /* Project object */;
+}
