@@ -59715,8 +59715,7 @@ if (
         return true;
       }
     },
-  ])
-  .run([
+  ]).run([
     "$rootScope",
     "$state",
     "$location",
@@ -64611,8 +64610,7 @@ if (
        * Example: `$ionicListDelegate.$getByHandle('my-handle').showReorder(true);`
        */
     ])
-  )
-  .controller("$ionicList", [
+  ).controller("$ionicList", [
     "$scope",
     "$attrs",
     "$ionicListDelegate",
