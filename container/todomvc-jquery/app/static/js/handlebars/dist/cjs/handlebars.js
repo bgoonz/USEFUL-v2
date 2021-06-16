@@ -9,13 +9,15 @@ var parse = require("./handlebars/compiler/base").parse;
 var Compiler = require("./handlebars/compiler/compiler").Compiler;
 var compile = require("./handlebars/compiler/compiler").compile;
 var precompile = require("./handlebars/compiler/compiler").precompile;
-var JavaScriptCompiler = require("./handlebars/compiler/javascript-compiler")["default"];
+var JavaScriptCompiler = require("./handlebars/compiler/javascript-compiler")[
+  "default"
+];
 
 var _create = Handlebars.create;
-var create = function() {
+var create = function () {
   var hb = _create();
 
-  hb.compile = function(input, options) {
+  hb.compile = function (input, options) {
     return compile(input, options, hb);
   };
   hb.precompile = function (input, options) {
@@ -34,6 +36,6 @@ var create = function() {
 Handlebars = create();
 Handlebars.create = create;
 
-Handlebars['default'] = Handlebars;
+Handlebars["default"] = Handlebars;
 
 exports["default"] = Handlebars;

@@ -8,7 +8,7 @@ var escape = {
   ">": "&gt;",
   '"': "&quot;",
   "'": "&#x27;",
-  "`": "&#x60;"
+  "`": "&#x60;",
 };
 
 var badChars = /[&<>"'`]/g;
@@ -30,26 +30,34 @@ function extend(obj /* , ...source */) {
   return obj;
 }
 
-exports.extend = extend;var toString = Object.prototype.toString;
+exports.extend = extend;
+var toString = Object.prototype.toString;
 exports.toString = toString;
 // Sourced from lodash
 // https://github.com/bestiejs/lodash/blob/master/LICENSE.txt
-var isFunction = function(value) {
-  return typeof value === 'function';
+var isFunction = function (value) {
+  return typeof value === "function";
 };
 // fallback for older versions of Chrome and Safari
 /* istanbul ignore next */
 if (isFunction(/x/)) {
-  isFunction = function(value) {
-    return typeof value === 'function' && toString.call(value) === '[object Function]';
+  isFunction = function (value) {
+    return (
+      typeof value === "function" &&
+      toString.call(value) === "[object Function]"
+    );
   };
 }
 var isFunction;
 exports.isFunction = isFunction;
 /* istanbul ignore next */
-var isArray = Array.isArray || function(value) {
-  return (value && typeof value === 'object') ? toString.call(value) === '[object Array]' : false;
-};
+var isArray =
+  Array.isArray ||
+  function (value) {
+    return value && typeof value === "object"
+      ? toString.call(value) === "[object Array]"
+      : false;
+  };
 exports.isArray = isArray;
 
 function escapeExpression(string) {
@@ -59,7 +67,7 @@ function escapeExpression(string) {
   } else if (string == null) {
     return "";
   } else if (!string) {
-    return string + '';
+    return string + "";
   }
 
   // Force a string conversion as this will be done by the append regardless and
@@ -67,11 +75,14 @@ function escapeExpression(string) {
   // an object's to string has escaped characters in it.
   string = "" + string;
 
-  if(!possible.test(string)) { return string; }
+  if (!possible.test(string)) {
+    return string;
+  }
   return string.replace(badChars, escapeChar);
 }
 
-exports.escapeExpression = escapeExpression;function isEmpty(value) {
+exports.escapeExpression = escapeExpression;
+function isEmpty(value) {
   if (!value && value !== 0) {
     return true;
   } else if (isArray(value) && value.length === 0) {
@@ -81,8 +92,9 @@ exports.escapeExpression = escapeExpression;function isEmpty(value) {
   }
 }
 
-exports.isEmpty = isEmpty;function appendContextPath(contextPath, id) {
-  return (contextPath ? contextPath + '.' : '') + id;
+exports.isEmpty = isEmpty;
+function appendContextPath(contextPath, id) {
+  return (contextPath ? contextPath + "." : "") + id;
 }
 
 exports.appendContextPath = appendContextPath;

@@ -1,8 +1,6 @@
-[jQuery](http://jquery.com/) - New Wave JavaScript
-==================================================
+# [jQuery](http://jquery.com/) - New Wave JavaScript
 
-Contribution Guides
---------------------------------------
+## Contribution Guides
 
 In the spirit of open source software development, jQuery always encourages community code contribution. To help you get started and before you jump into writing code, be sure to read these important contribution guidelines thoroughly:
 
@@ -10,16 +8,12 @@ In the spirit of open source software development, jQuery always encourages comm
 2. [Core Style Guide](http://contribute.jquery.org/style-guide/js/)
 3. [Writing Code for jQuery Foundation Projects](http://contribute.jquery.org/code/)
 
-
-Environments in which to use jQuery
---------------------------------------
+## Environments in which to use jQuery
 
 - [Browser support](http://jquery.com/browser-support/) differs between the master (2.x) branch and the 1.x-master branch. Specifically, 2.x does not support legacy browsers such as IE6-8. The jQuery team continues to provide support for legacy browsers on the 1.x-master branch. Use the latest 1.x release if support for those browsers is required. See [browser support](http://jquery.com/browser-support/) for more info.
 - To use jQuery in Node, browser extensions, and other non-browser environments, use only **2.x** releases. 1.x does not support these environments.
 
-
-What you need to build your own jQuery
---------------------------------------
+## What you need to build your own jQuery
 
 In order to build jQuery, you need to have Node.js/npm latest and git 1.7 or later.
 (Earlier versions might work OK, but are not tested.)
@@ -32,9 +26,7 @@ and `brew install node` to install Node.js.
 Linux/BSD users should use their appropriate package managers to install git and Node.js, or build from source
 if you swing that way. Easy-peasy.
 
-
-How to build your own jQuery
-----------------------------
+## How to build your own jQuery
 
 Clone a copy of the main jQuery git repo by running:
 
@@ -43,9 +35,11 @@ git clone git://github.com/jquery/jquery.git
 ```
 
 Enter the jquery directory and run the build script:
+
 ```bash
 cd jquery && npm run build
 ```
+
 The built version of jQuery will be put in the `dist/` subdirectory, along with the minified copy and associated map file.
 
 If you want create custom build or help with jQuery development, it would be better to install [grunt command line interface](https://github.com/gruntjs/grunt-cli) as a global package:
@@ -53,17 +47,21 @@ If you want create custom build or help with jQuery development, it would be bet
 ```
 npm install -g grunt-cli
 ```
+
 Make sure you have `grunt` installed by testing:
+
 ```
 grunt -v
 ```
 
 Now by running `grunt` command, in the jquery directory, you could build full version of jQuery, just like with `npm run build` command:
+
 ```
 grunt
 ```
 
 There are many other tasks available for jQuery Core:
+
 ```
 grunt -help
 ```
@@ -91,7 +89,7 @@ Some example modules that can be excluded are:
 - **offset**: The `.offset()`, `.position()`, `.offsetParent()`, `.scrollLeft()`, and `.scrollTop()` methods.
 - **wrap**: The `.wrap()`, `.wrapAll()`, `.wrapInner()`, and `.unwrap()` methods.
 - **core/ready**: Exclude the ready module if you place your scripts at the end of the body. Any ready callbacks bound with `jQuery()` will simply be called immediately. However, `jQuery(document).ready()` will not be a function and `.on("ready", ...)` or similar will not be triggered.
-- **deferred**: Exclude jQuery.Deferred. This also removes jQuery.Callbacks. *Note* that modules that depend on jQuery.Deferred(AJAX, effects, core/ready) will not be removed and will still expect jQuery.Deferred to be there. Include your own jQuery.Deferred implementation or exclude those modules as well (`grunt custom:-deferred,-ajax,-effects,-core/ready`).
+- **deferred**: Exclude jQuery.Deferred. This also removes jQuery.Callbacks. _Note_ that modules that depend on jQuery.Deferred(AJAX, effects, core/ready) will not be removed and will still expect jQuery.Deferred to be there. Include your own jQuery.Deferred implementation or exclude those modules as well (`grunt custom:-deferred,-ajax,-effects,-core/ready`).
 - **exports/global**: Exclude the attachment of global jQuery variables ($ and jQuery) to the window.
 - **exports/amd**: Exclude the AMD definition.
 
@@ -99,7 +97,7 @@ As a special case, you may also replace Sizzle by using a special flag `grunt cu
 
 - **sizzle**: The Sizzle selector engine. When this module is excluded, it is replaced by a rudimentary selector engine based on the browser's `querySelectorAll` method that does not support jQuery selector extensions or enhanced semantics. See the selector-native.js file for details.
 
-*Note*: Excluding Sizzle will also exclude all jQuery selector extensions (such as `effects/animatedSelector` and `css/hiddenVisibleSelectors`).
+_Note_: Excluding Sizzle will also exclude all jQuery selector extensions (such as `effects/animatedSelector` and `css/hiddenVisibleSelectors`).
 
 The build process shows a message for each dependent module it excludes or includes.
 
@@ -153,8 +151,7 @@ grunt custom:-ajax,-css,-deprecated,-dimensions,-effects,-event/alias,-offset,-w
 
 For questions or requests regarding custom builds, please start a thread on the [Developing jQuery Core](https://forum.jquery.com/developing-jquery-core) section of the forum. Due to the combinatorics and custom nature of these builds, they are not regularly tested in jQuery's unit test process. The non-Sizzle selector engine currently does not pass unit tests because it is missing too much essential functionality.
 
-Running the Unit Tests
---------------------------------------
+## Running the Unit Tests
 
 Make sure you have the necessary dependencies:
 
@@ -168,7 +165,6 @@ Start `grunt watch` or `npm start` to auto-build jQuery as you work:
 cd jquery && grunt watch
 ```
 
-
 Run the unit tests with a local server that supports PHP. Ensure that you run the site from the root directory, not the "test" directory. No database is required. Pre-configured php local servers are available for Windows and Mac. Here are some options:
 
 - Windows: [WAMP download](http://www.wampserver.com/en/)
@@ -176,17 +172,14 @@ Run the unit tests with a local server that supports PHP. Ensure that you run th
 - Linux: [Setting up LAMP](https://www.linux.com/learn/tutorials/288158-easy-lamp-server-installation)
 - [Mongoose (most platforms)](http://code.google.com/p/mongoose/)
 
-
-
-
-Building to a different directory
----------------------------------
+## Building to a different directory
 
 To copy the built jQuery files from `/dist` to another directory:
 
 ```bash
 grunt && grunt dist:/path/to/special/location/
 ```
+
 With this example, the output files would be:
 
 ```bash
@@ -197,7 +190,6 @@ With this example, the output files would be:
 To add a permanent copy destination, create a file in `dist/` called ".destination.json". Inside the file, paste and customize the following:
 
 ```json
-
 {
   "/Absolute/path/to/other/destination": true
 }
@@ -205,14 +197,11 @@ To add a permanent copy destination, create a file in `dist/` called ".destinati
 
 Additionally, both methods can be combined.
 
-
-
-Essential Git
--------------
+## Essential Git
 
 As the source code is handled by the Git version control system, it's useful to know some features used.
 
-### Cleaning ###
+### Cleaning
 
 If you want to purge your working directory back to the status of upstream, following commands can be used (remember everything you've worked on is gone after these):
 
@@ -221,64 +210,60 @@ git reset --hard upstream/master
 git clean -fdx
 ```
 
-### Rebasing ###
+### Rebasing
 
 For feature/topic branches, you should always use the `--rebase` flag to `git pull`, or if you are usually handling many temporary "to be in a github pull request" branches, run following to automate this:
 
 ```bash
 git config branch.autosetuprebase local
 ```
+
 (see `man git-config` for more information)
 
-### Handling merge conflicts ###
+### Handling merge conflicts
 
 If you're getting merge conflicts when merging, instead of editing the conflicted files manually, you can use the feature
 `git mergetool`. Even though the default tool `xxdiff` looks awful/old, it's rather useful.
 
 Following are some commands that can be used there:
 
-* `Ctrl + Alt + M` - automerge as much as possible
-* `b` - jump to next merge conflict
-* `s` - change the order of the conflicted lines
-* `u` - undo a merge
-* `left mouse button` - mark a block to be the winner
-* `middle mouse button` - mark a line to be the winner
-* `Ctrl + S` - save
-* `Ctrl + Q` - quit
+- `Ctrl + Alt + M` - automerge as much as possible
+- `b` - jump to next merge conflict
+- `s` - change the order of the conflicted lines
+- `u` - undo a merge
+- `left mouse button` - mark a block to be the winner
+- `middle mouse button` - mark a line to be the winner
+- `Ctrl + S` - save
+- `Ctrl + Q` - quit
 
-[QUnit](http://api.qunitjs.com) Reference
------------------
+## [QUnit](http://api.qunitjs.com) Reference
 
-### Test methods ###
+### Test methods
 
 ```js
-expect( numAssertions );
+expect(numAssertions);
 stop();
 start();
 ```
 
-
 Note: QUnit's eventual addition of an argument to stop/start is ignored in this test suite so that start and stop can be passed as callbacks without worrying about their parameters
 
-### Test assertions ###
-
+### Test assertions
 
 ```js
-ok( value, [message] );
-equal( actual, expected, [message] );
-notEqual( actual, expected, [message] );
-deepEqual( actual, expected, [message] );
-notDeepEqual( actual, expected, [message] );
-strictEqual( actual, expected, [message] );
-notStrictEqual( actual, expected, [message] );
-throws( block, [expected], [message] );
+ok(value, [message]);
+equal(actual, expected, [message]);
+notEqual(actual, expected, [message]);
+deepEqual(actual, expected, [message]);
+notDeepEqual(actual, expected, [message]);
+strictEqual(actual, expected, [message]);
+notStrictEqual(actual, expected, [message]);
+throws(block, [expected], [message]);
 ```
 
+## Test Suite Convenience Methods Reference (See [test/data/testinit.js](https://github.com/jquery/jquery/blob/master/test/data/testinit.js))
 
-Test Suite Convenience Methods Reference (See [test/data/testinit.js](https://github.com/jquery/jquery/blob/master/test/data/testinit.js))
-------------------------------
-
-### Returns an array of elements with the given IDs ###
+### Returns an array of elements with the given IDs
 
 ```js
 q( ... );
@@ -292,10 +277,10 @@ q("main", "foo", "bar");
 => [ div#main, span#foo, input#bar ]
 ```
 
-### Asserts that a selection matches the given IDs ###
+### Asserts that a selection matches the given IDs
 
 ```js
-t( testName, selector, [ "array", "of", "ids" ] );
+t(testName, selector, ["array", "of", "ids"]);
 ```
 
 Example:
@@ -304,24 +289,22 @@ Example:
 t("Check for something", "//[a]", ["foo", "baar"]);
 ```
 
-
-
-### Fires a native DOM event without going through jQuery ###
+### Fires a native DOM event without going through jQuery
 
 ```js
-fireNative( node, eventType )
+fireNative(node, eventType);
 ```
 
 Example:
 
 ```js
-fireNative( jQuery("#elem")[0], "click" );
+fireNative(jQuery("#elem")[0], "click");
 ```
 
-### Add random number to url to stop caching ###
+### Add random number to url to stop caching
 
 ```js
-url( "some/url.php" );
+url("some/url.php");
 ```
 
 Example:
@@ -337,24 +320,23 @@ url("data/test.php?foo=bar");
 => "data/test.php?foo=bar&10538358345554"
 ```
 
-
-### Load tests in an iframe ###
+### Load tests in an iframe
 
 Loads a given page constructing a url with fileName: `"./data/" + fileName + ".html"`
 and fires the given callback on jQuery ready (using the jQuery loading from that page)
 and passes the iFrame's jQuery to the callback.
 
 ```js
-testIframe( fileName, testName, callback );
+testIframe(fileName, testName, callback);
 ```
 
 Callback arguments:
 
 ```js
-callback( jQueryFromIFrame, iFrameWindow, iFrameDocument );
+callback(jQueryFromIFrame, iFrameWindow, iFrameDocument);
 ```
 
-### Load tests in an iframe (window.iframeCallback) ###
+### Load tests in an iframe (window.iframeCallback)
 
 Loads a given page constructing a url with fileName: `"./data/" + fileName + ".html"`
 The given callback is fired when window.iframeCallback is called by the page.
@@ -362,11 +344,10 @@ The arguments passed to the callback are the same as the
 arguments passed to window.iframeCallback, whatever that may be
 
 ```js
-testIframeWithCallback( testName, fileName, callback );
+testIframeWithCallback(testName, fileName, callback);
 ```
 
-Questions?
-----------
+## Questions?
 
 If you have any questions, please feel free to ask on the
 [Developing jQuery Core forum](http://forum.jquery.com/developing-jquery-core) or in #jquery on irc.freenode.net.

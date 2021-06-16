@@ -1,30 +1,30 @@
-This project has been cloned from the Xamarin repo and is one of the quickstart examples. 
+This project has been cloned from the Xamarin repo and is one of the quickstart examples.
 
 #### Phoneword - 'Hello World' for Mobile Developers
 
-When someone starts to learn programming, the first chapter is always a 'Hello World', be it printing it in C/C++, displaying it in HTML web page or popup message box in desktop application. 
+When someone starts to learn programming, the first chapter is always a 'Hello World', be it printing it in C/C++, displaying it in HTML web page or popup message box in desktop application.
 
 As this lab is aimed for mobile applications, let's build a mobile app which will make use phone functionality and make a phone call.
 
 #### Overview
 
-This lab will cover creating an Android & iOS apps for making a phone call. 
+This lab will cover creating an Android & iOS apps for making a phone call.
 
 #### Requirements
 
-This lab requires Xamarin components installed on Mac or on Windows. Download or clone this repository to start executing the lab. 
+This lab requires Xamarin components installed on Mac or on Windows. Download or clone this repository to start executing the lab.
 
-## Building Phoneword App ##
+## Building Phoneword App
 
-You can open existing Phoneword application from this repository or create a cross-platform 'Blank App (Native Portable)'. This will create projects for Portable Class Library, Android and iOS. 
+You can open existing Phoneword application from this repository or create a cross-platform 'Blank App (Native Portable)'. This will create projects for Portable Class Library, Android and iOS.
 
 ![01 Project Template Selection](ScreenImages/01-Project-Template-Selection.png)
 
-Now, let's build these projects individually. 
+Now, let's build these projects individually.
 
 ## Phoneword (Portable Class Library)
 
-- Open `MyClass.cs` from Phoneword (PCL) or add a new class to this project and rename it to `PhonewordTranslator.cs` 
+- Open `MyClass.cs` from Phoneword (PCL) or add a new class to this project and rename it to `PhonewordTranslator.cs`
 - In the class add following code
 
 ```csharp
@@ -80,12 +80,11 @@ public static class PhonewordTranslator
 }
 ```
 
-
 ## Phoneword for Android
 
 **Overview**
 
-In this lab, attendees will build their first Android application which will translate the Phoneword and make a phone call. 
+In this lab, attendees will build their first Android application which will translate the Phoneword and make a phone call.
 
 **Open Phoneword.Droid Project**
 
@@ -93,8 +92,8 @@ There are three steps to complete this project
 
 **Step 1: Creating User Interface**
 
-- Open existing `Phoneword.Droid` project and locate Main.axml within `Resources > Layout` folder. 
-- Use drag and drop feature to create user interface for Phoneword. 
+- Open existing `Phoneword.Droid` project and locate Main.axml within `Resources > Layout` folder.
+- Use drag and drop feature to create user interface for Phoneword.
 - Add `EditText` to enter the Phoneword. Name it as 'PhonewordText'
 - Use `Button` to translate this Phoneword to a valid phone number. Name it as `TranslateButton` & set Text peroprty to **Translate**
 - Use `Button` to call this translated number. Name it as `CallButton` & set the Text property to **Call**
@@ -131,17 +130,16 @@ There are three steps to complete this project
 
 **Step 2: Adding code behind**
 
-
-
 - Add a reference to Phoneword (Library) to Android Project
-- In `MainActivity.cs` write following code above constructor. 
+- In `MainActivity.cs` write following code above constructor.
 
 ```csharp
  EditText phoneNumberText;
  Button translateButton;
  Button callButton;
- string TranslatedNumber; 
+ string TranslatedNumber;
 ```
+
 - In `OnCreate()` method, set the layout file and assign controls to these variables. Along with it, set event handlers for the button.
 
 ```csharp
@@ -172,6 +170,7 @@ private void TranslateButton_Click(object sender, System.EventArgs e)
 	}
 }
 ```
+
 - Use `TranslatedNumber` to make phone call. Write that logic to make a phone call inside CallButton click event
 
 ```csharp
@@ -188,6 +187,7 @@ private void CallButton_Click(object sender, System.EventArgs e)
     callDialog.Show();
 }
 ```
+
 **Step 3: Running the app**
 
 Android applications require permissions to execute tasks like making a phone call. Open 'Properties' of the application and give permission to call.
@@ -196,11 +196,11 @@ Android applications require permissions to execute tasks like making a phone ca
 
 Now run the app and see it in action.
 
-## Phoneword for iOS ##
+## Phoneword for iOS
 
 **Overview**
 
-In this lab, attendees will build their first iOS application which will translate the Phoneword and make a phone call. 
+In this lab, attendees will build their first iOS application which will translate the Phoneword and make a phone call.
 
 **Creating Phoneword.iOS Project**
 
@@ -209,7 +209,7 @@ There are three steps to complete this project
 **Step 1: Creating User Interface**
 
 - Open existing Phoneword.iOS project and locate `Main.storyboard`. Make sure Visual Studio is connected to Mac to load the storyboard and build the iOS project.
-- Use drag and drop feature to create user interface for Phoneword. 
+- Use drag and drop feature to create user interface for Phoneword.
 - Add `Text Field` to enter the Phoneword. Name it as **PhonewordText**. Set the Text property to blank to empty the textbox.
 - Use `Button` to translate this Phoneword to a valid phone number. Name it as **TranslateButton**. Set the text to **Translate**
 - Use `Button` to call this translated number. Name it as **CallButton** & set the Text property to **Call**
@@ -220,11 +220,12 @@ There are three steps to complete this project
 **Step 2: Adding code behind**
 
 - Add a reference to Phoneword (Library) to iOS Project
-- In `ViewController.cs` write following code above constructor. 
+- In `ViewController.cs` write following code above constructor.
 
 ```csharp
  string translatedNumber = "";
 ```
+
 - In `ViewDidLoad()` method, add following code
 
 ```csharp
@@ -243,7 +244,7 @@ TranslateButton.TouchUpInside += (object sender, EventArgs e) =>
 - Use `CallButton` event handler to make a phone call to translated number.
 
 ```csharp
-CallButton.TouchUpInside += (object sender, EventArgs e) => 
+CallButton.TouchUpInside += (object sender, EventArgs e) =>
 {
    // Use URL handler with tel: prefix to invoke Apple's Phone app...
    var url = new NSUrl("tel:" + translatedNumber);
@@ -255,19 +256,20 @@ CallButton.TouchUpInside += (object sender, EventArgs e) =>
     }
 };
 ```
+
 **Step 3: Running the app**
 
 Now run the app and see it in action.
 
-## INTEGRATING WITH HASURA ##
+## INTEGRATING WITH HASURA
 
 **Overview**
 
 After you have created the simple Phoneword app. We will use Hasura to persist the translations that you do into a DB and then make another view to fetch all the saved translations.
- 
+
 **Step 1 : Setting up Hasura**
 
-- Log into your Hasura console 
+- Log into your Hasura console
 - Create a new table and call it "phoneword_translation"
 - Add three columns to it -> "id" of type integer (auto increment),"character" of type String and "number" of type String.
 - Click save.
@@ -300,7 +302,7 @@ namespace Phoneword
 
 - We can use a structure to handle our Endpoints. Create a new file and call it "Endpoint" and add the following to it.
 
-```csharp 
+```csharp
 using System;
 namespace Phoneword
 {
@@ -314,20 +316,20 @@ namespace Phoneword
 ```
 
 Here, change the `PROJECT_NAME` to the name of your project.
-  
+
 - Inserting a row into the table will be done using the following query :
 
-```csharp 
+```csharp
 {
 	"type" : "insert",
 	"args" : {
 			"table"     : "phoneword_translation",
 			"returning" : ["id","character","number"],
-			"objects"   : [ 
+			"objects"   : [
 					{"character" : "1800XAMARIN", "number" : "18009262746"}
 				      ]
 		}
-} 
+}
 ```
 
 To translate this to C# code. Create a file named "InsertTranslationQuery" and add the following code to it :
@@ -400,9 +402,10 @@ namespace Phoneword
                 }
 }
 ```
+
 Class "SelectTranslationQuery" would be :
 
-```csharp 
+```csharp
 using System;
 using Newtonsoft.Json;
 
@@ -430,6 +433,7 @@ namespace Phoneword
 	}
 }
 ```
+
 **Step 4: Creating the class to make the APIs**
 
 Create a new class called "ApiService" and add the following to it :
@@ -477,6 +481,7 @@ namespace Phoneword
 	}
 }
 ```
+
 - Here, AddTranslation will add a translation to the db and GetTranslations will get all the translations from the db
 
 **Step 5: Tweaking the Android App**
@@ -484,7 +489,7 @@ namespace Phoneword
 - Adding Permissions : We need to add internet permissions to the android app. For this, Go to Properties > AndroidManifest > Required Permissions > And check the Internet box.
 - Add another button in Main.axml
 
-```xml 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -513,24 +518,28 @@ namespace Phoneword
         android:id="@+id/HistoryButton" />
 </LinearLayout>
 ```
-- In MainActivity, account for the button 
+
+- In MainActivity, account for the button
 
 ```csharp
 Button historyButton;
 ```
-- Account for the button click 
 
-```csharp 
+- Account for the button click
+
+```csharp
 historyButton.Click += HistoryButton_Click;
 ```
+
 - Handle the Button Click
 
 ```csharp
 private void HistoryButton_Click(object sender, System.EventArgs e){}
 ```
+
 - Make the call to save the translation when the Translate button is clicked. Modify the TranslateButton_Click method to do the following :
 
-```csharp 
+```csharp
 private async void TranslateButton_Click(object sender, System.EventArgs e)
 		{
 			TranslatedNumber = PhonewordTranslator.ToNumber(phoneNumberText.Text);
@@ -552,9 +561,10 @@ private async void TranslateButton_Click(object sender, System.EventArgs e)
 			}
 		}
 ```
+
 - Create a new Activity called "TranslationHistoryActivity"
 
-```csharp 
+```csharp
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -594,9 +604,10 @@ namespace Phoneword.Droid
 	}
 }
 ```
-- TranslationHistory.axml would be 
 
-```xml 
+- TranslationHistory.axml would be
+
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
 android:orientation="vertical"
@@ -610,9 +621,10 @@ android:layout_height="match_parent"
 android:id="@+id/ListView" />
 </LinearLayout>
 ```
-- ListAdapter would be 
 
-```csharp 
+- ListAdapter would be
+
+```csharp
 using System;
 using Android.Widget;
 using Android.App;
@@ -629,7 +641,7 @@ public class ListAdapter: BaseAdapter<TranslationRecord>
 	public ListAdapter(Activity context, List<TranslationRecord> list):base()
 	{
 		this.context = context;
-		this.list = list;			
+		this.list = list;
 	}
 
 	public override int Count
@@ -663,9 +675,10 @@ public class ListAdapter: BaseAdapter<TranslationRecord>
 }
 }
 ```
+
 - Finally, HistoryItem would be :
 
-```xml 
+```xml
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
@@ -677,6 +690,7 @@ public class ListAdapter: BaseAdapter<TranslationRecord>
         android:layout_height="wrap_content" />
 </LinearLayout>
 ```
+
 - Run the app. Enter a value to be translated. Click the "Translate" button and then check the table in your hasura console. You should see a new entry. You can also click on the "Translation History" button and get a list of saved translations from the db.
 
 **Since we are using PCLs for our APIs, these can be reused for iOS in the same way**

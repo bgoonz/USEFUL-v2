@@ -1,32 +1,38 @@
-define(
-  ["exports"],
-  function(__exports__) {
-    "use strict";
+define(["exports"], function (__exports__) {
+  "use strict";
 
-    var errorProps = ['description', 'fileName', 'lineNumber', 'message', 'name', 'number', 'stack'];
+  var errorProps = [
+    "description",
+    "fileName",
+    "lineNumber",
+    "message",
+    "name",
+    "number",
+    "stack",
+  ];
 
-    function Exception(message, node) {
-      var line;
-      if (node && node.firstLine) {
-        line = node.firstLine;
+  function Exception(message, node) {
+    var line;
+    if (node && node.firstLine) {
+      line = node.firstLine;
 
-        message += ' - ' + line + ':' + node.firstColumn;
-      }
-
-      var tmp = Error.prototype.constructor.call(this, message);
-
-      // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
-      for (var idx = 0; idx < errorProps.length; idx++) {
-        this[errorProps[idx]] = tmp[errorProps[idx]];
-      }
-
-      if (line) {
-        this.lineNumber = line;
-        this.column = node.firstColumn;
-      }
+      message += " - " + line + ":" + node.firstColumn;
     }
 
-    Exception.prototype = new Error();
+    var tmp = Error.prototype.constructor.call(this, message);
 
-    __exports__["default"] = Exception;
-  });
+    // Unfortunately errors are not enumerable in Chrome (at least), so `for prop in tmp` doesn't work.
+    for (var idx = 0; idx < errorProps.length; idx++) {
+      this[errorProps[idx]] = tmp[errorProps[idx]];
+    }
+
+    if (line) {
+      this.lineNumber = line;
+      this.column = node.firstColumn;
+    }
+  }
+
+  Exception.prototype = new Error();
+
+  __exports__["default"] = Exception;
+});

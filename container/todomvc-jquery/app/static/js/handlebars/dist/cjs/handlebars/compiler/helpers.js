@@ -3,16 +3,26 @@ var Exception = require("../exception")["default"];
 
 function stripFlags(open, close) {
   return {
-    left: open.charAt(2) === '~',
-    right: close.charAt(close.length-3) === '~'
+    left: open.charAt(2) === "~",
+    right: close.charAt(close.length - 3) === "~",
   };
 }
 
 exports.stripFlags = stripFlags;
-function prepareBlock(mustache, program, inverseAndProgram, close, inverted, locInfo) {
+function prepareBlock(
+  mustache,
+  program,
+  inverseAndProgram,
+  close,
+  inverted,
+  locInfo
+) {
   /*jshint -W040 */
   if (mustache.sexpr.id.original !== close.path.original) {
-    throw new Exception(mustache.sexpr.id.original + ' doesn\'t match ' + close.path.original, mustache);
+    throw new Exception(
+      mustache.sexpr.id.original + " doesn't match " + close.path.original,
+      mustache
+    );
   }
 
   var inverse = inverseAndProgram && inverseAndProgram.program;
@@ -24,7 +34,7 @@ function prepareBlock(mustache, program, inverseAndProgram, close, inverted, loc
     // Determine the standalone candiacy. Basically flag our content as being possibly standalone
     // so our parent can determine if we actually are standalone
     openStandalone: isNextWhitespace(program.statements),
-    closeStandalone: isPrevWhitespace((inverse || program).statements)
+    closeStandalone: isPrevWhitespace((inverse || program).statements),
   };
 
   if (mustache.strip.right) {
@@ -45,9 +55,10 @@ function prepareBlock(mustache, program, inverseAndProgram, close, inverted, loc
     }
 
     // Find standalone else statments
-    if (isPrevWhitespace(program.statements)
-        && isNextWhitespace(inverse.statements)) {
-
+    if (
+      isPrevWhitespace(program.statements) &&
+      isNextWhitespace(inverse.statements)
+    ) {
       omitLeft(program.statements);
       omitRight(inverse.statements);
     }
@@ -68,18 +79,23 @@ exports.prepareBlock = prepareBlock;
 function prepareProgram(statements, isRoot) {
   for (var i = 0, l = statements.length; i < l; i++) {
     var current = statements[i],
-        strip = current.strip;
+      strip = current.strip;
 
     if (!strip) {
       continue;
     }
 
-    var _isPrevWhitespace = isPrevWhitespace(statements, i, isRoot, current.type === 'partial'),
-        _isNextWhitespace = isNextWhitespace(statements, i, isRoot),
-
-        openStandalone = strip.openStandalone && _isPrevWhitespace,
-        closeStandalone = strip.closeStandalone && _isNextWhitespace,
-        inlineStandalone = strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
+    var _isPrevWhitespace = isPrevWhitespace(
+        statements,
+        i,
+        isRoot,
+        current.type === "partial"
+      ),
+      _isNextWhitespace = isNextWhitespace(statements, i, isRoot),
+      openStandalone = strip.openStandalone && _isPrevWhitespace,
+      closeStandalone = strip.closeStandalone && _isNextWhitespace,
+      inlineStandalone =
+        strip.inlineStandalone && _isPrevWhitespace && _isNextWhitespace;
 
     if (strip.right) {
       omitRight(statements, i, true);
@@ -93,8 +109,10 @@ function prepareProgram(statements, isRoot) {
 
       if (omitLeft(statements, i)) {
         // If we are on a standalone node, save the indent info for partials
-        if (current.type === 'partial') {
-          current.indent = (/([ \t]+$)/).exec(statements[i-1].original) ? RegExp.$1 : '';
+        if (current.type === "partial") {
+          current.indent = /([ \t]+$)/.exec(statements[i - 1].original)
+            ? RegExp.$1
+            : "";
         }
       }
     }
@@ -115,21 +133,24 @@ function prepareProgram(statements, isRoot) {
   return statements;
 }
 
-exports.prepareProgram = prepareProgram;function isPrevWhitespace(statements, i, isRoot) {
+exports.prepareProgram = prepareProgram;
+function isPrevWhitespace(statements, i, isRoot) {
   if (i === undefined) {
     i = statements.length;
   }
 
   // Nodes that end with newlines are considered whitespace (but are special
   // cased for strip operations)
-  var prev = statements[i-1],
-      sibling = statements[i-2];
+  var prev = statements[i - 1],
+    sibling = statements[i - 2];
   if (!prev) {
     return isRoot;
   }
 
-  if (prev.type === 'content') {
-    return (sibling || !isRoot ? (/\r?\n\s*?$/) : (/(^|\r?\n)\s*?$/)).test(prev.original);
+  if (prev.type === "content") {
+    return (sibling || !isRoot ? /\r?\n\s*?$/ : /(^|\r?\n)\s*?$/).test(
+      prev.original
+    );
   }
 }
 function isNextWhitespace(statements, i, isRoot) {
@@ -137,14 +158,16 @@ function isNextWhitespace(statements, i, isRoot) {
     i = -1;
   }
 
-  var next = statements[i+1],
-      sibling = statements[i+2];
+  var next = statements[i + 1],
+    sibling = statements[i + 2];
   if (!next) {
     return isRoot;
   }
 
-  if (next.type === 'content') {
-    return (sibling || !isRoot ? (/^\s*?\r?\n/) : (/^\s*?(\r?\n|$)/)).test(next.original);
+  if (next.type === "content") {
+    return (sibling || !isRoot ? /^\s*?\r?\n/ : /^\s*?(\r?\n|$)/).test(
+      next.original
+    );
   }
 }
 
@@ -157,12 +180,19 @@ function isNextWhitespace(statements, i, isRoot) {
 // content is met.
 function omitRight(statements, i, multiple) {
   var current = statements[i == null ? 0 : i + 1];
-  if (!current || current.type !== 'content' || (!multiple && current.rightStripped)) {
+  if (
+    !current ||
+    current.type !== "content" ||
+    (!multiple && current.rightStripped)
+  ) {
     return;
   }
 
   var original = current.string;
-  current.string = current.string.replace(multiple ? (/^\s+/) : (/^[ \t]*\r?\n?/), '');
+  current.string = current.string.replace(
+    multiple ? /^\s+/ : /^[ \t]*\r?\n?/,
+    ""
+  );
   current.rightStripped = current.string !== original;
 }
 
@@ -175,13 +205,17 @@ function omitRight(statements, i, multiple) {
 // content is met.
 function omitLeft(statements, i, multiple) {
   var current = statements[i == null ? statements.length - 1 : i - 1];
-  if (!current || current.type !== 'content' || (!multiple && current.leftStripped)) {
+  if (
+    !current ||
+    current.type !== "content" ||
+    (!multiple && current.leftStripped)
+  ) {
     return;
   }
 
   // We omit the last node if it's whitespace only and not preceeded by a non-content node.
   var original = current.string;
-  current.string = current.string.replace(multiple ? (/\s+$/) : (/[ \t]+$/), '');
+  current.string = current.string.replace(multiple ? /\s+$/ : /[ \t]+$/, "");
   current.leftStripped = current.string !== original;
   return current.leftStripped;
 }

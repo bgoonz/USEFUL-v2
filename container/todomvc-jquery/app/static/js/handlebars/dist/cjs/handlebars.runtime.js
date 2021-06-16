@@ -10,7 +10,7 @@ var Utils = require("./handlebars/utils");
 var runtime = require("./handlebars/runtime");
 
 // For compatibility and usage outside of module systems, make the Handlebars object a namespace
-var create = function() {
+var create = function () {
   var hb = new base.HandlebarsEnvironment();
 
   Utils.extend(hb, base);
@@ -20,7 +20,7 @@ var create = function() {
   hb.escapeExpression = Utils.escapeExpression;
 
   hb.VM = runtime;
-  hb.template = function(spec) {
+  hb.template = function (spec) {
     return runtime.template(spec, hb);
   };
 
@@ -30,6 +30,6 @@ var create = function() {
 var Handlebars = create();
 Handlebars.create = create;
 
-Handlebars['default'] = Handlebars;
+Handlebars["default"] = Handlebars;
 
 exports["default"] = Handlebars;

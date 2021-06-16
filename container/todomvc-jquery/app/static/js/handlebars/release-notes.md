@@ -5,6 +5,7 @@
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0...master)
 
 ## v2.0.0 - September 1st, 2014
+
 - Update jsfiddle to 2.0.0-beta.1 - 0670f65
 - Add contrib note regarding handlebarsjs.com docs - 4d17e3c
 - Play nice with gemspec version numbers - 64d5481
@@ -12,6 +13,7 @@
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0-beta.1...v2.0.0)
 
 ## v2.0.0-beta.1 - August 26th, 2014
+
 - [#787](https://github.com/wycats/handlebars.js/pull/787) - Remove whitespace surrounding standalone statements ([@kpdecker](https://api.github.com/users/kpdecker))
 - [#827](https://github.com/wycats/handlebars.js/issues/827) - Render false literal as “false” ([@scoot557](https://api.github.com/users/scoot557))
 - [#767](https://github.com/wycats/handlebars.js/issues/767) - Subexpressions bug with hash and context ([@evensoul](https://api.github.com/users/evensoul))
@@ -21,7 +23,7 @@
   - [#837](https://github.com/wycats/handlebars.js/issues/837) - Strange input for custom helper ( foo.bar == false when foo is undefined ) ([@zordius](https://api.github.com/users/zordius))
 - [#819](https://github.com/wycats/handlebars.js/pull/819) - Implement recursive field lookup ([@kpdecker](https://api.github.com/users/kpdecker))
 - [#764](https://github.com/wycats/handlebars.js/issues/764) - This reference not working for helpers ([@kpdecker](https://api.github.com/users/kpdecker))
-- [#773](https://github.com/wycats/handlebars.js/issues/773) - Implicit parameters in {{#each}} introduces a peculiarity in helpers calling convention  ([@Bertrand](https://api.github.com/users/Bertrand))
+- [#773](https://github.com/wycats/handlebars.js/issues/773) - Implicit parameters in {{#each}} introduces a peculiarity in helpers calling convention ([@Bertrand](https://api.github.com/users/Bertrand))
 - [#783](https://github.com/wycats/handlebars.js/issues/783) - helperMissing and consistency for different expression types ([@ErisDS](https://api.github.com/users/ErisDS))
 - [#795](https://github.com/wycats/handlebars.js/pull/795) - Turn the precompile script into a wrapper around a module. ([@jwietelmann](https://api.github.com/users/jwietelmann))
 - [#823](https://github.com/wycats/handlebars.js/pull/823) - Support inverse sections on the with helper ([@dan-manges](https://api.github.com/users/dan-manges))
@@ -34,13 +36,14 @@
 - Fix compiler program de-duping - 9e3f824
 
 Compatibility notes:
+
 - The default build now outputs a generic UMD wrapper. This should be transparent change but may cause issues in some environments.
 - Runtime compatibility breaks in both directions. Ensure that both compiler and client are upgraded to 2.0.0-beta.1 or higher at the same time.
   - `programWithDepth` has been removed an instead an array of context values is passed to fields needing depth lookups.
 - `false` values are now printed to output rather than silently dropped
 - Lines containing only block statements and whitespace are now removed. This matches the Mustache spec but may cause issues with code that expects whitespace to exist but would not otherwise.
 - Partials that are standalone will now indent their rendered content
-- `AST.ProgramNode`'s signature has changed. 
+- `AST.ProgramNode`'s signature has changed.
 - Numerious methods/features removed from psuedo-API classes
   - `JavaScriptCompiler.register`
   - `JavaScriptCompiler.replaceStack` no longer supports non-inline replace
@@ -55,11 +58,13 @@ Compatibility notes:
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0-alpha.4...v2.0.0-beta.1)
 
 ## v2.0.0-alpha.4 - May 19th, 2014
+
 - Expose setup wrappers for compiled templates - 3638874
 
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0-alpha.3...v2.0.0-alpha.4)
 
 ## v2.0.0-alpha.3 - May 19th, 2014
+
 - [#797](https://github.com/wycats/handlebars.js/pull/797) - Pass full helper ID to helperMissing when options are provided ([@tomdale](https://api.github.com/users/tomdale))
 - [#793](https://github.com/wycats/handlebars.js/pull/793) - Ensure isHelper is coerced to a boolean ([@mmun](https://api.github.com/users/mmun))
 - Refactor template init logic - 085e5e1
@@ -67,6 +72,7 @@ Compatibility notes:
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0-alpha.2...v2.0.0-alpha.3)
 
 ## v2.0.0-alpha.2 - March 6th, 2014
+
 - [#756](https://github.com/wycats/handlebars.js/pull/756) - fix bug in IE<=8 (no Array::map), closes #751 ([@jenseng](https://api.github.com/users/jenseng))
 - [#749](https://github.com/wycats/handlebars.js/pull/749) - properly handle multiple subexpressions in the same hash, fixes #748 ([@jenseng](https://api.github.com/users/jenseng))
 - [#743](https://github.com/wycats/handlebars.js/issues/743) - subexpression confusion/problem? ([@waynedpj](https://api.github.com/users/waynedpj))
@@ -76,11 +82,13 @@ Compatibility notes:
 - Temporarily kill the AWS publish CI step - 8347ee2
 
 Compatibility notes:
+
 - A JSON polyfill is required to run the compiler under IE8 and below. It's recommended that the precompiler be used in lieu of running the compiler on these legacy environments.
 
 [Commits](https://github.com/wycats/handlebars.js/compare/v2.0.0-alpha.1...v2.0.0-alpha.2)
 
 ## v2.0.0-alpha.1 - February 10th, 2014
+
 - [#182](https://github.com/wycats/handlebars.js/pull/182) - Allow passing hash parameters to partials ([@kpdecker](https://api.github.com/users/kpdecker))
 - [#392](https://github.com/wycats/handlebars.js/pull/392) - Access to root context in partials and helpers ([@kpdecker](https://api.github.com/users/kpdecker))
 - [#472](https://github.com/wycats/handlebars.js/issues/472) - Helpers cannot have decimal parameters ([@kayleg](https://api.github.com/users/kayleg))
@@ -103,6 +111,7 @@ Compatibility notes:
 - [#704](https://github.com/wycats/handlebars.js/pull/704) - JavaScript Compiler Cleanup ([@blakeembrey](https://api.github.com/users/blakeembrey))
 
 Compatibility notes:
+
 - `helperMissing` helper no longer has the indexed name argument. Helper name is now available via `options.name`.
 - Precompiler output has changed, which breaks compatibility with prior versions of the runtime and precompiled output.
 - `JavaScriptCompiler.compilerInfo` now returns generic objects rather than javascript source.
@@ -115,6 +124,7 @@ Compatibility notes:
 [Commits](https://github.com/wycats/handlebars.js/compare/v1.3.0...v2.0.0-alpha.1)
 
 ## v1.3.0 - January 1st, 2014
+
 - [#690](https://github.com/wycats/handlebars.js/pull/690) - Added support for subexpressions ([@machty](https://api.github.com/users/machty))
 - [#696](https://github.com/wycats/handlebars.js/pull/696) - Fix for reserved keyword "default" ([@nateirwin](https://api.github.com/users/nateirwin))
 - [#692](https://github.com/wycats/handlebars.js/pull/692) - add line numbers to nodes when parsing ([@fivetanley](https://api.github.com/users/fivetanley))
@@ -129,12 +139,14 @@ Compatibility notes:
 [Commits](https://github.com/wycats/handlebars.js/compare/v1.2.1...v1.3.0)
 
 ## v1.2.1 - December 26th, 2013
+
 - [#684](https://github.com/wycats/handlebars.js/pull/684) - Allow any number of trailing characters for valid JavaScript variable ([@blakeembrey](https://api.github.com/users/blakeembrey))
 - [#686](https://github.com/wycats/handlebars.js/pull/686) - Falsy AMD module names in version 1.2.0 ([@kpdecker](https://api.github.com/users/kpdecker))
 
 [Commits](https://github.com/wycats/handlebars.js/compare/v1.2.0...v1.2.1)
 
 ## v1.2.0 - December 23rd, 2013
+
 - [#675](https://github.com/wycats/handlebars.js/issues/675) - Cannot compile empty template for partial ([@erwinw](https://api.github.com/users/erwinw))
 - [#677](https://github.com/wycats/handlebars.js/issues/677) - Triple brace statements fail under IE ([@hamzaCM](https://api.github.com/users/hamzaCM))
 - [#655](https://github.com/wycats/handlebars.js/issues/655) - Loading Handlebars using bower ([@niki4810](https://api.github.com/users/niki4810))
@@ -154,6 +166,7 @@ Compatibility notes:
 - Fix handling of boolean escape in MustacheNode - b4968bb
 
 Compatibility notes:
+
 - `@index` and `@first` are now supported for `each` iteration on objects
 - `Handlebars.VM.checkRevision` and `Handlebars.JavaScriptCompiler.prototype.compilerInfo` now available to modify the version checking behavior.
 - Browserify users may link to the runtime library via `require('handlebars/runtime')`
@@ -195,15 +208,14 @@ Compatibility notes:
 - [#571](https://github.com/wycats/handlebars.js/issues/571) - uglify upgrade breaks compatibility with older versions of node
 - [#587](https://github.com/wycats/handlebars.js/issues/587) - Partial inside partial breaks?
 
-
 Compatibility notes:
-- The project now includes separate artifacts for AMD, CommonJS, and global objects. 
+
+- The project now includes separate artifacts for AMD, CommonJS, and global objects.
   - AMD: Users may load the bundled `handlebars.amd.js` or `handlebars.runtime.amd.js` files or load individual modules directly. AMD users should also note that the handlebars object is exposed via the `default` field on the imported object. This [gist](https://gist.github.com/wycats/7417be0dc361a69d5916) provides some discussion of possible compatibility shims.
   - CommonJS/Node: Node loading occurs as normal via `require`
   - Globals: The `handlebars.js` and `handlebars.runtime.js` files should behave in the same manner as the v1.0.12 / 1.0.0 release.
-- Build artifacts have been removed from the repository. [npm][npm], [components/handlebars.js][components], [cdnjs][cdnjs], or the [builds page][builds-page] should now be used as the source of built artifacts. 
+- Build artifacts have been removed from the repository. [npm][npm], [components/handlebars.js][components], [cdnjs][cdnjs], or the [builds page][builds-page] should now be used as the source of built artifacts.
 - Context-stored helpers are now always passed the `options` hash. Previously no-argument helpers did not have this argument.
-
 
 [Commits](https://github.com/wycats/handlebars.js/compare/v1.0.12...v1.1.0)
 
@@ -222,6 +234,7 @@ Compatibility notes:
 - Docs updates
 
 Compatibility notes:
+
 - The parser is now stricter on `{{{`, requiring that the end token be `}}}`. Templates that do not
   follow this convention should add the additional brace value.
 - Code that relies on global the namespace being muted when custom helpers or partials are passed will need to explicitly pass an `undefined` value for any helpers that should not be available.
@@ -288,13 +301,13 @@ changed.
 Instead of:
 
 ```js
-template(context, helpers, partials, [data])
+template(context, helpers, partials, [data]);
 ```
 
 Use:
 
 ```js
-template(context, {helpers: helpers, partials: partials, data: data})
+template(context, { helpers: helpers, partials: partials, data: data });
 ```
 
 [builds-page]: http://builds.handlebarsjs.com.s3.amazonaws.com/index.html
